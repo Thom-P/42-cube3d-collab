@@ -6,7 +6,7 @@
 /*   By: tplanes <tplanes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 15:13:52 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/22 14:43:20 by tplanes          ###   ########.fr       */
+/*   Updated: 2023/03/22 14:55:43 by tplanes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	init_hooks(t_meta *meta)
 // Called on every keyboard down press
 int	key_down_hook(int key, t_meta *meta)
 {
-	printf("key=%i\n", key);
+	//printf("key=%i\n", key);
 	if (key == ESCAPE_KEY)
 		destroy_hook(meta);
 	if (key == M_KEY)
