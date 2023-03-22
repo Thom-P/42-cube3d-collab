@@ -6,7 +6,7 @@
 /*   By: tplanes <tplanes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 15:13:35 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/21 17:53:13 by tplanes          ###   ########.fr       */
+/*   Updated: 2023/03/22 11:41:04 by tplanes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,7 @@ typedef struct s_input
 	int		p_i;
 	int		p_j;
 	char	p_dir;
-	int		*text[4];
+	int		*text[5]; // 5th one is for doors
 }			t_input;
 
 // Variables used in raycasting

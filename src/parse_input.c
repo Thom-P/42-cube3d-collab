@@ -6,7 +6,7 @@
 /*   By: tplanes <tplanes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 15:30:54 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/21 12:45:11 by tplanes          ###   ########.fr       */
+/*   Updated: 2023/03/22 11:49:32 by tplanes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ void	parse_input_file(char *file_in, t_input *input, t_meta *meta)
 						 {1, 0, 0, 0, 0, 0, 0, 1, 1, 1},
 						 {1, 0, 0, 0, 0, 0, 0, 0, 1, 1},
 						 {1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-						 {1, 0, 0, 0, 0, 0, 0, 1, 0, 1},
+						 {1, 0, 0, 0, 0, 0, 0, 1, 2, 1},
 						 {1, 0, 0, 1, 1, 0, 0, 1, 0, 1},
-						 {1, 0, 1, 1, 1, 0, 0, 1, 0, 1},
+						 {1, 2, 1, 1, 1, 0, 0, 1, 0, 1},
 						 {1, 0, 0, 0, 0, 0, 0, 1, 0, 1},
 						 {1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
 						 {1, 0, 0, 1, 1, 0, 0, 0, 0, 1},
@@ -101,5 +101,14 @@ void	parse_input_file(char *file_in, t_input *input, t_meta *meta)
 			free_and_exit("Parsed wrong number of bytes in texture", meta);
 		k++;
 	}
+	// create dummy texture for door
+	text[5] = (int *)malloc((size_t)n_by_text);
+	if (text[5] == NULL)
+		free_and_exit("In parsing", meta); // missing frees here
+	int p = -1;
+	while (++p < n_by_text)
+		text[5][p] = p; //should create a rainbowish door
+	
+
 	return ;
 }

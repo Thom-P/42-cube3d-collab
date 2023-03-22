@@ -6,7 +6,7 @@
 /*   By: tplanes <tplanes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 12:32:20 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/21 12:38:59 by tplanes          ###   ########.fr       */
+/*   Updated: 2023/03/22 11:52:30 by tplanes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ static int	is_wall_found(t_fpt2 *wall, t_fpt2 *offset, t_input *inp)
 		j = (int)wall -> x / PIX_PER_BLOCK;
 		if (i < 0 || i > inp -> m - 1 || j < 0 || j > inp -> n -1)
 			break ;
-		if (inp -> map[i][j] == 1)
+		if (inp -> map[i][j] == 1 || inp -> map[i][j] == 2)
 			return (1);
 		wall -> y += offset -> y;
 		wall -> x += offset -> x;
