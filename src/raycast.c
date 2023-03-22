@@ -6,7 +6,7 @@
 /*   By: tplanes <tplanes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 12:32:20 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/22 13:26:15 by tplanes          ###   ########.fr       */
+/*   Updated: 2023/03/22 13:43:50 by tplanes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,11 +128,19 @@ static int	is_wall_found(t_raycast *ray, t_fpt2 *offset, t_input *inp, char h_or
 	int		i;
 	int		j;
 	t_fpt2	*wall;
+	int		*is_door;
 
 	if (h_or_v == 'h')
+	{	
 		wall = &ray -> h_wall;
+		is_door = &ray -> is_h_door;
+	}
 	else
+	{
 		wall = &ray -> v_wall;
+		is_door = &ray -> is_v_door;
+	}
+	*is_door = 0;
 	while (1)
 	{
 		i = (int)wall -> y / PIX_PER_BLOCK;
@@ -140,7 +148,11 @@ static int	is_wall_found(t_raycast *ray, t_fpt2 *offset, t_input *inp, char h_or
 		if (i < 0 || i > inp -> m - 1 || j < 0 || j > inp -> n -1)
 			break ;
 		if (inp -> map[i][j] == 1 || inp -> map[i][j] == 2)
+		{
+			if (inp -> map[i][j] == 2)
+				*is_door = 1;
 			return (1);
+		}
 		wall -> y += offset -> y;
 		wall -> x += offset -> x;
 	}
@@ -160,10 +172,15 @@ static void	set_closest_wall(t_raycast *ray, t_player *play, t_input *inp)
 		ray -> p1.y = (int)round(ray -> h_wall.y);
 		ray -> wall_dist = ray -> h_dist
 			* cosf(fabsf(ray -> theta_ray - play -> theta));
-		if (ray -> theta_ray > PI)
+		if (ray -> theta_ray > PI && !ray -> is_h_door)
 			ray -> ptr_text = inp -> text[1] + ray -> p1.x % PIX_PER_BLOCK;
-		else
+		else if (ray -> theta_ray > PI)
+			ray -> ptr_text = inp -> text[4] + ray -> p1.x % PIX_PER_BLOCK;
+		else if (!ray -> is_h_door)
 			ray -> ptr_text = inp -> text[0]
+				+ PIX_PER_BLOCK - 1 - (ray -> p1.x % PIX_PER_BLOCK);
+		else
+			ray -> ptr_text = inp -> text[4]
 				+ PIX_PER_BLOCK - 1 - (ray -> p1.x % PIX_PER_BLOCK);
 	}
 	else
@@ -172,10 +189,15 @@ static void	set_closest_wall(t_raycast *ray, t_player *play, t_input *inp)
 		ray -> p1.y = (int)round(ray -> v_wall.y);
 		ray -> wall_dist = ray -> v_dist
 			* cosf(fabsf(ray -> theta_ray - play -> theta));
-		if (ray -> theta_ray < 0.5 * PI || ray -> theta_ray > 1.5 * PI)
+		if ((ray -> theta_ray < 0.5 * PI || ray -> theta_ray > 1.5 * PI) && !ray -> is_v_door)
 			ray -> ptr_text = inp -> text[3] + ray -> p1.y % PIX_PER_BLOCK;
-		else
+		else if (ray -> theta_ray < 0.5 * PI || ray -> theta_ray > 1.5 * PI)
+			ray -> ptr_text = inp -> text[4] + ray -> p1.y % PIX_PER_BLOCK;
+		else if (!ray -> is_v_door)
 			ray -> ptr_text = inp -> text[2]
+				+ PIX_PER_BLOCK - 1 - (ray -> p1.y % PIX_PER_BLOCK);
+		else
+			ray -> ptr_text = inp -> text[4]
 				+ PIX_PER_BLOCK - 1 - (ray -> p1.y % PIX_PER_BLOCK);
 	}
 	return ;
