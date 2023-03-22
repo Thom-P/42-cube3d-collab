@@ -6,7 +6,7 @@
 /*   By: tplanes <tplanes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 15:13:35 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/22 11:41:04 by tplanes          ###   ########.fr       */
+/*   Updated: 2023/03/22 12:07:19 by tplanes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,6 +154,8 @@ typedef struct s_raycast
 	t_fpt2	v_wall;
 	float	h_dist;
 	float	v_dist;
+	int		is_h_door;
+	int		is_v_door;
 	t_ipt2	p0;
 	t_ipt2	p1;
 	float	theta_ray;
