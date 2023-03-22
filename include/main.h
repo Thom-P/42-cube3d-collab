@@ -6,7 +6,7 @@
 /*   By: tplanes <tplanes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 15:13:35 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/22 14:48:47 by tplanes          ###   ########.fr       */
+/*   Updated: 2023/03/22 17:23:15 by tplanes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 # define DESTROY_WIN 17  //closing window event
 # define KEY_DOWN 2
 # define KEY_UP 3
+# define MOUSE_MOVE 6
 
 # define ESCAPE_KEY 53
 # define LEFT_ARROW_KEY 123
@@ -42,6 +43,9 @@
 # define UP_ARROW_KEY 126
 # define SPACE_KEY 49
 # define M_KEY 46
+# define N_KEY 45
+# define MOUSE_LEFT 25 // nb: correspond to ( and )
+# define MOUSE_RIGHT 29
 
 // Colors
 # define WHITE 16777215 //White
@@ -131,6 +135,7 @@ typedef struct s_player
 	int		step;
 	float	theta;
 	float	d_theta;
+	float	d_theta_mouse;
 }				t_player;
 
 // Data collected during parsing
@@ -180,6 +185,7 @@ typedef struct s_meta
 	t_image		im;
 	t_image		im2;
 	int			flag_minimap;
+	int			flag_mouse_on;
 	t_imat		map2d;
 	t_player	play;
 	char		keys_down[256];
@@ -228,6 +234,7 @@ void	init_hooks(t_meta *meta);
 int		key_down_hook(int keycode, t_meta *meta);
 int		key_up_hook(int keycode, t_meta *meta);
 int		destroy_hook(t_meta *meta);
+int		mouse_hook(int x,int y, t_meta *meta);
 
 // Doors
 void	try_switch_door(t_meta *meta);

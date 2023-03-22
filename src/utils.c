@@ -6,7 +6,7 @@
 /*   By: tplanes <tplanes@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 13:57:04 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/21 16:45:49 by tplanes          ###   ########.fr       */
+/*   Updated: 2023/03/22 17:23:40 by tplanes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	init_mem_ptrs(t_meta *meta)
 	int	i;
 
 	meta -> flag_minimap = 0;
+	meta -> flag_mouse_on = 0;
 	meta -> input.map = NULL;
 	i = 0;
 	while (i < 4)
@@ -80,6 +81,7 @@ void	init_player_and_keys(t_player *play, t_input *inp, char *keys_down)
 	else if (inp -> p_dir == 'S')
 		play -> theta = PI / 2;
 	play -> d_theta = PI / 100;
+	play -> d_theta_mouse = PI / 1000;
 	i = -1;
 	while (++i < 256)
 		keys_down[i] = 0;

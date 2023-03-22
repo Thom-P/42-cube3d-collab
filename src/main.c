@@ -6,7 +6,7 @@
 /*   By: tplanes <tplanes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 15:01:56 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/22 15:27:18 by tplanes          ###   ########.fr       */
+/*   Updated: 2023/03/22 17:25:49 by tplanes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	main(int ac, char **av)
 	init_player_and_keys(&meta.play, &meta.input, meta.keys_down);
 	create_win(&meta, WIN_NY, WIN_NX, "***Cube 3D***");
 	mlx_string_put(meta.xp.mlx, meta.xp.win, 1, 1, WHITE,
-		"Move: WASD, Rotate: ARROWS, Minimap: M, Action: SPACE, Quit: ESC");
+		"Move: WASD, Rotate: ARROWS, Minimap: M, Toggle mouse/arrows for rotate: N, Action: SPACE, Quit: ESC");
 	create_image(&meta);
 	if (SHOW_RAYS)
 	{	
