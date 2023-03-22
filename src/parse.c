@@ -6,7 +6,7 @@
 /*   By: saeby <saeby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 12:02:02 by saeby             #+#    #+#             */
-/*   Updated: 2023/03/22 16:46:57 by saeby            ###   ########.fr       */
+/*   Updated: 2023/03/22 17:48:59 by saeby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -355,6 +355,116 @@ void	print_map(t_meta *meta)
 	}
 }
 
+int	check_udr(int x, int y, t_meta *meta)
+{
+	return (meta->map[x + y * meta->input.m] == ' ' ||
+			meta->map[x + (y + 1) * meta->input.m] == ' ' ||
+			meta->map[(x + 1) + y * meta->input.m] == ' ');
+}
+
+int	check_udl(int x, int y, t_meta *meta)
+{
+	return (meta->map[x + (y - 1) * meta->input.m] == ' ' ||
+			meta->map[x + (y + 1) * meta->input.m] == ' ' ||
+			meta->map[(x + 1) + y * meta->input.m] == ' ');
+}
+
+int	check_udlr(int x, int y, t_meta *meta)
+{
+	return (meta->map[x + (y - 1) * meta->input.m] == ' ' ||
+			meta->map[x + (y + 1) * meta->input.m] == ' ' ||
+			meta->map[(x - 1) + y * meta->input.m] == ' ' ||
+			meta->map[(x + 1) + y * meta->input.m] == ' ');
+}
+
+int space_around(int x, int y, t_meta *meta)
+{
+	if (x == 0)
+	{
+		if (check_udr(x, y, meta))
+			return (1);
+	}
+	else if (x == meta->input.m - 1)
+	{
+		if (check_udl(x, y, meta))
+			return (1);
+	}
+	else
+	{
+		if (check_udlr(x, y, meta))
+			return (1);
+	}
+	return (0);
+}
+
+int	check_top_bottom(t_meta *meta)
+{
+	int	x;
+	int	y;
+	
+	y = 0;
+	x = 0;
+	while (x < meta->input.m)
+	{
+		if (meta->map[x + y * meta->input.m] == '0')
+			return (1/*Map not enclose in walls*/);
+		x++;
+	}
+	x = 0;
+	while (x < meta->input.m)
+	{
+		if (meta->map[x + (meta->input.n - 1) * meta->input.m] == '0')
+			return (1/*Map not enclose in walls*/);
+		x++;
+	}
+	return (0);
+}
+
+int	is_dir(char c)
+{
+	return (c == 'N' || c == 'E' || c == 'S' || c == 'W');
+}
+
+int	set_start(int x, int y, t_meta *meta)
+{
+	if (meta->input.p_j != 0 || meta->input.p_i != 0)
+		return (1 /* multiple start position found on map.*/);
+	meta->input.p_j = x;
+	meta->input.p_i = y;
+	meta->input.p_dir = meta->map[x + y * meta->input.m];
+	meta->map[x + y * meta->input.m] = '0';
+	return (0);
+}
+
+int	check_map(t_meta *meta)
+{
+	int	x;
+	int	y;
+
+	meta->input.p_i = 0; // y (row index of player start)
+	meta->input.p_j = 0; // x (col index of player start)
+	meta->input.p_dir = 'N';
+	if (check_top_bottom(meta))
+		return (1);
+	y = 1;
+	while (y < meta->input.n - 1)
+	{
+		x = 0;
+		while (x < meta->input.m)
+		{
+			if (meta->map[x + y * meta->input.m] == '0')
+				if (space_around(x, y, meta))
+					return (1/* map not enclosed in walls*/);
+			if (is_dir(meta->map[x + y * meta->input.m]))
+				if (set_start(x, y, meta))
+					return (1 /* error setting player start position */);
+			x++;
+		}
+		y++;
+	}
+	return (0);
+}
+
 /*
  * parsing done in two steps
  * 1: get all information as strings (textures paths, floor/ceiling color as r,g,b, etc)
@@ -389,8 +499,8 @@ int	parse_map(char *in_file, t_meta *meta)
 		return (1 /*malloc error*/);
 	if (fill_map(in_file, meta))
 		return (1/*error when filling map arraz*/);
+	if (check_map(meta))
+		return (1/*not a valid map*/);
 	print_map(meta);
-	// if (check_map(meta))
-	// 	return (1/*not a valid map*/);
 	return (0);
 }
