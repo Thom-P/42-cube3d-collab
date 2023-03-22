@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tplanes <tplanes@student.42.fr>            +#+  +:+       +#+        */
+/*   By: saeby <saeby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 15:01:56 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/21 17:51:40 by tplanes          ###   ########.fr       */
+/*   Updated: 2023/03/22 14:28:09 by saeby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
-static void	create_win(t_meta *meta, int win_ny, int win_nx, char *title);
+// static void	create_win(t_meta *meta, int win_ny, int win_nx, char *title);
 
-static void	create_2d_win(t_meta *meta, char *title);
+// static void	create_2d_win(t_meta *meta, char *title);
 
 int	main(int ac, char **av)
 {
@@ -26,55 +26,56 @@ int	main(int ac, char **av)
 		exit(EXIT_FAILURE);
 	}
 	init_mem_ptrs(&meta);
-	parse_input_file(av[1], &meta.input, &meta);
-	if (SHOW_RAYS)
-		create_map2d(&meta.map2d, &meta.input, &meta);
-	init_player_and_keys(&meta.play, &meta.input, meta.keys_down);
-	create_win(&meta, WIN_NY, WIN_NX, "***Cube 3D***");
-	mlx_string_put(meta.xp.mlx, meta.xp.win, 1, 1, WHITE,
-		"Move: WASD, Rotate: ARROWS, Minimap: SPACE, Quit: ESC");
-	create_image(&meta);
-	if (SHOW_RAYS)
-	{	
-		create_2d_win(&meta, "***2D Map***");
-		create_2d_image(&meta);
-	}
-	render(&meta);
-	init_hooks(&meta);
-	mlx_loop(meta.xp.mlx);
+	parse_map(av[1], &meta);
+	//parse_input_file(av[1], &meta.input, &meta);
+	// if (SHOW_RAYS)
+	// 	create_map2d(&meta.map2d, &meta.input, &meta);
+	// init_player_and_keys(&meta.play, &meta.input, meta.keys_down);
+	// create_win(&meta, WIN_NY, WIN_NX, "***Cube 3D***");
+	// mlx_string_put(meta.xp.mlx, meta.xp.win, 1, 1, WHITE,
+	// 	"Move: WASD, Rotate: ARROWS, Minimap: SPACE, Quit: ESC");
+	// create_image(&meta);
+	// if (SHOW_RAYS)
+	// {	
+	// 	create_2d_win(&meta, "***2D Map***");
+	// 	create_2d_image(&meta);
+	// }
+	// render(&meta);
+	// init_hooks(&meta);
+	// mlx_loop(meta.xp.mlx);
 	return (0);
 }
 
-static void	create_win(t_meta *meta, int win_ny, int win_nx, char *title)
-{
-	void	*mlx;
-	void	*win;
+// static void	create_win(t_meta *meta, int win_ny, int win_nx, char *title)
+// {
+// 	void	*mlx;
+// 	void	*win;
 
-	mlx = mlx_init();
-	if (mlx == NULL)
-		free_and_exit("Error in mlx init", meta);
-	meta -> xp.mlx = mlx;
-	win = mlx_new_window(mlx, win_nx, win_ny, title);
-	if (win == NULL)
-		free_and_exit("Error in window init", meta);
-	meta -> xp.win = win;
-	return ;
-}
+// 	mlx = mlx_init();
+// 	if (mlx == NULL)
+// 		free_and_exit("Error in mlx init", meta);
+// 	meta -> xp.mlx = mlx;
+// 	win = mlx_new_window(mlx, win_nx, win_ny, title);
+// 	if (win == NULL)
+// 		free_and_exit("Error in window init", meta);
+// 	meta -> xp.win = win;
+// 	return ;
+// }
 
-static void	create_2d_win(t_meta *meta, char *title)
-{
-	void	*win2;
+// static void	create_2d_win(t_meta *meta, char *title)
+// {
+// 	void	*win2;
 
-	win2 = mlx_new_window(meta -> xp.mlx, meta -> map2d.n, meta -> map2d.m,
-			title);
-	if (win2 == NULL)
-	{
-		mlx_destroy_window(meta -> xp.mlx, meta -> xp.win);
-		free_and_exit("Error in window2 init", meta);
-	}
-	meta -> xp.win2 = win2;
-	return ;
-}
+// 	win2 = mlx_new_window(meta -> xp.mlx, meta -> map2d.n, meta -> map2d.m,
+// 			title);
+// 	if (win2 == NULL)
+// 	{
+// 		mlx_destroy_window(meta -> xp.mlx, meta -> xp.win);
+// 		free_and_exit("Error in window2 init", meta);
+// 	}
+// 	meta -> xp.win2 = win2;
+// 	return ;
+// }
 
 void	create_image(t_meta *meta)
 {
