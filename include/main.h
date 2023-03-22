@@ -6,7 +6,7 @@
 /*   By: tplanes <tplanes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 15:13:35 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/22 12:07:19 by tplanes          ###   ########.fr       */
+/*   Updated: 2023/03/22 14:48:47 by tplanes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # include "libft.h"
 
 //0 (off) or 1 (show extra window window with 2D map and rays) 
-# define SHOW_RAYS 1
+# define SHOW_RAYS 0
 
 # define PI (float)M_PI
 
@@ -41,7 +41,7 @@
 # define DOWN_ARROW_KEY 125
 # define UP_ARROW_KEY 126
 # define SPACE_KEY 49
-//# define MAJ_KEY 257
+# define M_KEY 46
 
 // Colors
 # define WHITE 16777215 //White
@@ -228,6 +228,9 @@ void	init_hooks(t_meta *meta);
 int		key_down_hook(int keycode, t_meta *meta);
 int		key_up_hook(int keycode, t_meta *meta);
 int		destroy_hook(t_meta *meta);
+
+// Doors
+void	try_switch_door(t_meta *meta);
 
 // Minimap
 void	draw_minimap(t_meta *meta);

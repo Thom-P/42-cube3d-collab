@@ -6,7 +6,7 @@
 /*   By: tplanes <tplanes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 15:30:54 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/22 11:49:32 by tplanes          ###   ########.fr       */
+/*   Updated: 2023/03/22 14:47:08 by tplanes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,26 +68,30 @@ void	parse_input_file(char *file_in, t_input *input, t_meta *meta)
 	input -> map = map;
 	
 	// Load textures in N, S, E, W order
-	char	*file_text[4];
-	file_text[0] = ft_strdup("./textures/textN");
+	char	*file_text[5];
+	file_text[0] = ft_strdup("./src/textures/textN");
 	if (file_text[0] == NULL)
 		free_and_exit("In parsing", meta);
-	file_text[1] = ft_strdup("./textures/textS");
+	file_text[1] = ft_strdup("./src/textures/textS");
 	if (file_text[1] == NULL)
 		free_and_exit("In parsing", meta); //warning, missing some free here
-	file_text[2] = ft_strdup("./textures/textE");
+	file_text[2] = ft_strdup("./src/textures/textE");
 	if (file_text[2] == NULL)
 		free_and_exit("In parsing", meta);
-	file_text[3] = ft_strdup("./textures/textW");
+	file_text[3] = ft_strdup("./src/textures/textE");
 	if (file_text[3] == NULL)
 		free_and_exit("In parsing", meta);
+	file_text[4] = ft_strdup("./src/textures/textW"); //doors
+	if (file_text[4] == NULL)
+		free_and_exit("In parsing", meta);
+
 
 	int n_by_text = PIX_PER_BLOCK * PIX_PER_BLOCK *sizeof(int);
 	int	n_by_rd;
 	int	**text = input -> text;
 	int k = 0;
 	int fd;
-	while (k < 4)
+	while (k < 5)
 	{
 		text[k] = (int *)malloc((size_t)n_by_text);
 		if (text[k] == NULL)
@@ -101,14 +105,5 @@ void	parse_input_file(char *file_in, t_input *input, t_meta *meta)
 			free_and_exit("Parsed wrong number of bytes in texture", meta);
 		k++;
 	}
-	// create dummy texture for door
-	text[5] = (int *)malloc((size_t)n_by_text);
-	if (text[5] == NULL)
-		free_and_exit("In parsing", meta); // missing frees here
-	int p = -1;
-	while (++p < n_by_text)
-		text[5][p] = p; //should create a rainbowish door
-	
-
 	return ;
 }

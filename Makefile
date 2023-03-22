@@ -54,6 +54,7 @@ SRC =	draw_2D_scene.c \
 		parse_input.c \
 		raycast.c \
 		update_and_render.c \
+		doors.c \
 		utils.c
 
 OBJ := $(SRC:%.c=%.o)
