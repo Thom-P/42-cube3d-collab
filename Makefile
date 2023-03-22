@@ -42,7 +42,7 @@ LIBFT = libft/
 MLX = minilibx_macos
 
 FRAMEWORKS = -framework OpenGL -framework AppKit
-INCS = -I$(INC_DIR) -I$(LIBFT) -I$(MLX)
+INCS = -I$(INC_DIR) -I$(LIBFT) -I$(MLX) -I$(LIBFT)/get_next_line/ -I$(LIBFT)/printf/
 LIBS = -L$(LIBFT) -lft -L$(MLX) -lmlx
 
 SRC =	draw_2D_scene.c \
@@ -54,8 +54,9 @@ SRC =	draw_2D_scene.c \
 		parse_input.c \
 		raycast.c \
 		update_and_render.c \
-		doors.c \
-		utils.c
+		utils.c \
+		parse.c \
+		doors.c
 
 OBJ := $(SRC:%.c=%.o)
 DEP := $(SRC:%.c=%.d)
@@ -73,8 +74,8 @@ $(NAME): $(SRCS) $(OBJ_DIR) $(OBJS)
 	@gcc -O2 $(CCFLAGS) $(OBJS) $(LIBS) $(FRAMEWORKS) -o $(NAME)
 	@printf "$(_BOLD)$(_GREEN)OK! $(_END)$(_DIM)$(_WHITE)(./$(NAME))$(_END)\n\n"
 
-debug: $(SRCS) $(OBJ_DIR) $(OBJS)
-	gcc -O0 $(CCFLAGS) -fsanitize=address -g3 $(OBJS) $(LIBS) -o $(NAME)
+debug: libft mlx $(SRCS) $(OBJ_DIR) $(OBJS)
+	gcc -O0 $(CCFLAGS) -fsanitize=address -g3 $(OBJS) $(LIBS) $(FRAMEWORKS) -o $(NAME)
 
 -include $(DEPS)
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tplanes <tplanes@student.42.fr>            +#+  +:+       +#+        */
+/*   By: saeby <saeby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 15:13:35 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/22 17:23:15 by tplanes          ###   ########.fr       */
+/*   Updated: 2023/03/22 17:37:59 by tplanes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 
 # include "mlx.h"
 # include "libft.h"
+# include "get_next_line.h"
+# include "ft_printf.h"
 
 //0 (off) or 1 (show extra window window with 2D map and rays) 
 # define SHOW_RAYS 0
@@ -46,6 +48,13 @@
 # define N_KEY 45
 # define MOUSE_LEFT 25 // nb: correspond to ( and )
 # define MOUSE_RIGHT 29
+
+# define NO 0
+# define EA 1
+# define SO 2
+# define WE 3
+# define F 4
+# define C 5
 
 // Colors
 # define WHITE 16777215 //White
@@ -149,7 +158,13 @@ typedef struct s_input
 	int		p_i;
 	int		p_j;
 	char	p_dir;
-	int		*text[5]; // 5th one is for doors
+	int		*text[5];
+	char	*so_path;
+	char	*we_path;
+	char	*ea_path;
+	char	*no_path;
+	char	*f_color;
+	char	*c_color;
 }			t_input;
 
 // Variables used in raycasting
@@ -177,6 +192,17 @@ typedef struct s_text_map
 	int		*ptr_text;	
 }			t_text_map;
 
+typedef struct s_text
+{
+	void		*img;
+	char		*addr;
+	int			bpp;
+	int			llen;
+	int			endian;
+	int			w;
+	int			h;
+}				t_text;
+
 // Meta-struct of all other structs
 typedef struct s_meta
 {
@@ -184,10 +210,14 @@ typedef struct s_meta
 	t_xptr		xp;
 	t_image		im;
 	t_image		im2;
+	t_text		*textures;
+	int			ceiling;
+	int			floor;
 	int			flag_minimap;
 	int			flag_mouse_on;
 	t_imat		map2d;
 	t_player	play;
+	char		*map;
 	char		keys_down[256];
 }				t_meta;
 
@@ -210,6 +240,9 @@ void	create_2d_image(t_meta *meta); // only if SHOW_RAYS = 1
 
 // Parsing
 void	parse_input_file(char *f_name, t_input *input, t_meta *meta);
+
+// parse.c
+int		parse_map(char *in_file, t_meta *meta);
 
 // Update and render
 int		update_and_render(t_meta *meta);

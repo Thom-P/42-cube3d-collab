@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tplanes <tplanes@student.42.fr>            +#+  +:+       +#+        */
+/*   By: saeby <saeby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 15:01:56 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/22 17:25:49 by tplanes          ###   ########.fr       */
+/*   Updated: 2023/03/22 17:41:12 by tplanes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	main(int ac, char **av)
 		exit(EXIT_FAILURE);
 	}
 	init_mem_ptrs(&meta);
+	//parse_map(av[1], &meta);
 	parse_input_file(av[1], &meta.input, &meta);
 	if (SHOW_RAYS)
 		create_map2d(&meta.map2d, &meta.input, &meta);
@@ -47,33 +48,33 @@ int	main(int ac, char **av)
 
 static void	create_win(t_meta *meta, int win_ny, int win_nx, char *title)
 {
-	void	*mlx;
-	void	*win;
+ 	void	*mlx;
+ 	void	*win;
 
-	mlx = mlx_init();
-	if (mlx == NULL)
-		free_and_exit("Error in mlx init", meta);
-	meta -> xp.mlx = mlx;
-	win = mlx_new_window(mlx, win_nx, win_ny, title);
-	if (win == NULL)
-		free_and_exit("Error in window init", meta);
-	meta -> xp.win = win;
-	return ;
+ 	mlx = mlx_init();
+ 	if (mlx == NULL)
+ 		free_and_exit("Error in mlx init", meta);
+ 	meta -> xp.mlx = mlx;
+ 	win = mlx_new_window(mlx, win_nx, win_ny, title);
+ 	if (win == NULL)
+ 		free_and_exit("Error in window init", meta);
+ 	meta -> xp.win = win;
+ 	return ;
 }
 
 static void	create_2d_win(t_meta *meta, char *title)
 {
 	void	*win2;
 
-	win2 = mlx_new_window(meta -> xp.mlx, meta -> map2d.n, meta -> map2d.m,
-			title);
-	if (win2 == NULL)
-	{
-		mlx_destroy_window(meta -> xp.mlx, meta -> xp.win);
-		free_and_exit("Error in window2 init", meta);
-	}
-	meta -> xp.win2 = win2;
-	return ;
+ 	win2 = mlx_new_window(meta -> xp.mlx, meta -> map2d.n, meta -> map2d.m,
+ 			title);
+ 	if (win2 == NULL)
+ 	{
+ 		mlx_destroy_window(meta -> xp.mlx, meta -> xp.win);
+ 		free_and_exit("Error in window2 init", meta);
+ 	}
+ 	meta -> xp.win2 = win2;
+ 	return ;
 }
 
 void	create_image(t_meta *meta)

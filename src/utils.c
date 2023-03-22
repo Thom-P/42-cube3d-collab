@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tplanes <tplanes@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: saeby <saeby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 13:57:04 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/22 17:23:40 by tplanes          ###   ########.fr       */
+/*   Updated: 2023/03/22 17:37:23 by tplanes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,13 @@ void	init_mem_ptrs(t_meta *meta)
 	meta -> flag_minimap = 0;
 	meta -> flag_mouse_on = 0;
 	meta -> input.map = NULL;
+	meta -> input.m = 0;
+	meta -> input.n = 0;
 	i = 0;
 	while (i < 4)
 		meta -> input.text[i++] = NULL;
 	meta -> map2d.imat = NULL;
+	meta -> textures = NULL;
 	return ;
 }
 
