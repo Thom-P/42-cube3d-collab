@@ -55,7 +55,8 @@ SRC =	draw_2D_scene.c \
 		raycast.c \
 		update_and_render.c \
 		utils.c \
-		parse.c
+		parse.c \
+		doors.c
 
 OBJ := $(SRC:%.c=%.o)
 DEP := $(SRC:%.c=%.d)

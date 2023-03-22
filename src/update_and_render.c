@@ -6,7 +6,7 @@
 /*   By: tplanes <tplanes@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 11:37:00 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/21 17:52:38 by tplanes          ###   ########.fr       */
+/*   Updated: 2023/03/22 14:54:08 by tplanes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,11 @@ int	update_and_render(t_meta *meta)
 	else if (keys_down[RIGHT_ARROW_KEY])
 		p -> theta = fmodf(p -> theta + p -> d_theta, 2 * PI);
 	update_position(p, keys_down);
-	if (map[y_save / PIX_PER_BLOCK][p -> x / PIX_PER_BLOCK] != 0)
+	if (map[y_save / PIX_PER_BLOCK][p -> x / PIX_PER_BLOCK] == 1
+		|| map[y_save / PIX_PER_BLOCK][p -> x / PIX_PER_BLOCK] == 2)
 		p -> x = x_save;
-	if (map[p -> y / PIX_PER_BLOCK][p -> x / PIX_PER_BLOCK] != 0)
+	if (map[p -> y / PIX_PER_BLOCK][p -> x / PIX_PER_BLOCK] == 1
+		|| map[p -> y / PIX_PER_BLOCK][p -> x / PIX_PER_BLOCK] == 2)
 		p -> y = y_save;
 	render(meta);
 	return (0);

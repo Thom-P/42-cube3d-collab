@@ -6,7 +6,7 @@
 /*   By: tplanes <tplanes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 15:30:54 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/21 12:45:11 by tplanes          ###   ########.fr       */
+/*   Updated: 2023/03/22 15:00:37 by tplanes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,15 @@ void	parse_input_file(char *file_in, t_input *input, t_meta *meta)
 	input -> n = 10;
 	char  tmp[15][10] = {{1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
 						 {1, 0, 1, 1, 0, 0, 1, 0, 0, 1},
+						 {1, 0, 2, 0, 0, 0, 0, 0, 0, 1},
 						 {1, 0, 1, 0, 0, 0, 0, 0, 0, 1},
-						 {1, 0, 1, 0, 0, 0, 0, 0, 0, 1},
-						 {1, 0, 0, 0, 0, 0, 0, 0, 1, 1},
+						 {1, 2, 1, 0, 0, 0, 0, 0, 1, 1},
 						 {1, 0, 0, 0, 0, 0, 0, 1, 1, 1},
 						 {1, 0, 0, 0, 0, 0, 0, 0, 1, 1},
 						 {1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
 						 {1, 0, 0, 0, 0, 0, 0, 1, 0, 1},
 						 {1, 0, 0, 1, 1, 0, 0, 1, 0, 1},
-						 {1, 0, 1, 1, 1, 0, 0, 1, 0, 1},
+						 {1, 2, 1, 1, 1, 0, 0, 2, 0, 1},
 						 {1, 0, 0, 0, 0, 0, 0, 1, 0, 1},
 						 {1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
 						 {1, 0, 0, 1, 1, 0, 0, 0, 0, 1},
@@ -68,26 +68,30 @@ void	parse_input_file(char *file_in, t_input *input, t_meta *meta)
 	input -> map = map;
 	
 	// Load textures in N, S, E, W order
-	char	*file_text[4];
-	file_text[0] = ft_strdup("./textures/textN");
+	char	*file_text[5];
+	file_text[0] = ft_strdup("./src/textures/textN");
 	if (file_text[0] == NULL)
 		free_and_exit("In parsing", meta);
-	file_text[1] = ft_strdup("./textures/textS");
+	file_text[1] = ft_strdup("./src/textures/textS");
 	if (file_text[1] == NULL)
 		free_and_exit("In parsing", meta); //warning, missing some free here
-	file_text[2] = ft_strdup("./textures/textE");
+	file_text[2] = ft_strdup("./src/textures/textE");
 	if (file_text[2] == NULL)
 		free_and_exit("In parsing", meta);
-	file_text[3] = ft_strdup("./textures/textW");
+	file_text[3] = ft_strdup("./src/textures/textE");
 	if (file_text[3] == NULL)
 		free_and_exit("In parsing", meta);
+	file_text[4] = ft_strdup("./src/textures/textW"); //doors
+	if (file_text[4] == NULL)
+		free_and_exit("In parsing", meta);
+
 
 	int n_by_text = PIX_PER_BLOCK * PIX_PER_BLOCK *sizeof(int);
 	int	n_by_rd;
 	int	**text = input -> text;
 	int k = 0;
 	int fd;
-	while (k < 4)
+	while (k < 5)
 	{
 		text[k] = (int *)malloc((size_t)n_by_text);
 		if (text[k] == NULL)

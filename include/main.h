@@ -6,7 +6,7 @@
 /*   By: saeby <saeby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 15:13:35 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/22 16:30:46 by saeby            ###   ########.fr       */
+/*   Updated: 2023/03/22 16:49:36 by saeby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # include "ft_printf.h"
 
 //0 (off) or 1 (show extra window window with 2D map and rays) 
-# define SHOW_RAYS 1
+# define SHOW_RAYS 0
 
 # define PI (float)M_PI
 
@@ -43,7 +43,7 @@
 # define DOWN_ARROW_KEY 125
 # define UP_ARROW_KEY 126
 # define SPACE_KEY 49
-//# define MAJ_KEY 257
+# define M_KEY 46
 
 # define NO 0
 # define EA 1
@@ -153,7 +153,7 @@ typedef struct s_input
 	int		p_i;
 	int		p_j;
 	char	p_dir;
-	int		*text[4];
+	int		*text[5];
 	char	*so_path;
 	char	*we_path;
 	char	*ea_path;
@@ -169,6 +169,8 @@ typedef struct s_raycast
 	t_fpt2	v_wall;
 	float	h_dist;
 	float	v_dist;
+	int		is_h_door;
+	int		is_v_door;
 	t_ipt2	p0;
 	t_ipt2	p1;
 	float	theta_ray;
@@ -259,6 +261,9 @@ void	init_hooks(t_meta *meta);
 int		key_down_hook(int keycode, t_meta *meta);
 int		key_up_hook(int keycode, t_meta *meta);
 int		destroy_hook(t_meta *meta);
+
+// Doors
+void	try_switch_door(t_meta *meta);
 
 // Minimap
 void	draw_minimap(t_meta *meta);
