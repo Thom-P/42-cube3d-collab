@@ -6,7 +6,7 @@
 /*   By: tplanes <tplanes@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 11:37:00 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/22 14:54:08 by tplanes          ###   ########.fr       */
+/*   Updated: 2023/03/22 17:28:27 by tplanes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,17 @@ int	update_and_render(t_meta *meta)
 		return (0);
 	x_save = p -> x;
 	y_save = p -> y;
-	if (keys_down[LEFT_ARROW_KEY])
+	if (!meta -> flag_mouse_on && keys_down[LEFT_ARROW_KEY])
 		p -> theta = fmodf(p -> theta + (2 * PI - p -> d_theta), 2 * PI);
-	else if (keys_down[RIGHT_ARROW_KEY])
+	else if (!meta -> flag_mouse_on && keys_down[RIGHT_ARROW_KEY])
 		p -> theta = fmodf(p -> theta + p -> d_theta, 2 * PI);
+	
+	else if (meta -> flag_mouse_on && keys_down[MOUSE_LEFT])
+		p -> theta = fmodf(p -> theta
+				+ (2 * PI - p -> d_theta_mouse * (float)keys_down[MOUSE_LEFT]), 2 * PI);
+	else if (meta -> flag_mouse_on && keys_down[MOUSE_RIGHT])
+		p -> theta = fmodf(p -> theta
+				+ p -> d_theta_mouse * (float)keys_down[MOUSE_RIGHT], 2 * PI);
 	update_position(p, keys_down);
 	if (map[y_save / PIX_PER_BLOCK][p -> x / PIX_PER_BLOCK] == 1
 		|| map[y_save / PIX_PER_BLOCK][p -> x / PIX_PER_BLOCK] == 2)
