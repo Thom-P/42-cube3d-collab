@@ -6,7 +6,7 @@
 /*   By: saeby <saeby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 12:02:02 by saeby             #+#    #+#             */
-/*   Updated: 2023/03/23 11:20:27 by saeby            ###   ########.fr       */
+/*   Updated: 2023/03/23 11:39:08 by saeby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,15 @@ int	line_nok(char *line, t_meta *meta)
 {
 	while (*line)
 	{
-		if (!(*line == '0' || *line == '1' || *line == 'N' || \
-			*line == 'S' || *line == 'W' || *line == 'E' || *line == ' '))
+		if (!(*line == '0' || *line == '1' || *line == '2' || *line == 'N' 
+			|| *line == '3' || *line == 'S' || *line == 'W' || *line == 'E' 
+			|| *line == ' '))
 			return (1/* Unauthorized chars*/);
 		if (ft_strlen(line) >= (unsigned int) meta->input.n)
 			meta->input.n = (int) ft_strlen(line);
 		line++;
 	}
+	// ft_printf(1, "Line len(meta->input.n): %d\n", meta->input.n);
 	return (0);
 }
 
@@ -302,7 +304,7 @@ char	*set_spaces(char *line, t_meta *meta)
 	size_t	len;
 
 	len = ft_strlen(line);
-	while (len < (unsigned int) meta->input.m)
+	while (len < (unsigned int) meta->input.n)
 	{
 		tmp = line;
 		line = ft_strjoin(line, " ");
@@ -335,7 +337,7 @@ int	fill_map(char *in_file, t_meta *meta)
 		line = ft_strtrim(line, "\n");
 		free(tmp);
 		tmp = meta->input.map;
-		if (ft_strlen(line) < (unsigned int) meta->input.m)
+		if (ft_strlen(line) < (unsigned int) meta->input.n)
 			line = set_spaces(line, meta);
 		meta->input.map = ft_strjoin(tmp, line);
 		free(tmp);
@@ -354,12 +356,12 @@ void	print_map(t_meta *meta)
 	int	y;
 
 	y = 0;
-	while (y < meta->input.n)
+	while (y < meta->input.m)
 	{
 		x = 0;
-		while (x < meta->input.m)
+		while (x < meta->input.n)
 		{
-			ft_putchar_fd(meta->input.map[x + y * meta->input.m], 1);
+			ft_putchar_fd(meta->input.map[x + y * meta->input.n], 1);
 			x++;
 		}
 		ft_putchar_fd('\n', 1);
@@ -369,24 +371,24 @@ void	print_map(t_meta *meta)
 
 int	check_udr(int x, int y, t_meta *meta)
 {
-	return (meta->input.map[x + y * meta->input.m] == ' ' ||
-			meta->input.map[x + (y + 1) * meta->input.m] == ' ' ||
-			meta->input.map[(x + 1) + y * meta->input.m] == ' ');
+	return (meta->input.map[x + y * meta->input.n] == ' ' ||
+			meta->input.map[x + (y + 1) * meta->input.n] == ' ' ||
+			meta->input.map[(x + 1) + y * meta->input.n] == ' ');
 }
 
 int	check_udl(int x, int y, t_meta *meta)
 {
-	return (meta->input.map[x + (y - 1) * meta->input.m] == ' ' ||
-			meta->input.map[x + (y + 1) * meta->input.m] == ' ' ||
-			meta->input.map[(x + 1) + y * meta->input.m] == ' ');
+	return (meta->input.map[x + (y - 1) * meta->input.n] == ' ' ||
+			meta->input.map[x + (y + 1) * meta->input.n] == ' ' ||
+			meta->input.map[(x + 1) + y * meta->input.n] == ' ');
 }
 
 int	check_udlr(int x, int y, t_meta *meta)
 {
-	return (meta->input.map[x + (y - 1) * meta->input.m] == ' ' ||
-			meta->input.map[x + (y + 1) * meta->input.m] == ' ' ||
-			meta->input.map[(x - 1) + y * meta->input.m] == ' ' ||
-			meta->input.map[(x + 1) + y * meta->input.m] == ' ');
+	return (meta->input.map[x + (y - 1) * meta->input.n] == ' ' ||
+			meta->input.map[x + (y + 1) * meta->input.n] == ' ' ||
+			meta->input.map[(x - 1) + y * meta->input.n] == ' ' ||
+			meta->input.map[(x + 1) + y * meta->input.n] == ' ');
 }
 
 int space_around(int x, int y, t_meta *meta)
@@ -396,7 +398,7 @@ int space_around(int x, int y, t_meta *meta)
 		if (check_udr(x, y, meta))
 			return (1);
 	}
-	else if (x == meta->input.m - 1)
+	else if (x == meta->input.n - 1)
 	{
 		if (check_udl(x, y, meta))
 			return (1);
@@ -416,16 +418,16 @@ int	check_top_bottom(t_meta *meta)
 	
 	y = 0;
 	x = 0;
-	while (x < meta->input.m)
+	while (x < meta->input.n)
 	{
-		if (meta->input.map[x + y * meta->input.m] == '0')
+		if (meta->input.map[x + y * meta->input.n] == '0')
 			return (1/*Map not enclose in walls*/);
 		x++;
 	}
 	x = 0;
-	while (x < meta->input.m)
+	while (x < meta->input.n)
 	{
-		if (meta->input.map[x + (meta->input.n - 1) * meta->input.m] == '0')
+		if (meta->input.map[x + (meta->input.m - 1) * meta->input.n] == '0')
 			return (1/*Map not enclose in walls*/);
 		x++;
 	}
@@ -443,8 +445,8 @@ int	set_start(int x, int y, t_meta *meta)
 		return (1 /* multiple start position found on map.*/);
 	meta->input.p_j = x;
 	meta->input.p_i = y;
-	meta->input.p_dir = meta->input.map[x + y * meta->input.m];
-	meta->input.map[x + y * meta->input.m] = '0';
+	meta->input.p_dir = meta->input.map[x + y * meta->input.n];
+	meta->input.map[x + y * meta->input.n] = '0';
 	return (0);
 }
 
@@ -459,17 +461,17 @@ int	check_map(t_meta *meta)
 	if (check_top_bottom(meta))
 		return (1);
 	y = 1;
-	while (y < meta->input.n - 1)
+	while (y < meta->input.m - 1)
 	{
 		x = 0;
-		while (x < meta->input.m)
+		while (x < meta->input.n)
 		{
-			if (meta->input.map[x + y * meta->input.m] == '0' 
-				|| meta->input.map[x + y * meta->input.m] == '2' 
-				|| meta->input.map[x + y * meta->input.m] == '3')
+			if (meta->input.map[x + y * meta->input.n] == '0' 
+				|| meta->input.map[x + y * meta->input.n] == '2' 
+				|| meta->input.map[x + y * meta->input.n] == '3')
 				if (space_around(x, y, meta))
 					return (1/* map not enclosed in walls*/);
-			if (is_dir(meta->input.map[x + y * meta->input.m]))
+			if (is_dir(meta->input.map[x + y * meta->input.n]))
 				if (set_start(x, y, meta))
 					return (1 /* error setting player start position */);
 			x++;
@@ -506,11 +508,12 @@ int	parse_map(char *in_file, t_meta *meta)
 	free(meta->input.c_color);
 	if (get_map_info(in_file, meta))
 		return (1/* error when getting map information*/);
-	meta->input.map = ft_calloc((unsigned int)(meta->input.m * meta->input.n), sizeof(char));
+	meta->input.map = ft_calloc((unsigned int)(meta->input.n * meta->input.m), sizeof(char));
 	if (!meta->input.map)
 		return (1 /*malloc error*/);
 	if (fill_map(in_file, meta))
 		return (1/*error when filling map arraz*/);
+	// check_map(meta);
 	if (check_map(meta))
 		return (1/*not a valid map*/);
 	print_map(meta);
