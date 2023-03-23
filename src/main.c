@@ -6,7 +6,7 @@
 /*   By: saeby <saeby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 15:01:56 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/23 10:50:13 by saeby            ###   ########.fr       */
+/*   Updated: 2023/03/23 10:52:11 by saeby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,22 @@ int	main(int ac, char **av)
 	create_win(&meta, WIN_NY, WIN_NX, "***Cube 3D***");
 	// if (load_textures(&meta))
 	// 	return (1 /*error when loading textures from file*/);
+	char	*file_text[5];
+	file_text[0] = ft_strdup("./src/textures/textN");
+	if (file_text[0] == NULL)
+		free_and_exit("In parsing", &meta);
+	file_text[1] = ft_strdup("./src/textures/textS");
+	if (file_text[1] == NULL)
+		free_and_exit("In parsing", &meta); //warning, missing some free here
+	file_text[2] = ft_strdup("./src/textures/textE");
+	if (file_text[2] == NULL)
+		free_and_exit("In parsing", &meta);
+	file_text[3] = ft_strdup("./src/textures/textE");
+	if (file_text[3] == NULL)
+		free_and_exit("In parsing", &meta);
+	file_text[4] = ft_strdup("./src/textures/textW"); //doors
+	if (file_text[4] == NULL)
+		free_and_exit("In parsing", &meta);
 	mlx_string_put(meta.xp.mlx, meta.xp.win, 1, 1, WHITE,
 		"Move: WASD, Rotate: ARROWS, Minimap: M, Toggle mouse/arrows for rotate: N, Action: SPACE, Quit: ESC");
 	create_image(&meta);

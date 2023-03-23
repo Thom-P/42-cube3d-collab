@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tplanes <tplanes@student.42.fr>            +#+  +:+       +#+        */
+/*   By: saeby <saeby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 15:30:54 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/22 15:00:37 by tplanes          ###   ########.fr       */
+/*   Updated: 2023/03/23 10:51:52 by saeby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,22 +68,22 @@ void	parse_input_file(char *file_in, t_input *input, t_meta *meta)
 	input -> map = map;
 	
 	// Load textures in N, S, E, W order
-	char	*file_text[5];
-	file_text[0] = ft_strdup("./src/textures/textN");
-	if (file_text[0] == NULL)
-		free_and_exit("In parsing", meta);
-	file_text[1] = ft_strdup("./src/textures/textS");
-	if (file_text[1] == NULL)
-		free_and_exit("In parsing", meta); //warning, missing some free here
-	file_text[2] = ft_strdup("./src/textures/textE");
-	if (file_text[2] == NULL)
-		free_and_exit("In parsing", meta);
-	file_text[3] = ft_strdup("./src/textures/textE");
-	if (file_text[3] == NULL)
-		free_and_exit("In parsing", meta);
-	file_text[4] = ft_strdup("./src/textures/textW"); //doors
-	if (file_text[4] == NULL)
-		free_and_exit("In parsing", meta);
+	// char	*file_text[5];
+	// file_text[0] = ft_strdup("./src/textures/textN");
+	// if (file_text[0] == NULL)
+	// 	free_and_exit("In parsing", meta);
+	// file_text[1] = ft_strdup("./src/textures/textS");
+	// if (file_text[1] == NULL)
+	// 	free_and_exit("In parsing", meta); //warning, missing some free here
+	// file_text[2] = ft_strdup("./src/textures/textE");
+	// if (file_text[2] == NULL)
+	// 	free_and_exit("In parsing", meta);
+	// file_text[3] = ft_strdup("./src/textures/textE");
+	// if (file_text[3] == NULL)
+	// 	free_and_exit("In parsing", meta);
+	// file_text[4] = ft_strdup("./src/textures/textW"); //doors
+	// if (file_text[4] == NULL)
+	// 	free_and_exit("In parsing", meta);
 
 
 	int n_by_text = PIX_PER_BLOCK * PIX_PER_BLOCK *sizeof(int);
