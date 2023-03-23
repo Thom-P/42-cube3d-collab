@@ -6,7 +6,7 @@
 /*   By: saeby <saeby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 13:57:04 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/23 13:12:57 by saeby            ###   ########.fr       */
+/*   Updated: 2023/03/23 15:34:48 by tplanes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,27 +49,26 @@ void	init_mem_ptrs(t_meta *meta)
 
 static void	free_mem(t_meta *meta)
 {
-	(void)meta; 
-	// to rework with new maps and textures
-	/*
-	int		i;
-	t_input	*inp;
-
-
-	i = 0;
-	inp = &meta -> input;
-	if (inp -> map != NULL)
-	{
-		while (i < inp -> m)
-			free(inp -> map[i++]);
-		free(inp -> map);
-	}
-	i = 0;
-	while (i < 4)
-		free(inp -> text[i++]);
-	free(meta -> map2d.imat);*/
+	(void) meta;
 	return ;
 }
+// to rework with new maps and textures
+/*
+int		i;
+t_input	*inp;
+
+i = 0;
+inp = &meta -> input;
+if (inp -> map != NULL)
+{
+	while (i < inp -> m)
+		free(inp -> map[i++]);
+	free(inp -> map);
+}
+i = 0;
+while (i < 4)
+	free(inp -> text[i++]);
+free(meta -> map2d.imat);*/
 
 //nb: y axis pointing downward
 void	init_player_and_keys(t_player *play, t_input *inp, char *keys_down)

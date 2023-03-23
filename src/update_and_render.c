@@ -6,13 +6,15 @@
 /*   By: tplanes <tplanes@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 11:37:00 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/23 11:06:54 by tplanes          ###   ########.fr       */
+/*   Updated: 2023/03/23 15:47:32 by tplanes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
 static void	update_position(t_player *play, char *keys_down);
+
+static void	update_rotation(int flag_mouse_on, t_player *p, char *keys_down);
 
 static int	is_any_key_down(char *keys_down);
 
@@ -24,36 +26,42 @@ int	update_and_render(t_meta *meta)
 	t_player	*p;
 	char		*map;
 	char		*keys_down;
-	int			x_save;
-	int			y_save;
+	int			pos_save[2];
+	int			ind_lin;
 
 	p = &meta -> play;
 	map = meta -> input.map;
 	keys_down = meta -> keys_down;
 	if (is_any_key_down(keys_down) == 0)
 		return (0);
-	x_save = p -> x;
-	y_save = p -> y;
-	if (!meta -> flag_mouse_on && keys_down[LEFT_ARROW_KEY])
-		p -> theta = fmodf(p -> theta + (2 * PI - p -> d_theta), 2 * PI);
-	else if (!meta -> flag_mouse_on && keys_down[RIGHT_ARROW_KEY])
-		p -> theta = fmodf(p -> theta + p -> d_theta, 2 * PI);
-	
-	else if (meta -> flag_mouse_on && keys_down[MOUSE_LEFT])
-		p -> theta = fmodf(p -> theta
-				+ (2 * PI - p -> d_theta_mouse * (float)keys_down[MOUSE_LEFT]), 2 * PI);
-	else if (meta -> flag_mouse_on && keys_down[MOUSE_RIGHT])
-		p -> theta = fmodf(p -> theta
-				+ p -> d_theta_mouse * (float)keys_down[MOUSE_RIGHT], 2 * PI);
+	pos_save[0] = p -> x;
+	pos_save[1] = p -> y;
+	update_rotation(meta -> flag_mouse_on, p, keys_down);
 	update_position(p, keys_down);
-	if (map[y_save / PIX_PER_BLOCK * meta -> input.n + p -> x / PIX_PER_BLOCK] == '1'
-		|| map[y_save / PIX_PER_BLOCK * meta -> input.n + p -> x / PIX_PER_BLOCK] == '2')
-		p -> x = x_save;
-	if (map[p -> y / PIX_PER_BLOCK * meta -> input.n + p -> x / PIX_PER_BLOCK] == '1'
-		|| map[p -> y / PIX_PER_BLOCK * meta -> input.n + p -> x / PIX_PER_BLOCK] == '2')
-		p -> y = y_save;
+	ind_lin = pos_save[1] / PIX_PER_BLOCK * meta -> input.n
+		+ p -> x / PIX_PER_BLOCK;
+	if (map[ind_lin] == '1' || map[ind_lin] == '2')
+		p -> x = pos_save[0];
+	ind_lin = p -> y / PIX_PER_BLOCK * meta -> input.n + p -> x / PIX_PER_BLOCK;
+	if (map[ind_lin] == '1' || map[ind_lin] == '2')
+		p -> y = pos_save[1];
 	render(meta);
 	return (0);
+}
+
+static void	update_rotation(int flag_mouse_on, t_player *p, char *keys_down)
+{
+	if (!flag_mouse_on && keys_down[LEFT_ARROW_KEY])
+		p -> theta = fmodf(p -> theta + (2 * PI - p -> d_theta), 2 * PI);
+	else if (!flag_mouse_on && keys_down[RIGHT_ARROW_KEY])
+		p -> theta = fmodf(p -> theta + p -> d_theta, 2 * PI);
+	else if (flag_mouse_on && keys_down[MOUSE_LEFT])
+		p -> theta = fmodf(p -> theta + (2 * PI - p -> d_theta_mouse
+					* (float)keys_down[MOUSE_LEFT]), 2 * PI);
+	else if (flag_mouse_on && keys_down[MOUSE_RIGHT])
+		p -> theta = fmodf(p -> theta
+				+ p -> d_theta_mouse * (float)keys_down[MOUSE_RIGHT], 2 * PI);
+	return ;
 }
 
 static void	update_position(t_player *p, char *keys_down)
