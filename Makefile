@@ -51,7 +51,6 @@ SRC =	draw_2D_scene.c \
 		hooks.c \
 		main.c \
 		minimap.c \
-		parse_input.c \
 		raycast.c \
 		update_and_render.c \
 		utils.c \
