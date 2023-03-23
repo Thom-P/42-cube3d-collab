@@ -6,7 +6,7 @@
 /*   By: saeby <saeby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 12:02:02 by saeby             #+#    #+#             */
-/*   Updated: 2023/03/22 17:48:59 by saeby            ###   ########.fr       */
+/*   Updated: 2023/03/23 10:49:59 by saeby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -322,10 +322,10 @@ int	fill_map(char *in_file, t_meta *meta)
 		tmp = line;
 		line = ft_strtrim(line, "\n");
 		free(tmp);
-		tmp = meta->map;
+		tmp = meta->input.map;
 		if (ft_strlen(line) < (unsigned int) meta->input.m)
 			line = set_spaces(line, meta);
-		meta->map = ft_strjoin(tmp, line);
+		meta->input.map = ft_strjoin(tmp, line);
 		free(tmp);
 		free(line);
 		line = get_next_line(fd);
@@ -347,7 +347,7 @@ void	print_map(t_meta *meta)
 		x = 0;
 		while (x < meta->input.m)
 		{
-			ft_putchar_fd(meta->map[x + y * meta->input.m], 1);
+			ft_putchar_fd(meta->input.map[x + y * meta->input.m], 1);
 			x++;
 		}
 		ft_putchar_fd('\n', 1);
@@ -357,24 +357,24 @@ void	print_map(t_meta *meta)
 
 int	check_udr(int x, int y, t_meta *meta)
 {
-	return (meta->map[x + y * meta->input.m] == ' ' ||
-			meta->map[x + (y + 1) * meta->input.m] == ' ' ||
-			meta->map[(x + 1) + y * meta->input.m] == ' ');
+	return (meta->input.map[x + y * meta->input.m] == ' ' ||
+			meta->input.map[x + (y + 1) * meta->input.m] == ' ' ||
+			meta->input.map[(x + 1) + y * meta->input.m] == ' ');
 }
 
 int	check_udl(int x, int y, t_meta *meta)
 {
-	return (meta->map[x + (y - 1) * meta->input.m] == ' ' ||
-			meta->map[x + (y + 1) * meta->input.m] == ' ' ||
-			meta->map[(x + 1) + y * meta->input.m] == ' ');
+	return (meta->input.map[x + (y - 1) * meta->input.m] == ' ' ||
+			meta->input.map[x + (y + 1) * meta->input.m] == ' ' ||
+			meta->input.map[(x + 1) + y * meta->input.m] == ' ');
 }
 
 int	check_udlr(int x, int y, t_meta *meta)
 {
-	return (meta->map[x + (y - 1) * meta->input.m] == ' ' ||
-			meta->map[x + (y + 1) * meta->input.m] == ' ' ||
-			meta->map[(x - 1) + y * meta->input.m] == ' ' ||
-			meta->map[(x + 1) + y * meta->input.m] == ' ');
+	return (meta->input.map[x + (y - 1) * meta->input.m] == ' ' ||
+			meta->input.map[x + (y + 1) * meta->input.m] == ' ' ||
+			meta->input.map[(x - 1) + y * meta->input.m] == ' ' ||
+			meta->input.map[(x + 1) + y * meta->input.m] == ' ');
 }
 
 int space_around(int x, int y, t_meta *meta)
@@ -406,14 +406,14 @@ int	check_top_bottom(t_meta *meta)
 	x = 0;
 	while (x < meta->input.m)
 	{
-		if (meta->map[x + y * meta->input.m] == '0')
+		if (meta->input.map[x + y * meta->input.m] == '0')
 			return (1/*Map not enclose in walls*/);
 		x++;
 	}
 	x = 0;
 	while (x < meta->input.m)
 	{
-		if (meta->map[x + (meta->input.n - 1) * meta->input.m] == '0')
+		if (meta->input.map[x + (meta->input.n - 1) * meta->input.m] == '0')
 			return (1/*Map not enclose in walls*/);
 		x++;
 	}
@@ -431,8 +431,8 @@ int	set_start(int x, int y, t_meta *meta)
 		return (1 /* multiple start position found on map.*/);
 	meta->input.p_j = x;
 	meta->input.p_i = y;
-	meta->input.p_dir = meta->map[x + y * meta->input.m];
-	meta->map[x + y * meta->input.m] = '0';
+	meta->input.p_dir = meta->input.map[x + y * meta->input.m];
+	meta->input.map[x + y * meta->input.m] = '0';
 	return (0);
 }
 
@@ -452,10 +452,10 @@ int	check_map(t_meta *meta)
 		x = 0;
 		while (x < meta->input.m)
 		{
-			if (meta->map[x + y * meta->input.m] == '0')
+			if (meta->input.map[x + y * meta->input.m] == '0')
 				if (space_around(x, y, meta))
 					return (1/* map not enclosed in walls*/);
-			if (is_dir(meta->map[x + y * meta->input.m]))
+			if (is_dir(meta->input.map[x + y * meta->input.m]))
 				if (set_start(x, y, meta))
 					return (1 /* error setting player start position */);
 			x++;
@@ -490,12 +490,10 @@ int	parse_map(char *in_file, t_meta *meta)
 		return (1/* error when converting rgb to uns. int*/);
 	free(meta->input.f_color);
 	free(meta->input.c_color);
-	if (load_textures(meta))
-		return (1 /*error when loading textures from file*/);
 	if (get_map_info(in_file, meta))
 		return (1/* error when getting map information*/);
-	meta->map = ft_calloc((unsigned int)(meta->input.m * meta->input.n), sizeof(char));
-	if (!meta->map)
+	meta->input.map = ft_calloc((unsigned int)(meta->input.m * meta->input.n), sizeof(char));
+	if (!meta->input.map)
 		return (1 /*malloc error*/);
 	if (fill_map(in_file, meta))
 		return (1/*error when filling map arraz*/);

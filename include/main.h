@@ -6,7 +6,7 @@
 /*   By: saeby <saeby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 15:13:35 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/22 17:37:59 by tplanes          ###   ########.fr       */
+/*   Updated: 2023/03/23 10:50:28 by saeby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # include "ft_printf.h"
 
 //0 (off) or 1 (show extra window window with 2D map and rays) 
-# define SHOW_RAYS 0
+# define SHOW_RAYS 1
 
 # define PI (float)M_PI
 
@@ -152,7 +152,8 @@ typedef struct s_input
 {
 	int		rgb_floor[3];
 	int		rgb_ceil[3];
-	char	**map;
+	// char	**map;
+	char	*map;
 	int		m;
 	int		n;
 	int		p_i;
@@ -217,7 +218,6 @@ typedef struct s_meta
 	int			flag_mouse_on;
 	t_imat		map2d;
 	t_player	play;
-	char		*map;
 	char		keys_down[256];
 }				t_meta;
 
@@ -243,6 +243,7 @@ void	parse_input_file(char *f_name, t_input *input, t_meta *meta);
 
 // parse.c
 int		parse_map(char *in_file, t_meta *meta);
+int		load_textures(t_meta *meta);
 
 // Update and render
 int		update_and_render(t_meta *meta);
