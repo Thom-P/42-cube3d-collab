@@ -6,10 +6,14 @@
 /*   By: saeby <saeby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 15:30:54 by tplanes           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2023/03/23 11:02:19 by saeby            ###   ########.fr       */
+=======
+/*   Updated: 2023/03/23 11:06:02 by tplanes          ###   ########.fr       */
+>>>>>>> 8c063955cdefa93320a1e516d034d27237012dce
 /*                                                                            */
 /* ************************************************************************** */
-
+/*
 # include "main.h"
 
 //Just a dummy parsing, hardcoded map at the moment
@@ -106,4 +110,4 @@ void	parse_input_file(char *file_in, t_input *input, t_meta *meta)
 		k++;
 	}
 	return ;
-}
+}*/

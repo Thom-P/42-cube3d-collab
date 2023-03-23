@@ -6,7 +6,7 @@
 /*   By: saeby <saeby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 15:13:35 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/23 11:03:59 by saeby            ###   ########.fr       */
+/*   Updated: 2023/03/23 11:20:46 by saeby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # include "ft_printf.h"
 
 //0 (off) or 1 (show extra window window with 2D map and rays) 
-# define SHOW_RAYS 1
+# define SHOW_RAYS 0
 
 # define PI (float)M_PI
 

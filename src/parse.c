@@ -6,7 +6,7 @@
 /*   By: saeby <saeby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 12:02:02 by saeby             #+#    #+#             */
-/*   Updated: 2023/03/23 11:06:59 by saeby            ###   ########.fr       */
+/*   Updated: 2023/03/23 11:20:27 by saeby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ int	line_nok(char *line, t_meta *meta)
 		if (!(*line == '0' || *line == '1' || *line == 'N' || \
 			*line == 'S' || *line == 'W' || *line == 'E' || *line == ' '))
 			return (1/* Unauthorized chars*/);
-		if (ft_strlen(line) >= (unsigned int) meta->input.m)
-			meta->input.m = (int) ft_strlen(line);
+		if (ft_strlen(line) >= (unsigned int) meta->input.n)
+			meta->input.n = (int) ft_strlen(line);
 		line++;
 	}
 	return (0);
@@ -255,7 +255,7 @@ int	get_map_info(char *in_file, t_meta *meta)
 			return (1);
 		}
 		free(line);
-		meta->input.n++;
+		meta->input.m++;
 		line = get_next_line(fd);
 		if (!line)
 			break ;

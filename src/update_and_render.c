@@ -6,7 +6,7 @@
 /*   By: tplanes <tplanes@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 11:37:00 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/22 17:28:27 by tplanes          ###   ########.fr       */
+/*   Updated: 2023/03/23 11:06:54 by tplanes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ Two step check to allow wall slide
 int	update_and_render(t_meta *meta)
 {	
 	t_player	*p;
-	char		**map;
+	char		*map;
 	char		*keys_down;
 	int			x_save;
 	int			y_save;
@@ -46,11 +46,11 @@ int	update_and_render(t_meta *meta)
 		p -> theta = fmodf(p -> theta
 				+ p -> d_theta_mouse * (float)keys_down[MOUSE_RIGHT], 2 * PI);
 	update_position(p, keys_down);
-	if (map[y_save / PIX_PER_BLOCK][p -> x / PIX_PER_BLOCK] == 1
-		|| map[y_save / PIX_PER_BLOCK][p -> x / PIX_PER_BLOCK] == 2)
+	if (map[y_save / PIX_PER_BLOCK * meta -> input.n + p -> x / PIX_PER_BLOCK] == '1'
+		|| map[y_save / PIX_PER_BLOCK * meta -> input.n + p -> x / PIX_PER_BLOCK] == '2')
 		p -> x = x_save;
-	if (map[p -> y / PIX_PER_BLOCK][p -> x / PIX_PER_BLOCK] == 1
-		|| map[p -> y / PIX_PER_BLOCK][p -> x / PIX_PER_BLOCK] == 2)
+	if (map[p -> y / PIX_PER_BLOCK * meta -> input.n + p -> x / PIX_PER_BLOCK] == '1'
+		|| map[p -> y / PIX_PER_BLOCK * meta -> input.n + p -> x / PIX_PER_BLOCK] == '2')
 		p -> y = y_save;
 	render(meta);
 	return (0);

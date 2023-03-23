@@ -6,7 +6,7 @@
 /*   By: tplanes <tplanes@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 13:52:53 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/22 14:58:19 by tplanes          ###   ########.fr       */
+/*   Updated: 2023/03/23 10:44:17 by tplanes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,17 @@ void	try_switch_door(t_meta *meta)
 	i_block = meta -> play.y / PIX_PER_BLOCK; //i index of block player is in
  	j_block = meta -> play.x / PIX_PER_BLOCK; //j index of block player is in
 
-	if (theta_p > PI / 4 && theta_p <= 3 * PI / 4)
-			//&& meta -> play.y % PIX_PER_BLOCK > PIX_PER_BLOCK / 2) //look down and close enough
+	if (theta_p > PI / 4 && theta_p <= 3 * PI / 4) //looking down
 		i_block++;
-	else if (theta_p > 3 * PI / 4 && theta_p <= 5 * PI / 4)
-			//&& meta -> play.x % PIX_PER_BLOCK < PIX_PER_BLOCK / 2) // looking left and close enough
+	else if (theta_p > 3 * PI / 4 && theta_p <= 5 * PI / 4) // looking left 
  		j_block--;
-	else if (theta_p > 5 * PI / 4 && theta_p <= 7 * PI / 4)
-			//&& meta -> play.y % PIX_PER_BLOCK < PIX_PER_BLOCK / 2) // looking up and close enough
+	else if (theta_p > 5 * PI / 4 && theta_p <= 7 * PI / 4) // looking up
 		i_block--;
-	else //if (meta -> play.x % PIX_PER_BLOCK > PIX_PER_BLOCK / 2) // looking right and close enough
+	else //looking right
  		j_block++;
-	if (meta -> input.map[i_block][j_block] == 2)
-		meta -> input.map[i_block][j_block] = 3;
-	else if (meta -> input.map[i_block][j_block] == 3)
-		meta -> input.map[i_block][j_block] = 2;
+	if (meta -> input.map[i_block * meta -> input.n + j_block] == '2')
+		meta -> input.map[i_block * meta -> input.n + j_block] = '3';
+	else if (meta -> input.map[i_block * meta -> input.n + j_block] == '3')
+		meta -> input.map[i_block * meta -> input.n + j_block] = '2';
 	return ;
 }

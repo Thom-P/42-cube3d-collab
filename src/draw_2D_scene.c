@@ -6,7 +6,7 @@
 /*   By: tplanes <tplanes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 19:19:09 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/20 17:31:49 by tplanes          ###   ########.fr       */
+/*   Updated: 2023/03/23 10:49:15 by tplanes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,9 @@ void	create_map2d(t_imat *map2d, t_input *input, t_meta *meta)
 		j = 0;
 		while (j < map2d -> n)
 		{
-			if (input -> map[i / PIX_PER_BLOCK][j / PIX_PER_BLOCK] == 0)
+			if (input -> map[i / PIX_PER_BLOCK * input -> n + j / PIX_PER_BLOCK] == '0')
+				map2d -> imat[i * map2d -> n + j] = 50 << 16 | 50 << 8 | 50;
+			else if (input -> map[i / PIX_PER_BLOCK * input -> n + j / PIX_PER_BLOCK] == ' ')
 				map2d -> imat[i * map2d -> n + j] = 0;
 			else
 				map2d -> imat[i * map2d -> n + j] = WHITE;
