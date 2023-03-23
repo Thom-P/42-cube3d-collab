@@ -6,7 +6,7 @@
 /*   By: saeby <saeby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 12:32:20 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/23 13:12:31 by saeby            ###   ########.fr       */
+/*   Updated: 2023/03/23 15:24:00 by tplanes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,10 @@
 
 static void	set_closest_wall(t_raycast *ray, t_player *play, t_input *inp);
 
-//static void	get_h_wall(float th_ray, float *h_d, t_fpt2 *h_wall, t_meta *meta);
 static void	get_h_wall(t_raycast *ray, t_meta *meta);
 
-//static void	get_v_wall(float th_ray, float *v_d, t_fpt2 *v_wall, t_meta *meta);
 static void	get_v_wall(t_raycast *ray, t_meta *meta);
 
-//static int	is_wall_found(t_fpt2 *wall, t_fpt2 *offset, t_input *inp);
 static int	is_wall_found(t_raycast *ray, t_fpt2 *offset, t_input *inp, char h_or_v);
 
 /*
@@ -44,9 +41,7 @@ void	compute_rays(t_input *inp, t_player *play, t_meta *meta)
 			ray.theta_ray += 2 * PI;
 		else if (ray.theta_ray > 2 * PI)
 			ray.theta_ray = fmodf(ray.theta_ray, 2 * PI);
-		//get_h_wall(ray.theta_ray, &ray.h_dist, &ray.h_wall, meta);
 		get_h_wall(&ray, meta);
-		//get_v_wall(ray.theta_ray, &ray.v_dist, &ray.v_wall, meta);
 		get_v_wall(&ray, meta);
 		set_closest_wall(&ray, play, inp);
 		if (SHOW_RAYS)
@@ -203,11 +198,6 @@ static void	set_closest_wall(t_raycast *ray, t_player *play, t_input *inp)
 	return ;
 }
 /*
-static inline float dist(float x0, float y0, float x1, float y1)
-{
-	return (sqrtf(powf(x1 - x0, 2) + powf(y1 - y0, 2)));
-}
-
 void	draw_box_around_image(t_image *im)
 {	
 	int	i;

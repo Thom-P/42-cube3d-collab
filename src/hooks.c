@@ -6,7 +6,7 @@
 /*   By: tplanes <tplanes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 15:13:52 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/22 17:23:01 by tplanes          ###   ########.fr       */
+/*   Updated: 2023/03/23 14:40:52 by tplanes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void	init_hooks(t_meta *meta)
 // Called on every keyboard down press
 int	key_down_hook(int key, t_meta *meta)
 {
-	//printf("key=%i\n", key);
 	if (key == ESCAPE_KEY)
 		destroy_hook(meta);
 	if (key == M_KEY)
@@ -53,14 +52,13 @@ int	key_up_hook(int key, t_meta *meta)
 	return (0);
 }
 
-int	mouse_hook(int x,int y, t_meta *meta)
+int	mouse_hook(int x, int y, t_meta *meta)
 {
-	(void)y;
 	float	*theta_p;
 	float	d_theta_p;
 	float	dx;
 
-	//if (meta -> keys)
+	(void) y;
 	theta_p = &meta -> play.theta;
 	d_theta_p = meta -> play.d_theta;
 	dx = (float)x - (float)WIN_NX / 2;
@@ -71,9 +69,11 @@ int	mouse_hook(int x,int y, t_meta *meta)
 		return (0);
 	}
 	else if (dx < 0)
-		meta -> keys_down[MOUSE_LEFT] = (char)((dx / (-(float)WIN_NX / 2)) * 20);
+		meta -> keys_down[MOUSE_LEFT]
+			= (char)((dx / (-(float)WIN_NX / 2)) * 20);
 	else if (dx > 0)
-		meta -> keys_down[MOUSE_RIGHT] = (char)((dx / ((float)WIN_NX / 2)) * 20);
+		meta -> keys_down[MOUSE_RIGHT]
+			= (char)((dx / ((float)WIN_NX / 2)) * 20);
 	return (0);
 }
 

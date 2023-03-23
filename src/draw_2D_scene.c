@@ -6,7 +6,7 @@
 /*   By: tplanes <tplanes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 19:19:09 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/23 10:49:15 by tplanes          ###   ########.fr       */
+/*   Updated: 2023/03/23 14:36:35 by tplanes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,25 +21,24 @@ void	create_map2d(t_imat *map2d, t_input *input, t_meta *meta)
 
 	map2d -> m = input -> m * PIX_PER_BLOCK;
 	map2d -> n = input -> n * PIX_PER_BLOCK;
-	map2d -> imat = (int *)malloc((size_t)map2d -> m
-			* (size_t)map2d -> n * sizeof(int));
+	map2d -> imat = (int *)malloc(4 * (size_t)(map2d -> m * map2d -> n));
 	if (map2d -> imat == NULL)
 		free_and_exit("In create map2d", meta);
-	i = 0;
-	while (i < map2d -> m)
+	i = -1;
+	while (++i < map2d -> m)
 	{
-		j = 0;
-		while (j < map2d -> n)
+		j = -1;
+		while (++j < map2d -> n)
 		{
-			if (input -> map[i / PIX_PER_BLOCK * input -> n + j / PIX_PER_BLOCK] == '0')
+			if (input -> map[i / PIX_PER_BLOCK * input -> n
+					+ j / PIX_PER_BLOCK] == '0')
 				map2d -> imat[i * map2d -> n + j] = 50 << 16 | 50 << 8 | 50;
-			else if (input -> map[i / PIX_PER_BLOCK * input -> n + j / PIX_PER_BLOCK] == ' ')
+			else if (input -> map[i / PIX_PER_BLOCK * input -> n
+					+ j / PIX_PER_BLOCK] == ' ')
 				map2d -> imat[i * map2d -> n + j] = 0;
 			else
 				map2d -> imat[i * map2d -> n + j] = WHITE;
-			j++;
 		}
-		i++;
 	}
 	return ;
 }

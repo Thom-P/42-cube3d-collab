@@ -6,7 +6,7 @@
 /*   By: saeby <saeby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 11:46:22 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/23 12:25:46 by saeby            ###   ########.fr       */
+/*   Updated: 2023/03/23 14:38:18 by tplanes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,7 @@ void	draw_column(int i_ray, float wall_dist, int *ptr_text, t_meta *meta)
 	int			h;
 	int			ind_wall_top;
 	t_text_map	tmap;
-	//int			c_floor;
-	//int			c_ceil;
 
-	//c_floor = (meta -> input.rgb_floor[2] << 16)
-	//	+ (meta -> input.rgb_floor[1] << 8) + meta -> input.rgb_floor[0];
-	//c_ceil = (meta -> input.rgb_ceil[2] << 16)
-	//	+ (meta -> input.rgb_ceil[1] << 8) + meta -> input.rgb_ceil[0];
 	h = (int)round((float)PIX_PER_BLOCK / wall_dist * (float)D_P2P);
 	tmap.dtext = (double)TEXT_SIZE / (double)h;
 	tmap.text_offset = 0.0;
@@ -108,11 +102,3 @@ static void	draw_pix_group(t_image *im, int i, int i_ray, int color)
 	}
 	return ;
 }
-/*static inline void	f_put_pixel(t_image *im, int i, int j, int color)
-{
-	char	*pix_addr;
-
-	pix_addr = im -> addr + i * im -> line_size + j * (im -> bpp / 8);
-	*((unsigned int *)pix_addr) = (unsigned int)color;
-	return ;
-}*/
