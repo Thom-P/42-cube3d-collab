@@ -6,7 +6,7 @@
 /*   By: saeby <saeby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 15:01:56 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/23 11:14:55 by tplanes          ###   ########.fr       */
+/*   Updated: 2023/03/23 11:51:03 by tplanes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,12 @@ int	main(int ac, char **av)
 	}
 	init_mem_ptrs(&meta);
 	parse_map(av[1], &meta);
-	meta.input.rgb_floor[0] = 10;
+	/*meta.input.rgb_floor[0] = 10;
 	meta.input.rgb_floor[1] = 50;
 	meta.input.rgb_floor[2] = 60;
 	meta.input.rgb_ceil[0] = 0;
 	meta.input.rgb_ceil[1] = 20;
-	meta.input.rgb_ceil[2] = 255;
+	meta.input.rgb_ceil[2] = 255;*/
 
 	//parse_input_file(av[1], &meta.input, &meta);
 	if (SHOW_RAYS)
@@ -40,7 +40,7 @@ int	main(int ac, char **av)
 	init_player_and_keys(&meta.play, &meta.input, meta.keys_down);
 	create_win(&meta, WIN_NY, WIN_NX, "***Cube 3D***");
 	// if (load_textures(&meta))
-	// 	return (1 /*error when loading textures from file*/);
+	// 	return (1 /*error when loading textures from file);
 	char	*file_text[5];
 	file_text[0] = ft_strdup("./src/textures/textN");
 	if (file_text[0] == NULL)

@@ -6,7 +6,7 @@
 /*   By: saeby <saeby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 15:13:35 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/23 11:20:46 by saeby            ###   ########.fr       */
+/*   Updated: 2023/03/23 11:48:43 by tplanes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,8 +151,8 @@ typedef struct s_player
 // Data collected during parsing
 typedef struct s_input
 {
-	int		rgb_floor[3];
-	int		rgb_ceil[3];
+	//int		rgb_floor[3];
+	//int		rgb_ceil[3];
 	int		ceiling;
 	int		floor;
 	// char	**map;

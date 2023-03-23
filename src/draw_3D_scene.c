@@ -6,7 +6,7 @@
 /*   By: tplanes <tplanes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 11:46:22 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/19 12:28:48 by tplanes          ###   ########.fr       */
+/*   Updated: 2023/03/23 11:50:17 by tplanes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,13 @@ void	draw_column(int i_ray, float wall_dist, int *ptr_text, t_meta *meta)
 	int			h;
 	int			ind_wall_top;
 	t_text_map	tmap;
-	int			c_floor;
-	int			c_ceil;
+	//int			c_floor;
+	//int			c_ceil;
 
-	c_floor = (meta -> input.rgb_floor[2] << 16)
-		+ (meta -> input.rgb_floor[1] << 8) + meta -> input.rgb_floor[0];
-	c_ceil = (meta -> input.rgb_ceil[2] << 16)
-		+ (meta -> input.rgb_ceil[1] << 8) + meta -> input.rgb_ceil[0];
+	//c_floor = (meta -> input.rgb_floor[2] << 16)
+	//	+ (meta -> input.rgb_floor[1] << 8) + meta -> input.rgb_floor[0];
+	//c_ceil = (meta -> input.rgb_ceil[2] << 16)
+	//	+ (meta -> input.rgb_ceil[1] << 8) + meta -> input.rgb_ceil[0];
 	h = (int)round((float)PIX_PER_BLOCK / wall_dist * (float)D_P2P);
 	tmap.dtext = (double)TEXT_SIZE / (double)h;
 	tmap.text_offset = 0.0;
@@ -49,9 +49,9 @@ void	draw_column(int i_ray, float wall_dist, int *ptr_text, t_meta *meta)
 		h = IM3_NY;
 	}
 	ind_wall_top = (IM3_NY - h) / 2;
-	draw_ceil(&meta -> im, i_ray, ind_wall_top, c_ceil);
+	draw_ceil(&meta -> im, i_ray, ind_wall_top, meta -> input.ceiling);
 	draw_wall(&meta -> im, i_ray, h, &tmap);
-	draw_floor(&meta -> im, i_ray, ind_wall_top + h - 1, c_floor);
+	draw_floor(&meta -> im, i_ray, ind_wall_top + h - 1, meta -> input.floor);
 	return ;
 }
 
