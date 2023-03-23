@@ -6,7 +6,7 @@
 /*   By: saeby <saeby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 15:01:56 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/23 11:51:03 by tplanes          ###   ########.fr       */
+/*   Updated: 2023/03/23 13:16:04 by saeby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	main(int ac, char **av)
 
 	if (ac != 2)
 	{
-		ft_putstr_fd("Incorrect number of arguments (expected 1).\n", 1);
+		ft_putstr_fd("Incorrect number of arguments (expected 1).\n", 2);
 		exit(EXIT_FAILURE);
 	}
 	init_mem_ptrs(&meta);
@@ -39,42 +39,42 @@ int	main(int ac, char **av)
 		create_map2d(&meta.map2d, &meta.input, &meta);
 	init_player_and_keys(&meta.play, &meta.input, meta.keys_down);
 	create_win(&meta, WIN_NY, WIN_NX, "***Cube 3D***");
-	// if (load_textures(&meta))
-	// 	return (1 /*error when loading textures from file);
-	char	*file_text[5];
-	file_text[0] = ft_strdup("./src/textures/textN");
-	if (file_text[0] == NULL)
-		free_and_exit("In parsing", &meta);
-	file_text[1] = ft_strdup("./src/textures/textS");
-	if (file_text[1] == NULL)
-		free_and_exit("In parsing", &meta); //warning, missing some free here
-	file_text[2] = ft_strdup("./src/textures/textE");
-	if (file_text[2] == NULL)
-		free_and_exit("In parsing", &meta);
-	file_text[3] = ft_strdup("./src/textures/textE");
-	if (file_text[3] == NULL)
-		free_and_exit("In parsing", &meta);
-	file_text[4] = ft_strdup("./src/textures/textW"); //doors
-	if (file_text[4] == NULL)
-		free_and_exit("In parsing", &meta);
-	int n_by_text = PIX_PER_BLOCK * PIX_PER_BLOCK *sizeof(int);
-	int	n_by_rd;
-	int k = 0;
-	int fd;
-	while (k < 5)
-	{
-		meta.input.text[k] = (int *)malloc((size_t)n_by_text);
-		//if (text[k] == NULL)
-		//	free_and_exit("In parsing", &meta); // missing frees here
-		fd = open(file_text[k], O_RDONLY);
-		if (fd < 0)
-			free_and_exit("In parsing", &meta);
-		n_by_rd = (int)read(fd, (void *)meta.input.text[k], (size_t)n_by_text);
-		close(fd);
-		if (n_by_rd != n_by_text)
-			free_and_exit("Parsed wrong number of bytes in texture", &meta);
-		k++;
-	}	
+	if (load_textures(&meta))
+		return (1 /*error when loading textures from file*/);
+	// char	*file_text[5];
+	// file_text[0] = ft_strdup("./src/textures/textN");
+	// if (file_text[0] == NULL)
+	// 	free_and_exit("In parsing", &meta);
+	// file_text[1] = ft_strdup("./src/textures/textS");
+	// if (file_text[1] == NULL)
+	// 	free_and_exit("In parsing", &meta); //warning, missing some free here
+	// file_text[2] = ft_strdup("./src/textures/textE");
+	// if (file_text[2] == NULL)
+	// 	free_and_exit("In parsing", &meta);
+	// file_text[3] = ft_strdup("./src/textures/textE");
+	// if (file_text[3] == NULL)
+	// 	free_and_exit("In parsing", &meta);
+	// file_text[4] = ft_strdup("./src/textures/textW"); //doors
+	// if (file_text[4] == NULL)
+	// 	free_and_exit("In parsing", &meta);
+	// int n_by_text = PIX_PER_BLOCK * PIX_PER_BLOCK *sizeof(int);
+	// int	n_by_rd;
+	// int k = 0;
+	// int fd;
+	// while (k < 5)
+	// {
+	// 	meta.input.text[k] = (int *)malloc((size_t)n_by_text);
+	// 	//if (text[k] == NULL)
+	// 	//	free_and_exit("In parsing", &meta); // missing frees here
+	// 	fd = open(file_text[k], O_RDONLY);
+	// 	if (fd < 0)
+	// 		free_and_exit("In parsing", &meta);
+	// 	n_by_rd = (int)read(fd, (void *)meta.input.text[k], (size_t)n_by_text);
+	// 	close(fd);
+	// 	if (n_by_rd != n_by_text)
+	// 		free_and_exit("Parsed wrong number of bytes in texture", &meta);
+	// 	k++;
+	// }	
 	
 	
 	mlx_string_put(meta.xp.mlx, meta.xp.win, 1, 1, WHITE,

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tplanes <tplanes@student.42.fr>            +#+  +:+       +#+        */
+/*   By: saeby <saeby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 12:32:20 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/23 10:56:55 by tplanes          ###   ########.fr       */
+/*   Updated: 2023/03/23 13:12:31 by saeby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,14 +173,14 @@ static void	set_closest_wall(t_raycast *ray, t_player *play, t_input *inp)
 		ray -> wall_dist = ray -> h_dist
 			* cosf(fabsf(ray -> theta_ray - play -> theta));
 		if (ray -> theta_ray > PI && !ray -> is_h_door)
-			ray -> ptr_text = inp -> text[1] + ray -> p1.x % PIX_PER_BLOCK;
+			ray -> ptr_text = (int *)(inp -> textures[SO].addr) + ray -> p1.x % PIX_PER_BLOCK;
 		else if (ray -> theta_ray > PI)
-			ray -> ptr_text = inp -> text[4] + ray -> p1.x % PIX_PER_BLOCK;
+			ray -> ptr_text = (int *)(inp -> textures[4].addr) + ray -> p1.x % PIX_PER_BLOCK;
 		else if (!ray -> is_h_door)
-			ray -> ptr_text = inp -> text[0]
+			ray -> ptr_text = (int *)(inp -> textures[NO].addr)
 				+ PIX_PER_BLOCK - 1 - (ray -> p1.x % PIX_PER_BLOCK);
 		else
-			ray -> ptr_text = inp -> text[4]
+			ray -> ptr_text = (int *)(inp -> textures[4].addr)
 				+ PIX_PER_BLOCK - 1 - (ray -> p1.x % PIX_PER_BLOCK);
 	}
 	else
@@ -190,14 +190,14 @@ static void	set_closest_wall(t_raycast *ray, t_player *play, t_input *inp)
 		ray -> wall_dist = ray -> v_dist
 			* cosf(fabsf(ray -> theta_ray - play -> theta));
 		if ((ray -> theta_ray < 0.5 * PI || ray -> theta_ray > 1.5 * PI) && !ray -> is_v_door)
-			ray -> ptr_text = inp -> text[3] + ray -> p1.y % PIX_PER_BLOCK;
+			ray -> ptr_text = (int *)(inp -> textures[WE].addr) + ray -> p1.y % PIX_PER_BLOCK;
 		else if (ray -> theta_ray < 0.5 * PI || ray -> theta_ray > 1.5 * PI)
-			ray -> ptr_text = inp -> text[4] + ray -> p1.y % PIX_PER_BLOCK;
+			ray -> ptr_text = (int *)(inp -> textures[4].addr) + ray -> p1.y % PIX_PER_BLOCK;
 		else if (!ray -> is_v_door)
-			ray -> ptr_text = inp -> text[2]
+			ray -> ptr_text = (int *)(inp -> textures[EA].addr)
 				+ PIX_PER_BLOCK - 1 - (ray -> p1.y % PIX_PER_BLOCK);
 		else
-			ray -> ptr_text = inp -> text[4]
+			ray -> ptr_text = (int *)(inp -> textures[4].addr)
 				+ PIX_PER_BLOCK - 1 - (ray -> p1.y % PIX_PER_BLOCK);
 	}
 	return ;

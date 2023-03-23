@@ -6,7 +6,7 @@
 /*   By: saeby <saeby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 13:57:04 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/23 10:40:09 by tplanes          ###   ########.fr       */
+/*   Updated: 2023/03/23 13:12:57 by saeby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	init_mem_ptrs(t_meta *meta)
 	while (i < 4)
 		meta -> input.text[i++] = NULL;
 	meta -> map2d.imat = NULL;
-	meta -> textures = NULL;
+	meta -> input.textures = NULL;
 	return ;
 }
 

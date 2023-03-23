@@ -6,11 +6,17 @@
 /*   By: saeby <saeby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 12:02:02 by saeby             #+#    #+#             */
-/*   Updated: 2023/03/23 11:39:08 by saeby            ###   ########.fr       */
+/*   Updated: 2023/03/23 13:13:41 by saeby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
+
+int	msg_exit(char *msg)
+{
+	ft_printf(2, "%s\n", msg);
+	exit(1);
+}
 
 int	line_nok(char *line, t_meta *meta)
 {
@@ -19,7 +25,7 @@ int	line_nok(char *line, t_meta *meta)
 		if (!(*line == '0' || *line == '1' || *line == '2' || *line == 'N' 
 			|| *line == '3' || *line == 'S' || *line == 'W' || *line == 'E' 
 			|| *line == ' '))
-			return (1/* Unauthorized chars*/);
+			return (1);
 		if (ft_strlen(line) >= (unsigned int) meta->input.n)
 			meta->input.n = (int) ft_strlen(line);
 		line++;
@@ -37,11 +43,7 @@ int	check_text_filename(char **tmp)
 			tmp[1][len - 2] == 'x' && 
 			tmp[1][len - 1] == 'p' && 
 			tmp[1][len] == 'm'))
-	{
-		ft_printf(2, "wrong texture filename\n");
-		return (1);
-	}
-	// ft_printf(2, "valid texture filename\n");
+		msg_exit("Wrong texture filename.");
 	return (0);
 }
 
@@ -51,31 +53,41 @@ int	get_texture_path(int dir, char *line, t_meta *meta)
 
 	tmp = ft_split(line, ' ');
 	if (check_text_filename(tmp))
-		return (1/*not a .xpm file*/);
+		return (msg_exit("Texture isn't a .xpm file."));
 	if (dir == NO)
 	{
 		meta->input.no_path = ft_strdup(tmp[1]);
 		meta->input.no_path[ft_strlen(tmp[1]) - 1] = 0;
+		if (open(meta->input.no_path, O_RDONLY) < 0)
+			msg_exit("Unable to open North texture.");
 	}
 	else if (dir == SO)
 	{
 		meta->input.so_path = ft_strdup(tmp[1]);
 		meta->input.so_path[ft_strlen(tmp[1]) - 1] = 0;
+		if (open(meta->input.so_path, O_RDONLY) < 0)
+			msg_exit("Unable to open South texture.");
 	}
 	else if (dir == WE)
 	{
 		meta->input.we_path = ft_strdup(tmp[1]);
 		meta->input.we_path[ft_strlen(tmp[1]) - 1] = 0;
+		if (open(meta->input.we_path, O_RDONLY) < 0)
+			msg_exit("Unable to open West texture.");
 	}
 	else if (dir == EA)
 	{
 		meta->input.ea_path = ft_strdup(tmp[1]);
 		meta->input.ea_path[ft_strlen(tmp[1]) - 1] = 0;
+		if (open(meta->input.ea_path, O_RDONLY) < 0 )
+			msg_exit("Unable to open East texture.");
 	}
 	else if (dir == D)
 	{
 		meta->input.door_path = ft_strdup(tmp[1]);
 		meta->input.door_path[ft_strlen(tmp[1]) - 1] = 0;
+		if (open(meta->input.door_path, O_RDONLY) < 0)
+			msg_exit("Unable to open Door texture.");
 	}
 	free(tmp[0]);
 	free(tmp[1]);
@@ -113,10 +125,7 @@ int	check_filename(char *in_file)
 				 in_file[len - 2] == 'c' &&
 				 in_file[len - 1] == 'u' &&
 				 in_file[len] == 'b'))
-	{
-		ft_printf(2, "wrong map filename> %s\n", in_file);
 		return (1);
-	}
 	// ft_printf(2, "valid map filename> %s\n", in_file);
 	return (0);
 }
@@ -204,9 +213,9 @@ int	convert_colors(t_meta *meta)
 	int		comp[3];
 
 	if (check_format(meta->input.c_color))
-		return (1 /*wrong format for ceiling color*/);
+		return (msg_exit("Wrong format for ceiling color"));
 	if (check_format(meta->input.f_color))
-		return (1 /*wrong format for floor color*/);
+		return (msg_exit("Wrong format for floor color"));
 	tmp = ft_split(meta->input.f_color, ',');
 	comp[0] = ft_atoi(tmp[0]);
 	comp[1] = ft_atoi(tmp[1]);
@@ -254,7 +263,7 @@ int	get_map_info(char *in_file, t_meta *meta)
 		{
 			close(fd);
 			free(line);
-			return (1);
+			return (msg_exit("Unauthorized character found."));
 		}
 		free(line);
 		meta->input.m++;
@@ -268,28 +277,20 @@ int	get_map_info(char *in_file, t_meta *meta)
 
 int	load_textures(t_meta *meta)
 {
-	meta->textures[0].img = mlx_xpm_file_to_image(meta->xp.mlx, meta->input.no_path, &(meta->textures[0].w), &(meta->textures[0].h));
-	meta->textures[1].img = mlx_xpm_file_to_image(meta->xp.mlx, meta->input.so_path, &(meta->textures[1].w), &(meta->textures[1].h));
-	meta->textures[2].img = mlx_xpm_file_to_image(meta->xp.mlx, meta->input.ea_path, &(meta->textures[2].w), &(meta->textures[2].h));
-	meta->textures[3].img = mlx_xpm_file_to_image(meta->xp.mlx, meta->input.we_path, &(meta->textures[3].w), &(meta->textures[3].h));
-	meta->textures[4].img = mlx_xpm_file_to_image(meta->xp.mlx, meta->input.door_path, &(meta->textures[4].w), &(meta->textures[4].h));
+	meta->input.textures[0].id = mlx_xpm_file_to_image(meta->xp.mlx, meta->input.no_path, &(meta->input.textures[0].nx), &(meta->input.textures[0].ny));
+	meta->input.textures[1].id = mlx_xpm_file_to_image(meta->xp.mlx, meta->input.so_path, &(meta->input.textures[1].nx), &(meta->input.textures[1].ny));
+	meta->input.textures[2].id = mlx_xpm_file_to_image(meta->xp.mlx, meta->input.ea_path, &(meta->input.textures[2].nx), &(meta->input.textures[2].ny));
+	meta->input.textures[3].id = mlx_xpm_file_to_image(meta->xp.mlx, meta->input.we_path, &(meta->input.textures[3].nx), &(meta->input.textures[3].ny));
+	meta->input.textures[4].id = mlx_xpm_file_to_image(meta->xp.mlx, meta->input.door_path, &(meta->input.textures[4].nx), &(meta->input.textures[4].ny));
 
-	if (!meta->textures[0].img || !meta->textures[1].img || !meta->textures[2].img || !meta->textures[3].img || !meta->textures[4].img)
-	{
-		ft_printf(2, "Unable to open a wall texture.\n");
-		free(meta->input.no_path);
-		free(meta->input.so_path);
-		free(meta->input.ea_path);
-		free(meta->input.we_path);
-		free(meta->input.door_path);
+	if (!meta->input.textures[0].id || !meta->input.textures[1].id || !meta->input.textures[2].id || !meta->input.textures[3].id || !meta->input.textures[4].id)
 		return (1);
-	}
 
-	meta->textures[0].addr = (char *)mlx_get_data_addr(meta->textures[0].img, &meta->textures[0].bpp, &meta->textures[0].llen, &meta->textures[0].endian);
-	meta->textures[1].addr = (char *)mlx_get_data_addr(meta->textures[1].img, &meta->textures[1].bpp, &meta->textures[1].llen, &meta->textures[1].endian);
-	meta->textures[2].addr = (char *)mlx_get_data_addr(meta->textures[2].img, &meta->textures[2].bpp, &meta->textures[2].llen, &meta->textures[2].endian);
-	meta->textures[3].addr = (char *)mlx_get_data_addr(meta->textures[3].img, &meta->textures[3].bpp, &meta->textures[3].llen, &meta->textures[3].endian);
-	meta->textures[4].addr = (char *)mlx_get_data_addr(meta->textures[4].img, &meta->textures[4].bpp, &meta->textures[4].llen, &meta->textures[4].endian);
+	meta->input.textures[0].addr = (char *)mlx_get_data_addr(meta->input.textures[0].id, &meta->input.textures[0].bpp, &meta->input.textures[0].line_size, &meta->input.textures[0].endian);
+	meta->input.textures[1].addr = (char *)mlx_get_data_addr(meta->input.textures[1].id, &meta->input.textures[1].bpp, &meta->input.textures[1].line_size, &meta->input.textures[1].endian);
+	meta->input.textures[2].addr = (char *)mlx_get_data_addr(meta->input.textures[2].id, &meta->input.textures[2].bpp, &meta->input.textures[2].line_size, &meta->input.textures[2].endian);
+	meta->input.textures[3].addr = (char *)mlx_get_data_addr(meta->input.textures[3].id, &meta->input.textures[3].bpp, &meta->input.textures[3].line_size, &meta->input.textures[3].endian);
+	meta->input.textures[4].addr = (char *)mlx_get_data_addr(meta->input.textures[4].id, &meta->input.textures[4].bpp, &meta->input.textures[4].line_size, &meta->input.textures[4].endian);
 	free(meta->input.no_path);
 	free(meta->input.so_path);
 	free(meta->input.ea_path);
@@ -421,14 +422,14 @@ int	check_top_bottom(t_meta *meta)
 	while (x < meta->input.n)
 	{
 		if (meta->input.map[x + y * meta->input.n] == '0')
-			return (1/*Map not enclose in walls*/);
+			return (1);
 		x++;
 	}
 	x = 0;
 	while (x < meta->input.n)
 	{
 		if (meta->input.map[x + (meta->input.m - 1) * meta->input.n] == '0')
-			return (1/*Map not enclose in walls*/);
+			return (1);
 		x++;
 	}
 	return (0);
@@ -442,7 +443,7 @@ int	is_dir(char c)
 int	set_start(int x, int y, t_meta *meta)
 {
 	if (meta->input.p_j != 0 || meta->input.p_i != 0)
-		return (1 /* multiple start position found on map.*/);
+		return (msg_exit("Multiple start position found on map."));
 	meta->input.p_j = x;
 	meta->input.p_i = y;
 	meta->input.p_dir = meta->input.map[x + y * meta->input.n];
@@ -455,8 +456,8 @@ int	check_map(t_meta *meta)
 	int	x;
 	int	y;
 
-	meta->input.p_i = 0; // y (row index of player start)
-	meta->input.p_j = 0; // x (col index of player start)
+	meta->input.p_i = 0;
+	meta->input.p_j = 0;
 	meta->input.p_dir = 'N';
 	if (check_top_bottom(meta))
 		return (1);
@@ -470,10 +471,10 @@ int	check_map(t_meta *meta)
 				|| meta->input.map[x + y * meta->input.n] == '2' 
 				|| meta->input.map[x + y * meta->input.n] == '3')
 				if (space_around(x, y, meta))
-					return (1/* map not enclosed in walls*/);
+					return (msg_exit("Map not enclosed in walls."));
 			if (is_dir(meta->input.map[x + y * meta->input.n]))
 				if (set_start(x, y, meta))
-					return (1 /* error setting player start position */);
+					return (msg_exit("Error setting player start position."));
 			x++;
 		}
 		y++;
@@ -493,17 +494,17 @@ int	parse_map(char *in_file, t_meta *meta)
 
 	fd = open(in_file, O_RDONLY);
 	if (fd < 0)
-		return (1/* unable to open map file*/);
+		return (msg_exit("Unable to open map file."));
 	close(fd);
 	if (check_filename(in_file))
-		return (1 /*wrong map name format (.cub)*/);
-	meta->textures = malloc(5 * sizeof(t_text));
-	if (!meta->textures)
-		return (1/* malloc error*/);
+		return (msg_exit("Wrong map filename (has to end with .cub."));
+	meta->input.textures = malloc(5 * sizeof(t_image));
+	if (!meta->input.textures)
+		return (msg_exit("Error when allocating texture memory."));
 	if (parse_textures(in_file, meta))
-		return (1/*unable to parse all textures*/);
+		return (msg_exit("Unable to parse one of the wall texture."));
 	if (convert_colors(meta))
-		return (1/* error when converting rgb to uns. int*/);
+		return (1/* error when converting rgb to int*/);
 	free(meta->input.f_color);
 	free(meta->input.c_color);
 	if (get_map_info(in_file, meta))

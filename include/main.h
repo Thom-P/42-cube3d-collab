@@ -6,7 +6,7 @@
 /*   By: saeby <saeby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 15:13:35 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/23 11:48:43 by tplanes          ###   ########.fr       */
+/*   Updated: 2023/03/23 13:31:23 by saeby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # include "ft_printf.h"
 
 //0 (off) or 1 (show extra window window with 2D map and rays) 
-# define SHOW_RAYS 0
+# define SHOW_RAYS 1
 
 # define PI (float)M_PI
 
@@ -50,8 +50,8 @@
 # define MOUSE_RIGHT 29
 
 # define NO 0
-# define EA 1
-# define SO 2
+# define SO 1
+# define EA 2
 # define WE 3
 # define F 4
 # define C 5
@@ -155,6 +155,7 @@ typedef struct s_input
 	//int		rgb_ceil[3];
 	int		ceiling;
 	int		floor;
+	t_image	*textures;
 	// char	**map;
 	char	*map;
 	int		m;
@@ -215,7 +216,7 @@ typedef struct s_meta
 	t_xptr		xp;
 	t_image		im;
 	t_image		im2;
-	t_text		*textures;
+	// t_text		*textures;
 	// int			ceiling;
 	// int			floor;
 	int			flag_minimap;
