@@ -6,7 +6,7 @@
 /*   By: saeby <saeby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 15:01:56 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/23 10:52:11 by saeby            ###   ########.fr       */
+/*   Updated: 2023/03/23 11:14:55 by tplanes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,15 @@ int	main(int ac, char **av)
 		exit(EXIT_FAILURE);
 	}
 	init_mem_ptrs(&meta);
-	//parse_map(av[1], &meta);
-	parse_input_file(av[1], &meta.input, &meta);
+	parse_map(av[1], &meta);
+	meta.input.rgb_floor[0] = 10;
+	meta.input.rgb_floor[1] = 50;
+	meta.input.rgb_floor[2] = 60;
+	meta.input.rgb_ceil[0] = 0;
+	meta.input.rgb_ceil[1] = 20;
+	meta.input.rgb_ceil[2] = 255;
+
+	//parse_input_file(av[1], &meta.input, &meta);
 	if (SHOW_RAYS)
 		create_map2d(&meta.map2d, &meta.input, &meta);
 	init_player_and_keys(&meta.play, &meta.input, meta.keys_down);
@@ -50,6 +57,26 @@ int	main(int ac, char **av)
 	file_text[4] = ft_strdup("./src/textures/textW"); //doors
 	if (file_text[4] == NULL)
 		free_and_exit("In parsing", &meta);
+	int n_by_text = PIX_PER_BLOCK * PIX_PER_BLOCK *sizeof(int);
+	int	n_by_rd;
+	int k = 0;
+	int fd;
+	while (k < 5)
+	{
+		meta.input.text[k] = (int *)malloc((size_t)n_by_text);
+		//if (text[k] == NULL)
+		//	free_and_exit("In parsing", &meta); // missing frees here
+		fd = open(file_text[k], O_RDONLY);
+		if (fd < 0)
+			free_and_exit("In parsing", &meta);
+		n_by_rd = (int)read(fd, (void *)meta.input.text[k], (size_t)n_by_text);
+		close(fd);
+		if (n_by_rd != n_by_text)
+			free_and_exit("Parsed wrong number of bytes in texture", &meta);
+		k++;
+	}	
+	
+	
 	mlx_string_put(meta.xp.mlx, meta.xp.win, 1, 1, WHITE,
 		"Move: WASD, Rotate: ARROWS, Minimap: M, Toggle mouse/arrows for rotate: N, Action: SPACE, Quit: ESC");
 	create_image(&meta);

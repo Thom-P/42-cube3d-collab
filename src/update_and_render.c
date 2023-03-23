@@ -6,7 +6,7 @@
 /*   By: tplanes <tplanes@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 11:37:00 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/23 10:58:32 by tplanes          ###   ########.fr       */
+/*   Updated: 2023/03/23 11:06:54 by tplanes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ Two step check to allow wall slide
 int	update_and_render(t_meta *meta)
 {	
 	t_player	*p;
-	char		**map;
+	char		*map;
 	char		*keys_down;
 	int			x_save;
 	int			y_save;
