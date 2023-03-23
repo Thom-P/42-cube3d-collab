@@ -6,7 +6,7 @@
 /*   By: tplanes <tplanes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 15:13:52 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/23 14:40:52 by tplanes          ###   ########.fr       */
+/*   Updated: 2023/03/23 17:18:47 by tplanes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,9 @@ int	key_up_hook(int key, t_meta *meta)
 
 int	mouse_hook(int x, int y, t_meta *meta)
 {
-	float	*theta_p;
-	float	d_theta_p;
 	float	dx;
 
 	(void) y;
-	theta_p = &meta -> play.theta;
-	d_theta_p = meta -> play.d_theta;
 	dx = (float)x - (float)WIN_NX / 2;
 	if (fabsf(dx) < (float)WIN_NX / 8)
 	{
