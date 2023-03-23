@@ -6,7 +6,7 @@
 /*   By: tplanes <tplanes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 12:32:20 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/22 13:43:50 by tplanes          ###   ########.fr       */
+/*   Updated: 2023/03/23 10:56:55 by tplanes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,9 +147,9 @@ static int	is_wall_found(t_raycast *ray, t_fpt2 *offset, t_input *inp, char h_or
 		j = (int)wall -> x / PIX_PER_BLOCK;
 		if (i < 0 || i > inp -> m - 1 || j < 0 || j > inp -> n -1)
 			break ;
-		if (inp -> map[i][j] == 1 || inp -> map[i][j] == 2)
+		if (inp -> map[i * inp -> n + j] == '1' || inp -> map[i * inp -> n + j] == '2')
 		{
-			if (inp -> map[i][j] == 2)
+			if (inp -> map[i * inp -> n + j] == '2')
 				*is_door = 1;
 			return (1);
 		}

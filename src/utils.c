@@ -6,7 +6,7 @@
 /*   By: saeby <saeby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 13:57:04 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/22 17:37:23 by tplanes          ###   ########.fr       */
+/*   Updated: 2023/03/23 10:40:09 by tplanes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,12 @@ void	init_mem_ptrs(t_meta *meta)
 
 static void	free_mem(t_meta *meta)
 {
+	(void)meta; 
+	// to rework with new maps and textures
+	/*
 	int		i;
 	t_input	*inp;
+
 
 	i = 0;
 	inp = &meta -> input;
@@ -63,7 +67,7 @@ static void	free_mem(t_meta *meta)
 	i = 0;
 	while (i < 4)
 		free(inp -> text[i++]);
-	free(meta -> map2d.imat);
+	free(meta -> map2d.imat);*/
 	return ;
 }
 

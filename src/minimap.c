@@ -6,7 +6,7 @@
 /*   By: tplanes <tplanes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 15:33:01 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/22 14:48:19 by tplanes          ###   ########.fr       */
+/*   Updated: 2023/03/23 10:55:06 by tplanes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,13 @@ void	draw_minimap(t_meta *meta)
 		j = -1;
 		while (++j < meta -> input.n * ppb_mp)
 		{
-			if (meta -> input.map[i / ppb_mp][j / ppb_mp] == 1)
+			if (meta -> input.map[i / ppb_mp * meta -> input.n + j / ppb_mp] == '0')
+    			put_pixel(&meta -> im, i, j, 50 << 16 | 50 << 8 | 50);
+			if (meta -> input.map[i / ppb_mp * meta -> input.n + j / ppb_mp] == '1')
     			put_pixel(&meta -> im, i, j, WHITE);
-			else if (meta -> input.map[i / ppb_mp][j / ppb_mp] == 2)
+			else if (meta -> input.map[i / ppb_mp * meta -> input.n + j / ppb_mp] == '2')
     			put_pixel(&meta -> im, i, j, 255);
-			else if (meta -> input.map[i / ppb_mp][j / ppb_mp] == 3)
+			else if (meta -> input.map[i / ppb_mp * meta -> input.n + j / ppb_mp] == '3')
     			put_pixel(&meta -> im, i, j, 255 / 2);
 			else
     			put_pixel(&meta -> im, i, j, 0);
