@@ -6,7 +6,7 @@
 /*   By: saeby <saeby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 15:13:35 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/23 10:50:28 by saeby            ###   ########.fr       */
+/*   Updated: 2023/03/23 11:03:59 by saeby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@
 # define WE 3
 # define F 4
 # define C 5
+# define D 6
 
 // Colors
 # define WHITE 16777215 //White
@@ -152,6 +153,8 @@ typedef struct s_input
 {
 	int		rgb_floor[3];
 	int		rgb_ceil[3];
+	int		ceiling;
+	int		floor;
 	// char	**map;
 	char	*map;
 	int		m;
@@ -166,6 +169,7 @@ typedef struct s_input
 	char	*no_path;
 	char	*f_color;
 	char	*c_color;
+	char	*door_path;
 }			t_input;
 
 // Variables used in raycasting
@@ -212,8 +216,8 @@ typedef struct s_meta
 	t_image		im;
 	t_image		im2;
 	t_text		*textures;
-	int			ceiling;
-	int			floor;
+	// int			ceiling;
+	// int			floor;
 	int			flag_minimap;
 	int			flag_mouse_on;
 	t_imat		map2d;

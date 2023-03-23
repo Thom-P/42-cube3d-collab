@@ -6,7 +6,7 @@
 /*   By: saeby <saeby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 12:02:02 by saeby             #+#    #+#             */
-/*   Updated: 2023/03/23 10:49:59 by saeby            ###   ########.fr       */
+/*   Updated: 2023/03/23 11:06:59 by saeby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,11 @@ int	get_texture_path(int dir, char *line, t_meta *meta)
 	{
 		meta->input.ea_path = ft_strdup(tmp[1]);
 		meta->input.ea_path[ft_strlen(tmp[1]) - 1] = 0;
+	}
+	else if (dir == D)
+	{
+		meta->input.door_path = ft_strdup(tmp[1]);
+		meta->input.door_path[ft_strlen(tmp[1]) - 1] = 0;
 	}
 	free(tmp[0]);
 	free(tmp[1]);
@@ -136,6 +141,9 @@ int	parse_textures(char *in_file, t_meta *meta)
 				return (1);
 		if (!ft_strncmp(line, "WE", 2))
 			if (get_texture_path(WE, line, meta))
+				return (1);
+		if (!ft_strncmp(line, "D", 1))
+			if (get_texture_path(D, line, meta))
 				return (1);
 		if (!ft_strncmp(line, "F", 1))
 			if (get_color(F, line, meta))
@@ -205,7 +213,7 @@ int	convert_colors(t_meta *meta)
 	free(tmp[1]);
 	free(tmp[2]);
 	free(tmp);
-	meta->floor = (comp[0] << 16) | (comp[1] << 8) | comp[2];
+	meta->input.floor = (comp[0] << 16) | (comp[1] << 8) | comp[2];
 	tmp = ft_split(meta->input.c_color, ',');
 	comp[0] = ft_atoi(tmp[0]);
 	comp[1] = ft_atoi(tmp[1]);
@@ -214,7 +222,7 @@ int	convert_colors(t_meta *meta)
 	free(tmp[1]);
 	free(tmp[2]);
 	free(tmp);
-	meta->ceiling = (comp[0] << 16) | (comp[1] << 8) | comp[2];
+	meta->input.ceiling = (comp[0] << 16) | (comp[1] << 8) | comp[2];
 	return (0);
 }
 
@@ -231,7 +239,7 @@ int	get_map_info(char *in_file, t_meta *meta)
 		if (!(!ft_strncmp(line, "SO", 2) || !ft_strncmp(line, "NO", 2) || \
 			!ft_strncmp(line, "WE", 2) || !ft_strncmp(line, "EA", 2) || \
 			!ft_strncmp(line, "F", 1) || !ft_strncmp(line, "C", 1) || \
-			!ft_strncmp(line, "\n", 1)))
+			!ft_strncmp(line, "D", 1) || !ft_strncmp(line, "\n", 1)))
 			break ;
 		free(line);
 	}
@@ -262,14 +270,16 @@ int	load_textures(t_meta *meta)
 	meta->textures[1].img = mlx_xpm_file_to_image(meta->xp.mlx, meta->input.so_path, &(meta->textures[1].w), &(meta->textures[1].h));
 	meta->textures[2].img = mlx_xpm_file_to_image(meta->xp.mlx, meta->input.ea_path, &(meta->textures[2].w), &(meta->textures[2].h));
 	meta->textures[3].img = mlx_xpm_file_to_image(meta->xp.mlx, meta->input.we_path, &(meta->textures[3].w), &(meta->textures[3].h));
+	meta->textures[4].img = mlx_xpm_file_to_image(meta->xp.mlx, meta->input.door_path, &(meta->textures[4].w), &(meta->textures[4].h));
 
-	if (!meta->textures[0].img || !meta->textures[1].img || !meta->textures[2].img || !meta->textures[3].img)
+	if (!meta->textures[0].img || !meta->textures[1].img || !meta->textures[2].img || !meta->textures[3].img || !meta->textures[4].img)
 	{
 		ft_printf(2, "Unable to open a wall texture.\n");
 		free(meta->input.no_path);
 		free(meta->input.so_path);
 		free(meta->input.ea_path);
 		free(meta->input.we_path);
+		free(meta->input.door_path);
 		return (1);
 	}
 
@@ -277,10 +287,12 @@ int	load_textures(t_meta *meta)
 	meta->textures[1].addr = (char *)mlx_get_data_addr(meta->textures[1].img, &meta->textures[1].bpp, &meta->textures[1].llen, &meta->textures[1].endian);
 	meta->textures[2].addr = (char *)mlx_get_data_addr(meta->textures[2].img, &meta->textures[2].bpp, &meta->textures[2].llen, &meta->textures[2].endian);
 	meta->textures[3].addr = (char *)mlx_get_data_addr(meta->textures[3].img, &meta->textures[3].bpp, &meta->textures[3].llen, &meta->textures[3].endian);
+	meta->textures[4].addr = (char *)mlx_get_data_addr(meta->textures[4].img, &meta->textures[4].bpp, &meta->textures[4].llen, &meta->textures[4].endian);
 	free(meta->input.no_path);
 	free(meta->input.so_path);
 	free(meta->input.ea_path);
 	free(meta->input.we_path);
+	free(meta->input.door_path);
 	return (0);
 }
 
@@ -313,7 +325,7 @@ int	fill_map(char *in_file, t_meta *meta)
 		if (!(!ft_strncmp(line, "SO", 2) || !ft_strncmp(line, "NO", 2) || \
 			!ft_strncmp(line, "WE", 2) || !ft_strncmp(line, "EA", 2) || \
 			!ft_strncmp(line, "F", 1) || !ft_strncmp(line, "C", 1) || \
-			!ft_strncmp(line, "\n", 1)))
+			!ft_strncmp(line, "D", 1) || !ft_strncmp(line, "\n", 1)))
 			break ;
 		free(line);
 	}
@@ -452,7 +464,9 @@ int	check_map(t_meta *meta)
 		x = 0;
 		while (x < meta->input.m)
 		{
-			if (meta->input.map[x + y * meta->input.m] == '0')
+			if (meta->input.map[x + y * meta->input.m] == '0' 
+				|| meta->input.map[x + y * meta->input.m] == '2' 
+				|| meta->input.map[x + y * meta->input.m] == '3')
 				if (space_around(x, y, meta))
 					return (1/* map not enclosed in walls*/);
 			if (is_dir(meta->input.map[x + y * meta->input.m]))
@@ -481,7 +495,7 @@ int	parse_map(char *in_file, t_meta *meta)
 	close(fd);
 	if (check_filename(in_file))
 		return (1 /*wrong map name format (.cub)*/);
-	meta->textures = malloc(4 * sizeof(t_text));
+	meta->textures = malloc(5 * sizeof(t_text));
 	if (!meta->textures)
 		return (1/* malloc error*/);
 	if (parse_textures(in_file, meta))
