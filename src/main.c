@@ -6,7 +6,7 @@
 /*   By: saeby <saeby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 15:01:56 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/22 17:41:12 by tplanes          ###   ########.fr       */
+/*   Updated: 2023/03/23 10:50:13 by saeby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ int	main(int ac, char **av)
 		create_map2d(&meta.map2d, &meta.input, &meta);
 	init_player_and_keys(&meta.play, &meta.input, meta.keys_down);
 	create_win(&meta, WIN_NY, WIN_NX, "***Cube 3D***");
+	// if (load_textures(&meta))
+	// 	return (1 /*error when loading textures from file*/);
 	mlx_string_put(meta.xp.mlx, meta.xp.win, 1, 1, WHITE,
 		"Move: WASD, Rotate: ARROWS, Minimap: M, Toggle mouse/arrows for rotate: N, Action: SPACE, Quit: ESC");
 	create_image(&meta);
