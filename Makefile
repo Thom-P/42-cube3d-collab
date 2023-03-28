@@ -55,7 +55,8 @@ SRC =	draw_2D_scene.c \
 		update_and_render.c \
 		utils.c \
 		parse.c \
-		doors.c
+		doors.c \
+		sprite.c
 
 OBJ := $(SRC:%.c=%.o)
 DEP := $(SRC:%.c=%.d)

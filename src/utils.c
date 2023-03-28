@@ -6,7 +6,7 @@
 /*   By: saeby <saeby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 13:57:04 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/23 15:34:48 by tplanes          ###   ########.fr       */
+/*   Updated: 2023/03/28 17:13:46 by tplanes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ void	init_player_and_keys(t_player *play, t_input *inp, char *keys_down)
 
 	play -> x = inp -> p_j * PIX_PER_BLOCK;
 	play -> y = inp -> p_i * PIX_PER_BLOCK;
+	printf("%i %i\n", play->x, play->y);
 	play -> step = 5;
 	if (inp -> p_dir == 'E')
 		play -> theta = 0;
