@@ -6,7 +6,7 @@
 /*   By: saeby <saeby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 15:13:35 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/23 15:26:34 by tplanes          ###   ########.fr       */
+/*   Updated: 2023/03/28 14:05:22 by tplanes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -219,6 +219,7 @@ typedef struct s_meta
 	// t_text		*textures;
 	// int			ceiling;
 	// int			floor;
+	float		dist_col[N_RAY]; //Store distance from player to each column for sprite display
 	int			flag_minimap;
 	int			flag_mouse_on;
 	t_imat		map2d;

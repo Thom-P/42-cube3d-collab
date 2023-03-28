@@ -6,7 +6,7 @@
 /*   By: saeby <saeby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 12:32:20 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/23 17:53:24 by tplanes          ###   ########.fr       */
+/*   Updated: 2023/03/28 14:13:36 by tplanes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ static int	is_wall(t_raycast *ray, t_fpt2 *offset, t_input *inp, char h_or_v);
 
 static void	ptr_wall(t_fpt2 **wall, int **is_door, t_raycast *ray, char h_or_v);
 
-static void	set_h_closest_wall(t_raycast *ray, t_player *play, t_input *inp);
+static void	set_h_closest_wall(t_raycast *ray, t_player *play, t_input *inp, float *dist_col);
 
-static void	set_v_closest_wall(t_raycast *ray, t_player *play, t_input *inp);
+static void	set_v_closest_wall(t_raycast *ray, t_player *play, t_input *inp, float *dist_col);
 
 /*
 v_dist (h_dist) is the distance to the closest vertical (horizontal) 
@@ -48,9 +48,9 @@ void	compute_rays(t_input *inp, t_player *play, t_meta *meta)
 		get_h_wall(&ray, meta);
 		get_v_wall(&ray, meta);
 		if (ray.h_dist < ray.v_dist)
-			set_h_closest_wall(&ray, play, inp);
+			set_h_closest_wall(&ray, play, inp, meta -> dist_col);
 		else
-			set_v_closest_wall(&ray, play, inp);
+			set_v_closest_wall(&ray, play, inp, meta -> dist_col);
 		if (SHOW_RAYS)
 			draw_line_image(&ray.p0, &ray.p1, &meta -> im2, 255 << 16);
 		draw_column(ray.i, ray.wall_dist, ray.ptr_text, meta);
@@ -171,10 +171,11 @@ add horizontal offset to texture ptr
 sometimes seems like glitchy column appears,
 probably happens when ray hits a corner
 */
-static void	set_h_closest_wall(t_raycast *ray, t_player *play, t_input *inp)
+static void	set_h_closest_wall(t_raycast *ray, t_player *play, t_input *inp, float *dist_col)
 {
 	ray -> p1.x = (int)round(ray -> h_wall.x);
 	ray -> p1.y = (int)round(ray -> h_wall.y);
+	dist_col[ray -> i] = ray -> h_dist;
 	ray -> wall_dist = ray -> h_dist
 		* cosf(fabsf(ray -> theta_ray - play -> theta));
 	if (ray -> theta_ray > PI && !ray -> is_h_door)
@@ -192,10 +193,11 @@ static void	set_h_closest_wall(t_raycast *ray, t_player *play, t_input *inp)
 	return ;
 }
 
-static void	set_v_closest_wall(t_raycast *ray, t_player *play, t_input *inp)
+static void	set_v_closest_wall(t_raycast *ray, t_player *play, t_input *inp, float *dist_col)
 {
 	ray -> p1.x = (int)round(ray -> v_wall.x);
 	ray -> p1.y = (int)round(ray -> v_wall.y);
+	dist_col[ray -> i] = ray -> v_dist;
 	ray -> wall_dist = ray -> v_dist
 		* cosf(fabsf(ray -> theta_ray - play -> theta));
 	if ((ray -> theta_ray < 0.5 * PI || ray -> theta_ray > 1.5 * PI)
