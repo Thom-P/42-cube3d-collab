@@ -62,7 +62,8 @@ SRC =	draw_2D_scene.c \
 		parsing/map_check.c \
 		parsing/map_check2.c \
 		parsing/name_checks.c \
-		parsing/parse.c
+		parsing/parse.c \
+		sprite.c
 
 OBJ := $(SRC:%.c=%.o)
 DEP := $(SRC:%.c=%.d)

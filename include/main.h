@@ -6,7 +6,7 @@
 /*   By: saeby <saeby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 15:13:35 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/29 12:42:12 by saeby            ###   ########.fr       */
+/*   Updated: 2023/03/29 14:29:57 by tplanes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@
 # define FOV 1.0472f //60 degrees in rad
 # define N_RAY 320
 # define TEXT_SIZE 64 // texture are 64 x 64 pixels
+# define SP_SIZE 32 // sprite texture is 32 x 32 pixels
 
 // 3D image size
 # define INTERP_FACT 4
@@ -195,7 +196,7 @@ typedef struct s_text_map
 {
 	double	text_offset;
 	double	dtext;
-	int		*ptr_text;	
+	int		*ptr_text;
 }			t_text_map;
 
 typedef struct s_text
@@ -209,6 +210,21 @@ typedef struct s_text
 	int			h;
 }				t_text;
 
+// Struct for sprite
+typedef struct s_sprite
+{
+	int		x;
+	int		y;
+	float	dx;
+	float	dy;
+	float	cost;
+	float	sint;
+	float	dist;
+	float	offset;
+	int		w;
+	int		h;
+}				t_sprite;
+
 // Meta-struct of all other structs
 typedef struct s_meta
 {
@@ -219,6 +235,8 @@ typedef struct s_meta
 	// t_text		*textures;
 	// int			ceiling;
 	// int			floor;
+	float		dist_col[N_RAY]; //Store distance from player to each column for sprite display
+	t_sprite	sp;
 	int			flag_minimap;
 	int			flag_mouse_on;
 	t_imat		map2d;
@@ -276,6 +294,9 @@ void	try_switch_door(t_meta *meta);
 
 // Minimap
 void	draw_minimap(t_meta *meta);
+
+// Sprite
+void	update_sprite(t_player *p, t_sprite *sp, t_meta *meta);
 
 // Utils
 void	init_player_and_keys(t_player *play, t_input *input, char *keys_down);

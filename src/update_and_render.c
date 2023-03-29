@@ -6,7 +6,7 @@
 /*   By: tplanes <tplanes@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 11:37:00 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/23 15:47:32 by tplanes          ###   ########.fr       */
+/*   Updated: 2023/03/28 15:19:36 by tplanes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ void	render(t_meta *meta)
 	if (SHOW_RAYS)
 		mat2im(&meta -> map2d, &meta -> im2);
 	compute_rays(&meta -> input, &meta -> play, meta);
+	update_sprite(&meta -> play, &meta -> sp, meta);
 	if (meta -> flag_minimap == 1)
 		draw_minimap(meta);
 	mlx_put_image_to_window(meta -> xp.mlx, meta -> xp.win,
