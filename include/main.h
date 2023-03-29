@@ -6,7 +6,7 @@
 /*   By: saeby <saeby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 15:13:35 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/29 16:36:46 by tplanes          ###   ########.fr       */
+/*   Updated: 2023/03/29 16:42:42 by saeby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -364,5 +364,14 @@ int		load_textures(t_meta *meta);
 void	load_sprites(t_meta *meta);
 void	get_sprite_addr(t_meta *meta);
 void	get_addr_1(t_meta *meta);
+
+// raycast.c
+void	get_h_wall(t_raycast *ray, t_meta *meta);
+void	get_v_wall(t_raycast *ray, t_meta *meta);
+int		is_wall(t_raycast *ray, t_fpt2 *offset, t_input *inp, char h_or_v);
+void	ptr_wall(t_fpt2 **wall, int **is_door, t_raycast *ray, char h_or_v);
+void	set_h_closest_wall(t_raycast *r, t_player *p, t_input *i, float *d);
+void	set_v_closest_wall(t_raycast *r, t_player *p, t_input *i, float *d);
+
 
 #endif

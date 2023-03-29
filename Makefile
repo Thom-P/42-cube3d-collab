@@ -52,6 +52,7 @@ SRC =	draw_2D_scene.c \
 		main.c \
 		minimap.c \
 		raycast.c \
+		raycast2.c \
 		update_and_render.c \
 		utils.c \
 		doors.c \

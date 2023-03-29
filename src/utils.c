@@ -6,7 +6,7 @@
 /*   By: saeby <saeby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 13:57:04 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/29 15:16:13 by tplanes          ###   ########.fr       */
+/*   Updated: 2023/03/29 16:12:37 by saeby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,8 @@ while (i < 4)
 free(meta -> map2d.imat);*/
 
 //nb: y axis pointing downward
-void	init_player_and_keys(t_player *play, t_input *inp, t_sprite *sp, char *keys_down)
+void	init_player_and_keys(t_player *play, t_input *inp, t_sprite *sp,
+							char *keys_down)
 {
 	int	i;
 
