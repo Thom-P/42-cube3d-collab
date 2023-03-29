@@ -6,7 +6,7 @@
 /*   By: tplanes <tplanes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 09:56:31 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/29 10:26:28 by tplanes          ###   ########.fr       */
+/*   Updated: 2023/03/29 11:27:06 by tplanes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,30 @@ void update_sprite(t_player *p, t_sprite *sp, t_meta *meta)
 	//float offset = sp->dx * -sint + sp->dy * cost;
 	//int i_ray = N_RAY / 2 + (int)offset;
 	
-	float theta_s = atanf(sp->dy/sp->dx);
-	int i_ray = (int)((theta_s - p->theta) / (FOV / 2) * (float)(N_RAY - 1) / 2) + N_RAY / 2;
+	//float theta_s = atanf(sp->dy/sp->dx);
+	float theta_s = atan2f(sp->dy, sp->dx);
+	
+	float dtheta_s;
+	if (theta_s < 0)
+		theta_s = 2 * PI + theta_s;
+	dtheta_s = theta_s - p->theta;
+	if (fabsf(dtheta_s) > FOV / 2)
+		return ;
+	//if (theta_s >= p->theta)
+	//	dtheta_s = theta_s - p->theta;
+	//else
+	//	dtheta_s = 2 * PI + (theta_s - p->theta);
+	//float dtheta_s = fmodf(p -> theta + (2 * PI - p -> d_theta), 2 * PI);
+		
+	int i_ray = (int)(dtheta_s / (FOV / 2) * (float)(N_RAY - 1) / 2) + N_RAY / 2;
 
 	if (i_ray < 0 || i_ray > N_RAY - 1)
 		return ;
-	
-	int h = (int)round((float)PIX_PER_BLOCK / dist * (float)D_P2P);
+
+
+//	int sp_size = PIXEL_PER_BLOCK;	
+	int sp_size = 32;	
+	int h = (int)round((float)sp_size / dist * (float)D_P2P);
 	if (h > IM3_NY)
 		return ;
 	int i = (IM3_NY - h) / 2;
