@@ -6,7 +6,7 @@
 /*   By: tplanes <tplanes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 09:56:31 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/29 14:25:55 by tplanes          ###   ########.fr       */
+/*   Updated: 2023/03/29 14:35:32 by tplanes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ void update_sprite(t_player *p, t_sprite *sp, t_meta *meta)
 	double		x_dtext;
 	int			i_ray_cent;
 
-	sp->x = 1696;
-	sp->y = 736;
+	//sp->x = 1696;
+	//sp->y = 736;
 	sp->dx = sp->x - p->x; 
 	sp->dy = sp->y - p->y;
 	sp->cost = cosf(p->theta);

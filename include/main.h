@@ -6,7 +6,7 @@
 /*   By: saeby <saeby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 15:13:35 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/29 14:29:57 by tplanes          ###   ########.fr       */
+/*   Updated: 2023/03/29 14:36:24 by tplanes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -299,7 +299,7 @@ void	draw_minimap(t_meta *meta);
 void	update_sprite(t_player *p, t_sprite *sp, t_meta *meta);
 
 // Utils
-void	init_player_and_keys(t_player *play, t_input *input, char *keys_down);
+void	init_player_and_keys(t_player *play, t_input *input, t_sprite *sp, char *keys_down);
 void	init_mem_ptrs(t_meta *meta);
 void	free_and_exit(char *msg, t_meta *meta);
 //void	draw_box_around_image(t_image *im);

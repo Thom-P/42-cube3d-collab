@@ -6,7 +6,7 @@
 /*   By: saeby <saeby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 13:57:04 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/29 09:56:12 by tplanes          ###   ########.fr       */
+/*   Updated: 2023/03/29 14:35:20 by tplanes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,12 +71,14 @@ while (i < 4)
 free(meta -> map2d.imat);*/
 
 //nb: y axis pointing downward
-void	init_player_and_keys(t_player *play, t_input *inp, char *keys_down)
+void	init_player_and_keys(t_player *play, t_input *inp, t_sprite *sp, char *keys_down)
 {
 	int	i;
 
-	play -> x = inp -> p_j * PIX_PER_BLOCK + PIX_PER_BLOCK / 2; //should do same in master
+	play -> x = inp -> p_j * PIX_PER_BLOCK + PIX_PER_BLOCK / 2;
 	play -> y = inp -> p_i * PIX_PER_BLOCK + PIX_PER_BLOCK / 2;
+	sp -> x = play -> x;
+	sp -> y = play -> y;
 	printf("%i %i\n", play->x, play->y);
 	play -> step = 5;
 	if (inp -> p_dir == 'E')

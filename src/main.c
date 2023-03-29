@@ -6,7 +6,7 @@
 /*   By: saeby <saeby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 15:01:56 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/23 14:57:12 by tplanes          ###   ########.fr       */
+/*   Updated: 2023/03/29 14:37:26 by tplanes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	main(int ac, char **av)
 	parse_map(av[1], &meta);
 	if (SHOW_RAYS)
 		create_map2d(&meta.map2d, &meta.input, &meta);
-	init_player_and_keys(&meta.play, &meta.input, meta.keys_down);
+	init_player_and_keys(&meta.play, &meta.input, &meta.sp, meta.keys_down);
 	create_win(&meta, WIN_NY, WIN_NX, "***Cube 3D***");
 	mlx_string_put(meta.xp.mlx, meta.xp.win, 1, 1, WHITE, "Move: WASD, Rotate: "
 		"ARROWS/MOUSE (Toggle with N), Minimap: M, Action: SPACE, Quit: ESC");
