@@ -6,7 +6,7 @@
 /*   By: tplanes <tplanes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 09:56:31 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/29 14:35:32 by tplanes          ###   ########.fr       */
+/*   Updated: 2023/03/29 14:40:25 by tplanes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,12 +69,12 @@ static void	draw_sprite(int i_ray_cent, t_text_map *smap, double x_dtext, t_meta
 			x_text_offset += x_dtext;
 			continue ;
 		}
-		smap->ptr_text = (int *)(meta -> input.textures[4].addr) + (int)x_text_offset;
+		smap->ptr_text = (int *)(meta -> input.textures[5].addr) + (int)x_text_offset;
 		smap->text_offset = 0;
 		i = (IM3_NY - sp->h) / 2 - 1;
 		while (++i < (IM3_NY + sp->h) / 2)
     	{
-       		color = *(smap->ptr_text + (int)(smap->text_offset) * TEXT_SIZE);
+       		color = *(smap->ptr_text + (int)(smap->text_offset) * SP_SIZE);
        		if (color != (255 << 16) + 255)
 				draw_pix_group(&meta->im, i, i_ray, color);
        		smap->text_offset += smap->dtext;
