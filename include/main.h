@@ -6,7 +6,7 @@
 /*   By: saeby <saeby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 15:13:35 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/29 14:39:05 by tplanes          ###   ########.fr       */
+/*   Updated: 2023/03/29 15:22:36 by tplanes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@
 # define SPACE_KEY 49
 # define M_KEY 46
 # define N_KEY 45
+# define B_KEY 11
 # define MOUSE_LEFT 25 // nb: correspond to ( and )
 # define MOUSE_RIGHT 29
 
@@ -239,6 +240,7 @@ typedef struct s_meta
 	t_sprite	sp;
 	int			flag_minimap;
 	int			flag_mouse_on;
+	int			flag_bird;
 	t_imat		map2d;
 	t_player	play;
 	char		keys_down[256];

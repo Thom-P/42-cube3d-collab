@@ -6,7 +6,7 @@
 /*   By: tplanes <tplanes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 09:56:31 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/29 14:40:25 by tplanes          ###   ########.fr       */
+/*   Updated: 2023/03/29 15:28:56 by tplanes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,14 @@ static void	draw_sprite(int i_ray_cent, t_text_map *smap, double x_dtext, t_meta
 
 static void draw_pix_group(t_image *im, int i, int i_ray, int color);
 
+static void move_sprite(t_sprite *sp, t_input *inp, t_meta *meta);
+
 void update_sprite(t_player *p, t_sprite *sp, t_meta *meta)
 {
 	t_text_map	smap;
 	double		x_dtext;
 	int			i_ray_cent;
 
-	//sp->x = 1696;
-	//sp->y = 736;
 	sp->dx = sp->x - p->x; 
 	sp->dy = sp->y - p->y;
 	sp->cost = cosf(p->theta);
@@ -40,6 +40,8 @@ void update_sprite(t_player *p, t_sprite *sp, t_meta *meta)
 	smap.dtext = (double)SP_SIZE / (double)sp->h;
 	x_dtext = (double)SP_SIZE / (double)sp->w;
 	draw_sprite(i_ray_cent, &smap, x_dtext, meta);
+	if (fabsf(sp -> dist) > (float)PIX_PER_BLOCK && meta -> flag_bird)
+		move_sprite(sp, &meta->input, meta);
 	return ;
 }
 /*
@@ -50,6 +52,29 @@ if (theta_s < 0)
 dtheta_s = theta_s - p->theta;
 int i_ray_cent = (int)(dtheta_s / (FOV / 2) * (float)(N_RAY - 1) / 2) + N_RAY / 2;
 */
+
+static void move_sprite(t_sprite *sp, t_input *inp, t_meta *meta)
+{
+	float 	step;
+	float	theta_s;
+	int		pos_save[2];
+	int		ind_lin;
+	
+	pos_save[0] = sp->x;
+	pos_save[1] = sp->y;
+	theta_s	= atan2f(sp->dy, sp->dx);
+	step = (float)meta -> play.step / 3;
+	sp -> x += (int)round(-step * cosf(theta_s));
+	sp -> y += (int)round(-step * sinf(theta_s));
+	ind_lin = pos_save[1] / PIX_PER_BLOCK * meta -> input.n
+		+ sp -> x / PIX_PER_BLOCK;
+	if (inp -> map[ind_lin] == '1' || inp -> map[ind_lin] == '2')
+		sp -> x = pos_save[0];
+	ind_lin = sp -> y / PIX_PER_BLOCK * meta -> input.n + sp -> x / PIX_PER_BLOCK;
+	if (inp -> map[ind_lin] == '1' || inp -> map[ind_lin] == '2')
+		sp -> y = pos_save[1];
+	return ;
+}
 
 static void	draw_sprite(int i_ray_cent, t_text_map *smap, double x_dtext, t_meta *meta)
 {

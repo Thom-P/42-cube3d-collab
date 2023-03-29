@@ -6,7 +6,7 @@
 /*   By: tplanes <tplanes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 15:33:01 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/23 15:21:08 by tplanes          ###   ########.fr       */
+/*   Updated: 2023/03/29 15:11:31 by tplanes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 static inline void	put_pixel(t_image *im, int i, int j, int color);
 
 static void		draw_player_in_minimap(t_meta *meta, int ppb_mp, int width);
+
+static void		draw_sprite_in_minimap(t_meta *meta, int ppb_mp, int width);
 
 static int		get_ppb_minimap(int m, int n);
 
@@ -84,6 +86,28 @@ static void	draw_player_in_minimap(t_meta *meta, int ppb_mp, int width)
 	{
 		put_pixel(im, (int)round(p.y + (float)i * sinf(meta -> play.theta)),
 			(int)round(p.x + (float)i * cosf(meta -> play.theta)), 255 << 16);
+		i++;
+	}
+	draw_sprite_in_minimap(meta, ppb_mp, width);
+	return ;
+}
+
+static void	draw_sprite_in_minimap(t_meta *meta, int ppb_mp, int width)
+{
+	t_image		*im;
+	t_ipt2		p;
+	int			i;
+	int			j;
+
+	im = &meta -> im;
+	p.x = (int)((float)meta -> sp.x / (float)PIX_PER_BLOCK * (float)ppb_mp);
+	p.y = (int)((float)meta -> sp.y / (float)PIX_PER_BLOCK * (float)ppb_mp);
+	i = p.y - width / 2;
+	while (i < p.y + width / 2)
+	{
+		j = p.x - width / 2;
+		while (j < p.x + width / 2)
+			put_pixel(im, i, j++, 255 << 8);
 		i++;
 	}
 	return ;

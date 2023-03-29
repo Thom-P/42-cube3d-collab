@@ -6,7 +6,7 @@
 /*   By: saeby <saeby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 13:57:04 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/29 14:35:20 by tplanes          ###   ########.fr       */
+/*   Updated: 2023/03/29 15:16:13 by tplanes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	init_mem_ptrs(t_meta *meta)
 	int	i;
 
 	meta -> flag_minimap = 0;
+	meta -> flag_bird = 0;
 	meta -> flag_mouse_on = 0;
 	meta -> input.map = NULL;
 	meta -> input.m = 0;

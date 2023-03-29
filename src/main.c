@@ -6,7 +6,7 @@
 /*   By: saeby <saeby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 15:01:56 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/29 14:37:26 by tplanes          ###   ########.fr       */
+/*   Updated: 2023/03/29 15:33:23 by tplanes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@ int	main(int ac, char **av)
 		create_map2d(&meta.map2d, &meta.input, &meta);
 	init_player_and_keys(&meta.play, &meta.input, &meta.sp, meta.keys_down);
 	create_win(&meta, WIN_NY, WIN_NX, "***Cube 3D***");
-	mlx_string_put(meta.xp.mlx, meta.xp.win, 1, 1, WHITE, "Move: WASD, Rotate: "
-		"ARROWS/MOUSE (Toggle with N), Minimap: M, Action: SPACE, Quit: ESC");
 	create_image(&meta);
 	if (SHOW_RAYS)
 	{	
@@ -60,6 +58,9 @@ static void	create_win(t_meta *meta, int win_ny, int win_nx, char *title)
 	meta -> xp.win = win;
 	if (load_textures(meta))
 		free_and_exit("Error in loading textures", meta);
+	mlx_string_put(meta->xp.mlx, meta->xp.win, 1, 1, WHITE, "Move: WASD, Rotate: "
+		"ARROWS/MOUSE (Toggle with N), Minimap: M, Action: SPACE, Bird: B, "
+		"Quit: ESC");
 	return ;
 }
 

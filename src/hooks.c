@@ -6,7 +6,7 @@
 /*   By: tplanes <tplanes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 15:13:52 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/23 17:18:47 by tplanes          ###   ########.fr       */
+/*   Updated: 2023/03/29 15:23:35 by tplanes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ int	key_down_hook(int key, t_meta *meta)
 		meta -> flag_minimap ^= 1;
 	if (key == N_KEY)
 		meta -> flag_mouse_on ^= 1;
+	if (key == B_KEY)
+		meta -> flag_bird ^= 1;
 	else if (key == SPACE_KEY)
 		try_switch_door(meta);
 	if (key >= 0 && key < 256)

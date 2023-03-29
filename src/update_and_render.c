@@ -6,7 +6,7 @@
 /*   By: tplanes <tplanes@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 11:37:00 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/28 15:19:36 by tplanes          ###   ########.fr       */
+/*   Updated: 2023/03/29 14:57:22 by tplanes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ static void	update_position(t_player *p, char *keys_down)
 	if (keys_down[W_KEY] || keys_down[UP_ARROW_KEY])
 	{
 		p -> x += (int)round((float)p -> step * cosf(p -> theta));
-		p -> y += (int)((float)p -> step * sinf(p -> theta));
+		p -> y += (int)round((float)p -> step * sinf(p -> theta));
 	}
 	else if (keys_down[S_KEY] || keys_down[DOWN_ARROW_KEY])
 	{	
