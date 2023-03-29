@@ -6,7 +6,7 @@
 /*   By: saeby <saeby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 13:57:04 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/29 17:04:24 by saeby            ###   ########.fr       */
+/*   Updated: 2023/03/29 17:05:14 by saeby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ void	init_player_and_keys(t_player *play, t_input *inp, t_sprite *sp,
 	play -> y = inp -> p_i * PIX_PER_BLOCK + PIX_PER_BLOCK / 2;
 	sp -> x = play -> x;
 	sp -> y = play -> y;
-	printf("%i %i\n", play->x, play->y);
 	play -> step = 5;
 	if (inp -> p_dir == 'E')
 		play -> theta = 0;

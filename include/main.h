@@ -6,7 +6,7 @@
 /*   By: saeby <saeby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 15:13:35 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/29 16:42:42 by saeby            ###   ########.fr       */
+/*   Updated: 2023/03/29 16:55:16 by tplanes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,12 +153,9 @@ typedef struct s_player
 // Data collected during parsing
 typedef struct s_input
 {
-	//int		rgb_floor[3];
-	//int		rgb_ceil[3];
 	int		ceiling;
 	int		floor;
 	t_image	*textures;
-	// char	**map;
 	char	*map;
 	int		m;
 	int		n;
@@ -224,6 +221,7 @@ typedef struct s_sprite
 	float	dy;
 	float	cost;
 	float	sint;
+	float	dist_real;
 	float	dist;
 	float	offset;
 	int		w;
@@ -237,10 +235,7 @@ typedef struct s_meta
 	t_xptr		xp;
 	t_image		im;
 	t_image		im2;
-	// t_text		*textures;
-	// int			ceiling;
-	// int			floor;
-	float		dist_col[N_RAY]; //Store distance from player to each column for sprite display
+	float		dist_col[N_RAY];
 	t_sprite	sp;
 	int			flag_minimap;
 	int			flag_mouse_on;
@@ -293,7 +288,7 @@ void	init_hooks(t_meta *meta);
 int		key_down_hook(int keycode, t_meta *meta);
 int		key_up_hook(int keycode, t_meta *meta);
 int		destroy_hook(t_meta *meta);
-int		mouse_hook(int x,int y, t_meta *meta);
+int		mouse_hook(int x, int y, t_meta *meta);
 
 // Doors
 void	try_switch_door(t_meta *meta);
@@ -305,10 +300,10 @@ void	draw_minimap(t_meta *meta);
 void	update_sprite(t_player *p, t_sprite *sp, t_meta *meta);
 
 // Utils
-void	init_player_and_keys(t_player *play, t_input *input, t_sprite *sp, char *keys_down);
+void	init_player_and_keys(t_player *play, t_input *input,
+			t_sprite *sp, char *keys_down);
 void	init_mem_ptrs(t_meta *meta);
 void	free_and_exit(char *msg, t_meta *meta);
-//void	draw_box_around_image(t_image *im);
 
 // Parsing
 int		parse_map(char *in_file, t_meta *meta);
@@ -372,6 +367,5 @@ int		is_wall(t_raycast *ray, t_fpt2 *offset, t_input *inp, char h_or_v);
 void	ptr_wall(t_fpt2 **wall, int **is_door, t_raycast *ray, char h_or_v);
 void	set_h_closest_wall(t_raycast *r, t_player *p, t_input *i, float *d);
 void	set_v_closest_wall(t_raycast *r, t_player *p, t_input *i, float *d);
-
 
 #endif
