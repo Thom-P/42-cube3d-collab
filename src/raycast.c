@@ -6,23 +6,11 @@
 /*   By: saeby <saeby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 12:32:20 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/28 14:13:36 by tplanes          ###   ########.fr       */
+/*   Updated: 2023/03/29 16:41:25 by saeby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
-
-static void	get_h_wall(t_raycast *ray, t_meta *meta);
-
-static void	get_v_wall(t_raycast *ray, t_meta *meta);
-
-static int	is_wall(t_raycast *ray, t_fpt2 *offset, t_input *inp, char h_or_v);
-
-static void	ptr_wall(t_fpt2 **wall, int **is_door, t_raycast *ray, char h_or_v);
-
-static void	set_h_closest_wall(t_raycast *ray, t_player *play, t_input *inp, float *dist_col);
-
-static void	set_v_closest_wall(t_raycast *ray, t_player *play, t_input *inp, float *dist_col);
 
 /*
 v_dist (h_dist) is the distance to the closest vertical (horizontal) 
@@ -64,7 +52,7 @@ theta > pi means looking up (else looking down)
 For first intersection, y-eps to find wall in future casting to int, 
 because wall one pix behind multiple of PixPerBlock.
 */
-static void	get_h_wall(t_raycast *ray, t_meta *meta)
+void	get_h_wall(t_raycast *ray, t_meta *meta)
 {
 	t_fpt2		off;
 	float		itan;
@@ -96,7 +84,7 @@ theta > pi/2 and < 3pi/2 means looking left (else looking right)
 For first intersection, x-eps to find wall in future casting to int, 
 because wall one pix behind multiple of PixPerBlock.
 */
-static void	get_v_wall(t_raycast *ray, t_meta *meta)
+void	get_v_wall(t_raycast *ray, t_meta *meta)
 {
 	t_fpt2		off;
 	float		tan;
@@ -123,7 +111,7 @@ static void	get_v_wall(t_raycast *ray, t_meta *meta)
 }
 
 // Increase ray until finds wall intersection or get outta map
-static int	is_wall(t_raycast *ray, t_fpt2 *offset, t_input *inp, char h_or_v)
+int	is_wall(t_raycast *ray, t_fpt2 *offset, t_input *inp, char h_or_v)
 {
 	int		i;
 	int		j;
@@ -151,7 +139,7 @@ static int	is_wall(t_raycast *ray, t_fpt2 *offset, t_input *inp, char h_or_v)
 	return (0);
 }
 
-static void	ptr_wall(t_fpt2 **wall, int **is_door, t_raycast *ray, char h_or_v)
+void	ptr_wall(t_fpt2 **wall, int **is_door, t_raycast *ray, char h_or_v)
 {
 	if (h_or_v == 'h')
 	{	
@@ -166,55 +154,6 @@ static void	ptr_wall(t_fpt2 **wall, int **is_door, t_raycast *ray, char h_or_v)
 	return ;
 }
 
-/*
-add horizontal offset to texture ptr
-sometimes seems like glitchy column appears,
-probably happens when ray hits a corner
-*/
-static void	set_h_closest_wall(t_raycast *ray, t_player *play, t_input *inp, float *dist_col)
-{
-	ray -> p1.x = (int)round(ray -> h_wall.x);
-	ray -> p1.y = (int)round(ray -> h_wall.y);
-	dist_col[ray -> i] = ray -> h_dist;
-	ray -> wall_dist = ray -> h_dist
-		* cosf(fabsf(ray -> theta_ray - play -> theta));
-	if (ray -> theta_ray > PI && !ray -> is_h_door)
-		ray -> ptr_text = (int *)(inp -> textures[SO].addr)
-			+ ray -> p1.x % PIX_PER_BLOCK;
-	else if (ray -> theta_ray > PI)
-		ray -> ptr_text = (int *)(inp -> textures[4].addr)
-			+ ray -> p1.x % PIX_PER_BLOCK;
-	else if (!ray -> is_h_door)
-		ray -> ptr_text = (int *)(inp -> textures[NO].addr)
-			+ PIX_PER_BLOCK - 1 - (ray -> p1.x % PIX_PER_BLOCK);
-	else
-		ray -> ptr_text = (int *)(inp -> textures[4].addr)
-			+ PIX_PER_BLOCK - 1 - (ray -> p1.x % PIX_PER_BLOCK);
-	return ;
-}
-
-static void	set_v_closest_wall(t_raycast *ray, t_player *play, t_input *inp, float *dist_col)
-{
-	ray -> p1.x = (int)round(ray -> v_wall.x);
-	ray -> p1.y = (int)round(ray -> v_wall.y);
-	dist_col[ray -> i] = ray -> v_dist;
-	ray -> wall_dist = ray -> v_dist
-		* cosf(fabsf(ray -> theta_ray - play -> theta));
-	if ((ray -> theta_ray < 0.5 * PI || ray -> theta_ray > 1.5 * PI)
-		&& !ray -> is_v_door)
-		ray -> ptr_text = (int *)(inp -> textures[WE].addr)
-			+ ray -> p1.y % PIX_PER_BLOCK;
-	else if (ray -> theta_ray < 0.5 * PI || ray -> theta_ray > 1.5 * PI)
-		ray -> ptr_text = (int *)(inp -> textures[4].addr)
-			+ ray -> p1.y % PIX_PER_BLOCK;
-	else if (!ray -> is_v_door)
-		ray -> ptr_text = (int *)(inp -> textures[EA].addr)
-			+ PIX_PER_BLOCK - 1 - (ray -> p1.y % PIX_PER_BLOCK);
-	else
-		ray -> ptr_text = (int *)(inp -> textures[4].addr)
-			+ PIX_PER_BLOCK - 1 - (ray -> p1.y % PIX_PER_BLOCK);
-	return ;
-}
 /*
 void	draw_box_around_image(t_image *im)
 {	
