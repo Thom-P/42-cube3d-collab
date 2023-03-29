@@ -6,13 +6,13 @@
 /*   By: tplanes <tplanes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 09:56:31 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/29 15:28:56 by tplanes          ###   ########.fr       */
+/*   Updated: 2023/03/29 16:39:39 by tplanes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
-static void	draw_sprite(int i_ray_cent, t_text_map *smap, double x_dtext, t_meta *meta);
+static void	draw_sprite(int ray_ct, t_text_map *smap, t_meta *meta);
 
 static void draw_pix_group(t_image *im, int i, int i_ray, int color);
 
@@ -21,25 +21,26 @@ static void move_sprite(t_sprite *sp, t_input *inp, t_meta *meta);
 void update_sprite(t_player *p, t_sprite *sp, t_meta *meta)
 {
 	t_text_map	smap;
-	double		x_dtext;
 	int			i_ray_cent;
 
 	sp->dx = sp->x - p->x; 
 	sp->dy = sp->y - p->y;
 	sp->cost = cosf(p->theta);
 	sp->sint = sinf(p->theta);
-	sp->dist = sp->dx*sp->cost + sp->dy*sp->sint; //effective distance of sprite
+	sp->dist = sp->dx*sp->cost + sp->dy*sp->sint;
 	if (sp->dist == 0)
 		return ;
 	sp->offset = sp->dx * -sp->sint + sp->dy * sp->cost;
-	i_ray_cent = N_RAY / 2 + (int)(sp->offset / sp->dist * (float)(D_P2P / INTERP_FACT));	
-	sp->h = (int)round((float)SP_SIZE / sp->dist * (float)D_P2P);
-	sp->w = (int)round((float)SP_SIZE / sp->dist * (float)(D_P2P / INTERP_FACT));
+	i_ray_cent = N_RAY / 2
+		+ (int)(sp->offset / sp->dist * (float)(D_P2P / INTERP_FACT));
+	sp->h = (int)round((float)S_SIZE / sp->dist * (float)D_P2P);
+	sp->w = (int)round((float)S_SIZE
+			/ sp->dist * (float)(D_P2P / INTERP_FACT));
 	if (sp->h > IM3_NY)
 		return ;
-	smap.dtext = (double)SP_SIZE / (double)sp->h;
-	x_dtext = (double)SP_SIZE / (double)sp->w;
-	draw_sprite(i_ray_cent, &smap, x_dtext, meta);
+	smap.dtext = (double)S_SIZE / (double)sp->h;
+	smap.x_dtext = (double)S_SIZE / (double)sp->w;
+	draw_sprite(i_ray_cent, &smap, meta);
 	if (fabsf(sp -> dist) > (float)PIX_PER_BLOCK && meta -> flag_bird)
 		move_sprite(sp, &meta->input, meta);
 	return ;
@@ -70,41 +71,38 @@ static void move_sprite(t_sprite *sp, t_input *inp, t_meta *meta)
 		+ sp -> x / PIX_PER_BLOCK;
 	if (inp -> map[ind_lin] == '1' || inp -> map[ind_lin] == '2')
 		sp -> x = pos_save[0];
-	ind_lin = sp -> y / PIX_PER_BLOCK * meta -> input.n + sp -> x / PIX_PER_BLOCK;
+	ind_lin = sp -> y / PIX_PER_BLOCK
+		* meta -> input.n + sp -> x / PIX_PER_BLOCK;
 	if (inp -> map[ind_lin] == '1' || inp -> map[ind_lin] == '2')
 		sp -> y = pos_save[1];
 	return ;
 }
 
-static void	draw_sprite(int i_ray_cent, t_text_map *smap, double x_dtext, t_meta *meta)
+static void	draw_sprite(int ray_ct, t_text_map *smap, t_meta *m)
 {
-	int		i_ray;
-	int		i;
-	int		color;
-	double	x_text_offset;
-	t_sprite *sp;
+	int			i_ray;
 
-	sp = &meta -> sp;
-	x_text_offset = 0;
-	i_ray = i_ray_cent - sp->w / 2 - 1;
-	while (++i_ray < i_ray_cent + sp->w / 2)
+	smap->x_text_offset = 0;
+	i_ray = ray_ct - m->sp.w / 2 - 1;
+	while (++i_ray < ray_ct + m->sp.w / 2)
 	{
-		if (i_ray < 0 || i_ray > N_RAY - 1 || meta->dist_col[i_ray] < sp->dist)
+		if (i_ray < 0 || i_ray > N_RAY - 1 || m->dist_col[i_ray] < m->sp.dist)
 		{	
-			x_text_offset += x_dtext;
+			smap->x_text_offset += smap->x_dtext;
 			continue ;
 		}
-		smap->ptr_text = (int *)(meta -> input.textures[5].addr) + (int)x_text_offset;
+		smap->ptr_text = (int *)(m->input.textures[5].addr)
+			+ (int)smap->x_text_offset;
 		smap->text_offset = 0;
-		i = (IM3_NY - sp->h) / 2 - 1;
-		while (++i < (IM3_NY + sp->h) / 2)
+		smap->i = (IM3_NY - m->sp.h) / 2 - 1;
+		while (++smap->i < (IM3_NY + m->sp.h) / 2)
     	{
-       		color = *(smap->ptr_text + (int)(smap->text_offset) * SP_SIZE);
-       		if (color != (255 << 16) + 255)
-				draw_pix_group(&meta->im, i, i_ray, color);
-       		smap->text_offset += smap->dtext;
+			smap->color = *(smap->ptr_text + (int)(smap->text_offset) * S_SIZE);
+			if (smap->color != (255 << 16) + 255)
+				draw_pix_group(&m->im, smap->i, i_ray, smap->color);
+			smap->text_offset += smap->dtext;
     	}
-		x_text_offset += x_dtext;
+		smap->x_text_offset += smap->x_dtext;
 	}	
 	return ;
 }

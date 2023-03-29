@@ -6,7 +6,7 @@
 /*   By: saeby <saeby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 15:13:35 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/29 16:38:07 by saeby            ###   ########.fr       */
+/*   Updated: 2023/03/29 16:42:42 by saeby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@
 # define FOV 1.0472f //60 degrees in rad
 # define N_RAY 320
 # define TEXT_SIZE 64 // texture are 64 x 64 pixels
-# define SP_SIZE 32 // sprite texture is 32 x 32 pixels
+# define S_SIZE 32 // sprite texture is 32 x 32 pixels
 
 // 3D image size
 # define INTERP_FACT 4
@@ -198,6 +198,10 @@ typedef struct s_text_map
 	double	text_offset;
 	double	dtext;
 	int		*ptr_text;
+	double	x_dtext;
+	double	x_text_offset;
+	int		color;
+	int		i;
 }			t_text_map;
 
 typedef struct s_text
