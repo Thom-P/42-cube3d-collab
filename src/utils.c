@@ -6,7 +6,7 @@
 /*   By: saeby <saeby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 13:57:04 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/29 16:12:37 by saeby            ###   ########.fr       */
+/*   Updated: 2023/03/29 17:04:24 by saeby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,19 +32,18 @@ void	free_and_exit(char *msg, t_meta *meta)
 // Also init flag_minimap off
 void	init_mem_ptrs(t_meta *meta)
 {
-	int	i;
+	// int	i;
 
 	meta -> flag_minimap = 0;
 	meta -> flag_bird = 0;
 	meta -> flag_mouse_on = 0;
-	meta -> input.map = NULL;
+	meta -> input.map = 0;
 	meta -> input.m = 0;
 	meta -> input.n = 0;
-	i = 0;
-	while (i < 4)
-		meta -> input.text[i++] = NULL;
-	meta -> map2d.imat = NULL;
-	meta -> input.textures = NULL;
+	meta -> map2d.imat = 0;
+	meta -> input.textures = 0;
+	meta -> input.f_color = 0;
+	meta -> input.c_color = 0;
 	return ;
 }
 

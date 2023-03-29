@@ -6,24 +6,18 @@
 /*   By: saeby <saeby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 12:02:02 by saeby             #+#    #+#             */
-/*   Updated: 2023/03/29 14:29:08 by saeby            ###   ########.fr       */
+/*   Updated: 2023/03/29 17:04:01 by saeby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
-
-int	msg_exit(char *msg)
-{
-	ft_printf(2, "%s\n", msg);
-	exit(1);
-}
 
 int	get_door(char *path, t_meta *meta)
 {
 	meta->input.door_path = ft_strdup(path);
 	meta->input.door_path[ft_strlen(path) - 1] = 0;
 	if (open(meta->input.door_path, O_RDONLY) < 0)
-		msg_exit("Unable to open Door texture.");
+		free_and_exit("Unable to open Door texture.", meta);
 	return (0);
 }
 
@@ -44,7 +38,7 @@ int	get_map_info(char *in_file, t_meta *meta)
 		{
 			close(fd);
 			free(line);
-			return (msg_exit("Unauthorized character found."));
+			free_and_exit("Unauthorized character found.", meta);
 		}
 		free(line);
 		meta->input.m++;
@@ -86,15 +80,15 @@ int	parse_map(char *in_file, t_meta *meta)
 
 	fd = open(in_file, O_RDONLY);
 	if (fd < 0)
-		return (msg_exit("Unable to open map file."));
+		free_and_exit("Unable to open map file.", meta);
 	close(fd);
 	if (check_filename(in_file))
-		return (msg_exit("Wrong map filename (has to end with .cub."));
+		free_and_exit("Wrong map filename (has to end with .cub", meta);
 	meta->input.textures = malloc(6 * sizeof(t_image));
 	if (!meta->input.textures)
-		return (msg_exit("Error when allocating texture memory."));
+		free_and_exit("Error when allocating textures memory.", meta);
 	if (parse_textures(in_file, meta))
-		return (msg_exit("Unable to parse one of the wall texture."));
+		free_and_exit("Unable to parse one of the wall texture.", meta);
 	convert_colors(meta);
 	free(meta->input.f_color);
 	free(meta->input.c_color);
