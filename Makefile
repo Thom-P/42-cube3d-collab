@@ -58,6 +58,7 @@ SRC =	draw_2D_scene.c \
 		parsing/colors.c \
 		parsing/get_textures.c \
 		parsing/helpers.c \
+		parsing/load_sprites.c \
 		parsing/load_textures.c \
 		parsing/map_check.c \
 		parsing/map_check2.c \

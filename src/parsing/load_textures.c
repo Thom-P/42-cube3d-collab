@@ -6,7 +6,7 @@
 /*   By: saeby <saeby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 12:25:05 by saeby             #+#    #+#             */
-/*   Updated: 2023/03/29 12:44:54 by saeby            ###   ########.fr       */
+/*   Updated: 2023/03/29 14:32:03 by saeby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,10 @@ void	load_xpm_files(t_meta *meta)
 								meta->input.door_path, \
 								&(meta->input.textures[4].nx), \
 								&(meta->input.textures[4].ny));
+	load_sprites(meta);
 }
 
-void	get_text_addr(t_meta *meta)
+void	get_addr_1(t_meta *meta)
 {
 	meta->input.textures[0].addr = (char *)mlx_get_data_addr(\
 									meta->input.textures[0].id, \
@@ -99,6 +100,11 @@ void	get_text_addr(t_meta *meta)
 									&meta->input.textures[2].bpp, \
 									&meta->input.textures[2].line_size, \
 									&meta->input.textures[2].endian);
+}
+
+void	get_text_addr(t_meta *meta)
+{
+	get_addr_1(meta);
 	meta->input.textures[3].addr = (char *)mlx_get_data_addr(\
 									meta->input.textures[3].id, \
 									&meta->input.textures[3].bpp, \
@@ -109,4 +115,5 @@ void	get_text_addr(t_meta *meta)
 									&meta->input.textures[4].bpp, \
 									&meta->input.textures[4].line_size, \
 									&meta->input.textures[4].endian);
+	get_sprite_addr(meta);
 }

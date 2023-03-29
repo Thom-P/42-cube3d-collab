@@ -6,7 +6,7 @@
 /*   By: saeby <saeby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 12:02:02 by saeby             #+#    #+#             */
-/*   Updated: 2023/03/29 12:42:52 by saeby            ###   ########.fr       */
+/*   Updated: 2023/03/29 14:29:08 by saeby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int	parse_map(char *in_file, t_meta *meta)
 	close(fd);
 	if (check_filename(in_file))
 		return (msg_exit("Wrong map filename (has to end with .cub."));
-	meta->input.textures = malloc(5 * sizeof(t_image));
+	meta->input.textures = malloc(6 * sizeof(t_image));
 	if (!meta->input.textures)
 		return (msg_exit("Error when allocating texture memory."));
 	if (parse_textures(in_file, meta))

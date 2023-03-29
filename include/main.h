@@ -6,7 +6,7 @@
 /*   By: saeby <saeby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 15:13:35 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/29 12:42:12 by saeby            ###   ########.fr       */
+/*   Updated: 2023/03/29 14:33:07 by saeby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -332,5 +332,10 @@ int		parse_textures(char *in_file, t_meta *meta);
 void	load_xpm_files(t_meta *meta);
 void	get_text_addr(t_meta *meta);
 int		load_textures(t_meta *meta);
+
+// parsing/load_sprites.c
+void	load_sprites(t_meta *meta);
+void	get_sprite_addr(t_meta *meta);
+void	get_addr_1(t_meta *meta);
 
 #endif
