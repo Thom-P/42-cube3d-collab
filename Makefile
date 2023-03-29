@@ -54,8 +54,15 @@ SRC =	draw_2D_scene.c \
 		raycast.c \
 		update_and_render.c \
 		utils.c \
-		parse.c \
-		doors.c
+		doors.c \
+		parsing/colors.c \
+		parsing/get_textures.c \
+		parsing/helpers.c \
+		parsing/load_textures.c \
+		parsing/map_check.c \
+		parsing/map_check2.c \
+		parsing/name_checks.c \
+		parsing/parse.c
 
 OBJ := $(SRC:%.c=%.o)
 DEP := $(SRC:%.c=%.d)
@@ -111,6 +118,7 @@ re: fclean all
 
 $(OBJ_DIR):
 	@mkdir $(OBJ_DIR)
+	@mkdir $(OBJ_DIR)/parsing/
 
 libft:
 	@make -C $(LIBFT)

@@ -6,7 +6,7 @@
 /*   By: saeby <saeby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 15:13:35 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/23 15:26:34 by tplanes          ###   ########.fr       */
+/*   Updated: 2023/03/29 12:42:12 by saeby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -246,10 +246,6 @@ void	create_2d_image(t_meta *meta); // only if SHOW_RAYS = 1
 // Parsing
 void	parse_input_file(char *f_name, t_input *input, t_meta *meta);
 
-// parse.c
-int		parse_map(char *in_file, t_meta *meta);
-int		load_textures(t_meta *meta);
-
 // Update and render
 int		update_and_render(t_meta *meta);
 void	render(t_meta *meta);
@@ -286,5 +282,55 @@ void	init_player_and_keys(t_player *play, t_input *input, char *keys_down);
 void	init_mem_ptrs(t_meta *meta);
 void	free_and_exit(char *msg, t_meta *meta);
 //void	draw_box_around_image(t_image *im);
+
+// Parsing
+int		parse_map(char *in_file, t_meta *meta);
+int		get_map_info(char *in_file, t_meta *meta);
+void	print_map(t_meta *meta);
+int		get_door(char *path, t_meta *meta);
+
+// parsing/helpers.c
+char	*skip_textures(int fd);
+char	*set_spaces(char *line, t_meta *meta);
+int		fill_map(char *in_file, t_meta *meta);
+int		is_dir(char c);
+int		set_start(int x, int y, t_meta *meta);
+
+// parsing/get_textures.c
+int		get_texture_path(int dir, char *line, t_meta *meta);
+int		get_north(char *path, t_meta *meta);
+int		get_south(char *path, t_meta *meta);
+int		get_west(char *path, t_meta *meta);
+int		get_east(char *path, t_meta *meta);
+
+// parsing/map_check.c
+int		check_map(t_meta *meta);
+int		check_udr(int x, int y, t_meta *meta);
+int		check_udl(int x, int y, t_meta *meta);
+int		check_udlr(int x, int y, t_meta *meta);
+int		space_around(int x, int y, t_meta *meta);
+
+// parsing/map_check2.c
+int		check_value(char *rgb_str, unsigned int i);
+int		check_format(char *rgb_str);
+int		check_top_bottom(t_meta *meta);
+int		line_nok(char *line, t_meta *meta);
+
+// parsing/name_checks.c
+int		check_filename(char *in_file);
+int		check_text_filename(char **tmp);
+
+// parsing/colors.c
+int		get_color(int dir, char *line, t_meta *meta);
+int		parse_colors(char *line, t_meta *meta);
+int		convert_color(char **c);
+int		convert_colors(t_meta *meta);
+
+// parsing/load_textures.c
+int		load_textures(t_meta *meta);
+int		parse_textures(char *in_file, t_meta *meta);
+void	load_xpm_files(t_meta *meta);
+void	get_text_addr(t_meta *meta);
+int		load_textures(t_meta *meta);
 
 #endif
