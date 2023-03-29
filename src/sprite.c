@@ -6,7 +6,7 @@
 /*   By: tplanes <tplanes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 09:56:31 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/29 12:26:24 by tplanes          ###   ########.fr       */
+/*   Updated: 2023/03/29 12:29:19 by tplanes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void update_sprite(t_player *p, t_sprite *sp, t_meta *meta)
 	while (i_ray < i_ray_center + w / 2)
 	{
 		
-		if (i_ray < 0 || i_ray > N_RAY - 1)
+		if (i_ray < 0 || i_ray > N_RAY - 1 || meta->dist_col[i_ray] < dist)
 		{	
 			i_ray++;
 			x_text_offset += x_dtext;
