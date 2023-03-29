@@ -6,7 +6,7 @@
 /*   By: saeby <saeby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 15:13:35 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/28 15:20:25 by tplanes          ###   ########.fr       */
+/*   Updated: 2023/03/29 14:12:45 by tplanes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@
 # define FOV 1.0472f //60 degrees in rad
 # define N_RAY 320
 # define TEXT_SIZE 64 // texture are 64 x 64 pixels
+# define SP_SIZE 32 // sprite texture is 32 x 32 pixels
 
 // 3D image size
 # define INTERP_FACT 4
@@ -195,7 +196,7 @@ typedef struct s_text_map
 {
 	double	text_offset;
 	double	dtext;
-	int		*ptr_text;	
+	int		*ptr_text;
 }			t_text_map;
 
 typedef struct s_text
@@ -212,15 +213,16 @@ typedef struct s_text
 // Struct for sprite
 typedef struct s_sprite
 {
-	int	x;
-	int	y;
-	int z;
-	float dx;
-	float dy;
-	float dz;
-
-
-
+	int		x;
+	int		y;
+	float	dx;
+	float	dy;
+	float	cost;
+	float	sint;
+	float	dist;
+	float	offset;
+	int		w;
+	int		h;
 }				t_sprite;
 
 // Meta-struct of all other structs

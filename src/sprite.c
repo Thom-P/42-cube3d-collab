@@ -6,79 +6,79 @@
 /*   By: tplanes <tplanes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 09:56:31 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/29 12:29:19 by tplanes          ###   ########.fr       */
+/*   Updated: 2023/03/29 14:25:55 by tplanes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
+static void	draw_sprite(int i_ray_cent, t_text_map *smap, double x_dtext, t_meta *meta);
+
 static void draw_pix_group(t_image *im, int i, int i_ray, int color);
 
 void update_sprite(t_player *p, t_sprite *sp, t_meta *meta)
 {
+	t_text_map	smap;
+	double		x_dtext;
+	int			i_ray_cent;
 
-	t_text_map smap;
-	
 	sp->x = 1696;
 	sp->y = 736;
 	sp->dx = sp->x - p->x; 
 	sp->dy = sp->y - p->y;
-		
-	float cost = cosf(p->theta);
-	float sint = sinf(p->theta);
-
-	float dist = sp->dx*cost + sp->dy*sint; //effective distance of sprite
-	//float offset = sp->dx * -sint + sp->dy * cost;
-	//int i_ray = N_RAY / 2 + (int)offset;
-	
-	float theta_s = atan2f(sp->dy, sp->dx);
-	
-	float dtheta_s;
-	if (theta_s < 0)
-		theta_s = 2 * PI + theta_s;
-	dtheta_s = theta_s - p->theta;
-		
-	int i_ray_center = (int)(dtheta_s / (FOV / 2) * (float)(N_RAY - 1) / 2) + N_RAY / 2;
-
-	int sp_size = 32;	
-	int h = (int)round((float)sp_size / dist * (float)D_P2P);
-	int w = (int)round((float)sp_size / dist * (float)(D_P2P / INTERP_FACT));
-	if (h > IM3_NY)
+	sp->cost = cosf(p->theta);
+	sp->sint = sinf(p->theta);
+	sp->dist = sp->dx*sp->cost + sp->dy*sp->sint; //effective distance of sprite
+	if (sp->dist == 0)
 		return ;
-	int i;
-   	int color;
+	sp->offset = sp->dx * -sp->sint + sp->dy * sp->cost;
+	i_ray_cent = N_RAY / 2 + (int)(sp->offset / sp->dist * (float)(D_P2P / INTERP_FACT));	
+	sp->h = (int)round((float)SP_SIZE / sp->dist * (float)D_P2P);
+	sp->w = (int)round((float)SP_SIZE / sp->dist * (float)(D_P2P / INTERP_FACT));
+	if (sp->h > IM3_NY)
+		return ;
+	smap.dtext = (double)SP_SIZE / (double)sp->h;
+	x_dtext = (double)SP_SIZE / (double)sp->w;
+	draw_sprite(i_ray_cent, &smap, x_dtext, meta);
+	return ;
+}
+/*
+float theta_s = atan2f(sp->dy, sp->dx);
+float dtheta_s;
+if (theta_s < 0)
+	theta_s = 2 * PI + theta_s;
+dtheta_s = theta_s - p->theta;
+int i_ray_cent = (int)(dtheta_s / (FOV / 2) * (float)(N_RAY - 1) / 2) + N_RAY / 2;
+*/
 
-	//(void)smap;
-	
-	smap.dtext = (double)sp_size / (double)h;
-	double x_text_offset = 0;
-	double x_dtext = (double)sp_size / (double)w;
+static void	draw_sprite(int i_ray_cent, t_text_map *smap, double x_dtext, t_meta *meta)
+{
+	int		i_ray;
+	int		i;
+	int		color;
+	double	x_text_offset;
+	t_sprite *sp;
 
-	int i_ray = i_ray_center - w / 2;
-	while (i_ray < i_ray_center + w / 2)
+	sp = &meta -> sp;
+	x_text_offset = 0;
+	i_ray = i_ray_cent - sp->w / 2 - 1;
+	while (++i_ray < i_ray_cent + sp->w / 2)
 	{
-		
-		if (i_ray < 0 || i_ray > N_RAY - 1 || meta->dist_col[i_ray] < dist)
+		if (i_ray < 0 || i_ray > N_RAY - 1 || meta->dist_col[i_ray] < sp->dist)
 		{	
-			i_ray++;
 			x_text_offset += x_dtext;
 			continue ;
 		}
-		
-		smap.ptr_text = (int *)(meta -> input.textures[4].addr) + (int)x_text_offset;
-
-
-		smap.text_offset = 0;
-		i = (IM3_NY - h) / 2;
-		while (i < (IM3_NY + h) / 2)
+		smap->ptr_text = (int *)(meta -> input.textures[4].addr) + (int)x_text_offset;
+		smap->text_offset = 0;
+		i = (IM3_NY - sp->h) / 2 - 1;
+		while (++i < (IM3_NY + sp->h) / 2)
     	{
-       		//color = WHITE;
-       		color = *(smap.ptr_text + (int)(smap.text_offset) * TEXT_SIZE);
-       		draw_pix_group(&meta->im, i, i_ray, color);
-       		smap.text_offset += smap.dtext;
-       		i++;
+       		color = *(smap->ptr_text + (int)(smap->text_offset) * TEXT_SIZE);
+       		if (color != (255 << 16) + 255)
+				draw_pix_group(&meta->im, i, i_ray, color);
+       		smap->text_offset += smap->dtext;
     	}
-		i_ray++;
 		x_text_offset += x_dtext;
 	}	
 	return ;
