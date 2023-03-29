@@ -6,7 +6,7 @@
 /*   By: tplanes <tplanes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 09:56:31 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/29 16:45:25 by tplanes          ###   ########.fr       */
+/*   Updated: 2023/03/29 16:58:44 by tplanes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	update_sprite(t_player *p, t_sprite *sp, t_meta *meta)
 	sp->dy = sp->y - p->y;
 	sp->cost = cosf(p->theta);
 	sp->sint = sinf(p->theta);
+	sp->dist_real = sqrtf(sp->dx*sp->dx + sp->dy*sp->dy);
 	sp->dist = sp->dx * sp->cost + sp->dy * sp->sint;
 	if (sp->dist == 0)
 		return ;
@@ -41,7 +42,7 @@ void	update_sprite(t_player *p, t_sprite *sp, t_meta *meta)
 	smap.dtext = (double)S_SIZE / (double)sp->h;
 	smap.x_dtext = (double)S_SIZE / (double)sp->w;
 	draw_sprite(i_ray_cent, &smap, meta);
-	if (fabsf(sp -> dist) > (float)PIX_PER_BLOCK && meta -> flag_bird)
+	if (fabsf(sp -> dist_real) > (float)PIX_PER_BLOCK && meta -> flag_bird)
 		move_sprite(sp, &meta->input, meta);
 	return ;
 }
