@@ -6,7 +6,7 @@
 /*   By: tplanes <tplanes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 09:56:31 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/29 16:39:39 by tplanes          ###   ########.fr       */
+/*   Updated: 2023/03/29 16:45:25 by tplanes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,20 @@
 
 static void	draw_sprite(int ray_ct, t_text_map *smap, t_meta *meta);
 
-static void draw_pix_group(t_image *im, int i, int i_ray, int color);
+static void	draw_pix_group(t_image *im, int i, int i_ray, int color);
 
-static void move_sprite(t_sprite *sp, t_input *inp, t_meta *meta);
+static void	move_sprite(t_sprite *sp, t_input *inp, t_meta *meta);
 
-void update_sprite(t_player *p, t_sprite *sp, t_meta *meta)
+void	update_sprite(t_player *p, t_sprite *sp, t_meta *meta)
 {
 	t_text_map	smap;
 	int			i_ray_cent;
 
-	sp->dx = sp->x - p->x; 
+	sp->dx = sp->x - p->x;
 	sp->dy = sp->y - p->y;
 	sp->cost = cosf(p->theta);
 	sp->sint = sinf(p->theta);
-	sp->dist = sp->dx*sp->cost + sp->dy*sp->sint;
+	sp->dist = sp->dx * sp->cost + sp->dy * sp->sint;
 	if (sp->dist == 0)
 		return ;
 	sp->offset = sp->dx * -sp->sint + sp->dy * sp->cost;
@@ -51,19 +51,20 @@ float dtheta_s;
 if (theta_s < 0)
 	theta_s = 2 * PI + theta_s;
 dtheta_s = theta_s - p->theta;
-int i_ray_cent = (int)(dtheta_s / (FOV / 2) * (float)(N_RAY - 1) / 2) + N_RAY / 2;
+int i_ray_cent = (int)(dtheta_s / (FOV / 2) 
+* (float)(N_RAY - 1) / 2) + N_RAY / 2;
 */
 
-static void move_sprite(t_sprite *sp, t_input *inp, t_meta *meta)
+static void	move_sprite(t_sprite *sp, t_input *inp, t_meta *meta)
 {
-	float 	step;
+	float	step;
 	float	theta_s;
 	int		pos_save[2];
 	int		ind_lin;
-	
+
 	pos_save[0] = sp->x;
 	pos_save[1] = sp->y;
-	theta_s	= atan2f(sp->dy, sp->dx);
+	theta_s = atan2f(sp->dy, sp->dx);
 	step = (float)meta -> play.step / 3;
 	sp -> x += (int)round(-step * cosf(theta_s));
 	sp -> y += (int)round(-step * sinf(theta_s));
@@ -96,29 +97,29 @@ static void	draw_sprite(int ray_ct, t_text_map *smap, t_meta *m)
 		smap->text_offset = 0;
 		smap->i = (IM3_NY - m->sp.h) / 2 - 1;
 		while (++smap->i < (IM3_NY + m->sp.h) / 2)
-    	{
+		{
 			smap->color = *(smap->ptr_text + (int)(smap->text_offset) * S_SIZE);
 			if (smap->color != (255 << 16) + 255)
 				draw_pix_group(&m->im, smap->i, i_ray, smap->color);
 			smap->text_offset += smap->dtext;
-    	}
+		}
 		smap->x_text_offset += smap->x_dtext;
 	}	
 	return ;
 }
 
-static void draw_pix_group(t_image *im, int i, int i_ray, int color)
+static void	draw_pix_group(t_image *im, int i, int i_ray, int color)
 {
-    char    *pix_addr;
-    int     j;
-    int     k;
+	char	*pix_addr;
+	int		j;
+	int		k;
 
-    k = -1;
-    while (++k < INTERP_FACT)
-    {
-        j = i_ray * INTERP_FACT + k;
-        pix_addr = im -> addr + i * im -> line_size + j * (im -> bpp / 8);
-        *((unsigned int *)pix_addr) = (unsigned int)color;
-    }
-    return ;
+	k = -1;
+	while (++k < INTERP_FACT)
+	{
+		j = i_ray * INTERP_FACT + k;
+		pix_addr = im -> addr + i * im -> line_size + j * (im -> bpp / 8);
+		*((unsigned int *)pix_addr) = (unsigned int)color;
+	}
+	return ;
 }
