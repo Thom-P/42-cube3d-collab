@@ -6,7 +6,7 @@
 /*   By: saeby <saeby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 12:23:25 by saeby             #+#    #+#             */
-/*   Updated: 2023/03/29 12:44:47 by saeby            ###   ########.fr       */
+/*   Updated: 2023/03/29 17:08:41 by saeby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,9 @@ int	convert_colors(t_meta *meta)
 {
 	char	**tmp;
 
-	if (check_format(meta->input.c_color))
+	if (check_format(meta->input.c_color, meta))
 		free_and_exit("Wrong format for ceiling color.", meta);
-	if (check_format(meta->input.f_color))
+	if (check_format(meta->input.f_color, meta))
 		free_and_exit("Wrong format for floor color.", meta);
 	tmp = ft_split(meta->input.f_color, ',');
 	meta->input.floor = convert_color(tmp);

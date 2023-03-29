@@ -6,24 +6,26 @@
 /*   By: saeby <saeby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 12:21:00 by saeby             #+#    #+#             */
-/*   Updated: 2023/03/29 12:31:00 by saeby            ###   ########.fr       */
+/*   Updated: 2023/03/29 17:10:34 by saeby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
-int	check_format(char *rgb_str)
+int	check_format(char *rgb_str, t_meta *meta)
 {
 	int	i;
 
 	i = 0;
-	i = check_value(rgb_str, (unsigned int) i);
+	if (!rgb_str)
+		free_and_exit("No color found.", meta);
+	i = check_value(rgb_str, (unsigned int) i, meta);
 	if (i < 0 || rgb_str[i++] != ',')
 		return (1);
-	i = check_value(rgb_str, (unsigned int) i);
+	i = check_value(rgb_str, (unsigned int) i, meta);
 	if (i < 0 || rgb_str[i++] != ',')
 		return (1);
-	i = check_value(rgb_str, (unsigned int) i);
+	i = check_value(rgb_str, (unsigned int) i, meta);
 	if (i < 0)
 		return (1);
 	return (0);
@@ -50,7 +52,7 @@ int	check_top_bottom(t_meta *meta)
 	return (0);
 }
 
-int	check_value(char *rgb_str, unsigned int i)
+int	check_value(char *rgb_str, unsigned int i, t_meta *meta)
 {
 	unsigned int	j;
 	char			*tmp_str;
@@ -60,10 +62,7 @@ int	check_value(char *rgb_str, unsigned int i)
 	while (ft_isdigit(rgb_str[i]))
 		i++;
 	if (i - j == 0 || i - j > 3)
-	{
-		ft_printf(2, "No number or Number too big\n");
-		return (-1);
-	}
+		free_and_exit("No number or Number too big.", meta);
 	tmp_str = ft_substr(rgb_str, j, 3);
 	tmp = ft_atoi(tmp_str);
 	free(tmp_str);
