@@ -6,7 +6,7 @@
 /*   By: tplanes <tplanes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 09:56:31 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/29 12:03:35 by tplanes          ###   ########.fr       */
+/*   Updated: 2023/03/29 12:26:24 by tplanes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@ void update_sprite(t_player *p, t_sprite *sp, t_meta *meta)
 	sp->y = 736;
 	sp->dx = sp->x - p->x; 
 	sp->dy = sp->y - p->y;
-	//if (fabsf(sp->dx) < 5 || fabsf(sp->dy) < 5)
-	//	return ;
 		
 	float cost = cosf(p->theta);
 	float sint = sinf(p->theta);
@@ -50,8 +48,12 @@ void update_sprite(t_player *p, t_sprite *sp, t_meta *meta)
 	int i;
    	int color;
 
-	(void)smap;
+	//(void)smap;
 	
+	smap.dtext = (double)sp_size / (double)h;
+	double x_text_offset = 0;
+	double x_dtext = (double)sp_size / (double)w;
+
 	int i_ray = i_ray_center - w / 2;
 	while (i_ray < i_ray_center + w / 2)
 	{
@@ -59,31 +61,25 @@ void update_sprite(t_player *p, t_sprite *sp, t_meta *meta)
 		if (i_ray < 0 || i_ray > N_RAY - 1)
 		{	
 			i_ray++;
+			x_text_offset += x_dtext;
 			continue ;
 		}
-		/*
-		smap.ptr_text = (int *)(meta -> input.textures[4].addr) + ray -> p1.x % PIX_PER_BLOCK;
+		
+		smap.ptr_text = (int *)(meta -> input.textures[4].addr) + (int)x_text_offset;
 
 
-		tmap.dtext = (double)TEXT_SIZE / (double)h;
-     tmap.text_offset = 0.0;
-     tmap.ptr_text = ptr_text;
-     if (h > IM3_NY)
-     {
-         tmap.text_offset = 0.5 * ((double)(h - IM3_NY)) * tmap.dtext;
-         h = IM3_NY;
-     }
-	*/
-	
+		smap.text_offset = 0;
 		i = (IM3_NY - h) / 2;
 		while (i < (IM3_NY + h) / 2)
     	{
-       		color = WHITE;//*(tmap -> ptr_text + (int)(tmap -> text_offset) * TEXT_SIZE);
+       		//color = WHITE;
+       		color = *(smap.ptr_text + (int)(smap.text_offset) * TEXT_SIZE);
        		draw_pix_group(&meta->im, i, i_ray, color);
-       		//tmap -> text_offset += tmap -> dtext;
+       		smap.text_offset += smap.dtext;
        		i++;
     	}
 		i_ray++;
+		x_text_offset += x_dtext;
 	}	
 	return ;
 }
