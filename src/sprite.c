@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sprite.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tplanes <tplanes@student.42.fr>            +#+  +:+       +#+        */
+/*   By: saeby <saeby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 09:56:31 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/29 17:01:41 by tplanes          ###   ########.fr       */
+/*   Updated: 2023/03/30 13:55:41 by saeby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	update_sprite(t_player *p, t_sprite *sp, t_meta *meta)
 	sp->sint = sinf(p->theta);
 	sp->dist_real = sqrtf(sp->dx * sp->dx + sp->dy * sp->dy);
 	sp->dist = sp->dx * sp->cost + sp->dy * sp->sint;
-	if (sp->dist == 0)
+	if (sp->dist <= PIX_PER_BLOCK)
 		return ;
 	sp->offset = sp->dx * -sp->sint + sp->dy * sp->cost;
 	i_ray_cent = N_RAY / 2
