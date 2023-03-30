@@ -6,7 +6,7 @@
 /*   By: tplanes <tplanes@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 11:37:00 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/29 14:57:22 by tplanes          ###   ########.fr       */
+/*   Updated: 2023/03/30 12:20:58 by tplanes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,6 @@ static void	update_position(t_player *p, char *keys_down)
 	return ;
 }
 
-//draw_box_around_image(&meta -> im);
 //2D and 3D render
 void	render(t_meta *meta)
 {
@@ -101,15 +100,11 @@ void	render(t_meta *meta)
 		draw_minimap(meta);
 	mlx_put_image_to_window(meta -> xp.mlx, meta -> xp.win,
 		meta -> im.id, meta -> im.pos_x, meta -> im.pos_y);
-	mlx_destroy_image(meta -> xp.mlx, meta -> im.id);
-	create_image(meta);
 	if (SHOW_RAYS)
 	{
 		draw_player_im(&meta -> play, &meta -> im2);
 		mlx_put_image_to_window(meta -> xp.mlx, meta -> xp.win2,
 			meta -> im2.id, meta -> im2.pos_x, meta -> im2.pos_y);
-		mlx_destroy_image(meta -> xp.mlx, meta -> im2.id);
-		create_2d_image(meta);
 	}
 	return ;
 }

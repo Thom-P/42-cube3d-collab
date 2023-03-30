@@ -6,7 +6,7 @@
 /*   By: saeby <saeby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 15:13:35 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/29 17:09:05 by saeby            ###   ########.fr       */
+/*   Updated: 2023/03/30 12:22:33 by tplanes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -257,10 +257,6 @@ typedef struct s_draw
 }				t_draw;
 
 /********************* Functions *********************************************/
-
-// Main
-void	create_image(t_meta *meta);
-void	create_2d_image(t_meta *meta); // only if SHOW_RAYS = 1
 
 // Parsing
 void	parse_input_file(char *f_name, t_input *input, t_meta *meta);
