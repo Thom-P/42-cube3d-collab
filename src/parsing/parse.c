@@ -6,7 +6,7 @@
 /*   By: saeby <saeby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 12:02:02 by saeby             #+#    #+#             */
-/*   Updated: 2023/03/30 12:28:18 by saeby            ###   ########.fr       */
+/*   Updated: 2023/03/30 12:45:45 by saeby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,8 @@ int	parse_map(char *in_file, t_meta *meta)
 		free_and_exit("Error when allocating map memory.", meta);
 	fill_map(in_file, meta);
 	check_map(meta);
+	if (meta->input.p_i == 0 || meta->input.p_j == 0)
+		free_and_exit("No start position found.", meta);
 	return (0);
 }
 
