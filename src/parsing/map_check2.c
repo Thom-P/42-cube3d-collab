@@ -6,7 +6,7 @@
 /*   By: saeby <saeby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 12:21:00 by saeby             #+#    #+#             */
-/*   Updated: 2023/03/30 14:23:28 by tplanes          ###   ########.fr       */
+/*   Updated: 2023/03/30 14:40:50 by tplanes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,9 @@ int	check_value(char *rgb_str, unsigned int i, t_meta *meta)
 		i++;
 	if (i - j == 0 || i - j > 3)
 		free_and_exit("No number or Number too big.", meta);
-	tmp_str = ft_substr(rgb_str, j, 3); //malloc
+	tmp_str = ft_substr(rgb_str, j, 3);
+	if (tmp_str == NULL)
+		free_and_exit("In check_value", meta);
 	tmp = ft_atoi(tmp_str);
 	free(tmp_str);
 	if (tmp < 0 || tmp > 255)
