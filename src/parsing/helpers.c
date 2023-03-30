@@ -6,7 +6,7 @@
 /*   By: saeby <saeby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 12:39:06 by saeby             #+#    #+#             */
-/*   Updated: 2023/03/29 12:44:05 by saeby            ###   ########.fr       */
+/*   Updated: 2023/03/30 14:17:11 by tplanes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*skip_textures(int fd)
 
 	while (1)
 	{
-		line = get_next_line(fd);
+		line = get_next_line(fd); //need to protect in case line = NULL?
 		if (!(!ft_strncmp(line, "SO", 2) || !ft_strncmp(line, "NO", 2) || \
 			!ft_strncmp(line, "WE", 2) || !ft_strncmp(line, "EA", 2) || \
 			!ft_strncmp(line, "F", 1) || !ft_strncmp(line, "C", 1) || \
@@ -38,7 +38,7 @@ char	*set_spaces(char *line, t_meta *meta)
 	while (len < (unsigned int) meta->input.n)
 	{
 		tmp = line;
-		line = ft_strjoin(line, " ");
+		line = ft_strjoin(line, " ");  //malloc
 		free(tmp);
 		len++;
 	}
@@ -51,17 +51,17 @@ int	fill_map(char *in_file, t_meta *meta)
 	char	*line;
 	char	*tmp;
 
-	fd = open(in_file, O_RDONLY);
+	fd = open(in_file, O_RDONLY); //protect open
 	line = skip_textures(fd);
 	while (1)
 	{
 		tmp = line;
-		line = ft_strtrim(line, "\n");
+		line = ft_strtrim(line, "\n"); //malloc 
 		free(tmp);
 		tmp = meta->input.map;
 		if (ft_strlen(line) < (unsigned int) meta->input.n)
 			line = set_spaces(line, meta);
-		meta->input.map = ft_strjoin(tmp, line);
+		meta->input.map = ft_strjoin(tmp, line); //malloc
 		free(tmp);
 		free(line);
 		line = get_next_line(fd);

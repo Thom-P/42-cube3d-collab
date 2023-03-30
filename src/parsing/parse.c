@@ -6,7 +6,7 @@
 /*   By: saeby <saeby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 12:02:02 by saeby             #+#    #+#             */
-/*   Updated: 2023/03/30 12:45:45 by saeby            ###   ########.fr       */
+/*   Updated: 2023/03/30 14:12:18 by tplanes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	get_door(char *path, t_meta *meta)
 {
-	meta->input.door_path = ft_strdup(path);
+	meta->input.door_path = ft_strdup(path); //protect malloc
 	meta->input.door_path[ft_strlen(path) - 1] = 0;
 	if (open(meta->input.door_path, O_RDONLY) < 0)
 		free_and_exit("Unable to open Door texture.", meta);
@@ -27,12 +27,12 @@ int	get_map_info(char *in_file, t_meta *meta)
 	char	*line;
 	char	*tmp;
 
-	fd = open(in_file, O_RDONLY);
+	fd = open(in_file, O_RDONLY); // protect open
 	line = skip_textures(fd);
 	while (1)
 	{
 		tmp = line;
-		line = ft_strtrim(line, "\n");
+		line = ft_strtrim(line, "\n"); //protect malloc
 		free(tmp);
 		if (line_nok(line, meta))
 		{
@@ -92,7 +92,7 @@ int	parse_map(char *in_file, t_meta *meta)
 	close(fd);
 	if (check_filename(in_file))
 		free_and_exit("Wrong map filename (has to end with .cub", meta);
-	meta->input.textures = malloc(TEXTURES_COUNT * sizeof(t_image));
+	meta->input.textures = malloc(TEXTURES_COUNT * sizeof(t_image));  //cast malloc?
 	if (!meta->input.textures)
 		free_and_exit("Error when allocating textures memory.", meta);
 	if (parse_textures(in_file, meta))
