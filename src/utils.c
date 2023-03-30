@@ -6,7 +6,7 @@
 /*   By: saeby <saeby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 13:57:04 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/30 12:25:48 by saeby            ###   ########.fr       */
+/*   Updated: 2023/03/30 12:30:36 by saeby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,6 @@ void	free_and_exit(char *msg, t_meta *meta)
 // Also init flag_minimap off
 void	init_mem_ptrs(t_meta *meta)
 {
-	// int	i;
-
 	meta -> flag_minimap = 0;
 	meta -> flag_bird = 0;
 	meta -> flag_mouse_on = 0;
@@ -48,6 +46,7 @@ void	init_mem_ptrs(t_meta *meta)
 	return ;
 }
 
+//need to free all alloc memory here
 static void	free_mem(t_meta *meta)
 {
 	(void) meta;
@@ -59,6 +58,7 @@ static void	free_mem(t_meta *meta)
 		free(meta->input.c_color);
 	if (meta->input.map)
 		free(meta->input.map);
+	free(meta -> map2d.imat);
 	return ;
 }
 // to rework with new maps and textures
