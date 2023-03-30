@@ -6,7 +6,7 @@
 /*   By: saeby <saeby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 12:25:05 by saeby             #+#    #+#             */
-/*   Updated: 2023/03/29 14:32:03 by saeby            ###   ########.fr       */
+/*   Updated: 2023/03/30 14:21:44 by tplanes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	parse_textures(char *in_file, t_meta *meta)
 	int		fd;
 	char	*line;
 
-	fd = open(in_file, O_RDONLY);
+	fd = open(in_file, O_RDONLY);  //protect
 	while (1)
 	{
 		line = get_next_line(fd);
@@ -60,7 +60,7 @@ int	parse_textures(char *in_file, t_meta *meta)
 
 void	load_xpm_files(t_meta *meta)
 {
-	meta->input.textures[0].id = mlx_xpm_file_to_image(meta->xp.mlx, \
+	meta->input.textures[0].id = mlx_xpm_file_to_image(meta->xp.mlx, \  //protect all below
 								meta->input.no_path, \
 								&(meta->input.textures[0].nx), \
 								&(meta->input.textures[0].ny));
