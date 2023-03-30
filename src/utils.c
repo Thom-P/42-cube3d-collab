@@ -6,7 +6,7 @@
 /*   By: saeby <saeby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 13:57:04 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/30 12:30:36 by saeby            ###   ########.fr       */
+/*   Updated: 2023/03/30 14:53:02 by saeby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	free_and_exit(char *msg, t_meta *meta)
 	status = 0;
 	if (msg)
 	{
+		ft_putstr_fd("Error\n", 2);
 		perror(msg);
 		status = 1;
 	}
