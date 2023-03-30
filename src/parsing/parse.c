@@ -6,7 +6,7 @@
 /*   By: saeby <saeby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 12:02:02 by saeby             #+#    #+#             */
-/*   Updated: 2023/03/29 17:04:01 by saeby            ###   ########.fr       */
+/*   Updated: 2023/03/30 12:28:18 by saeby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,14 @@ void	print_map(t_meta *meta)
 	}
 }
 
+static void	free_parse(t_meta *meta)
+{
+	free(meta->input.f_color);
+	meta->input.f_color = 0;
+	free(meta->input.c_color);
+	meta->input.c_color = 0;
+}
+
 // parsing done in two steps
 // 1: get all information as strings 
 // (textures paths, floor/ceiling color as r,g,b, etc)
@@ -84,19 +92,18 @@ int	parse_map(char *in_file, t_meta *meta)
 	close(fd);
 	if (check_filename(in_file))
 		free_and_exit("Wrong map filename (has to end with .cub", meta);
-	meta->input.textures = malloc(6 * sizeof(t_image));
+	meta->input.textures = malloc(TEXTURES_COUNT * sizeof(t_image));
 	if (!meta->input.textures)
 		free_and_exit("Error when allocating textures memory.", meta);
 	if (parse_textures(in_file, meta))
 		free_and_exit("Unable to parse one of the wall texture.", meta);
 	convert_colors(meta);
-	free(meta->input.f_color);
-	free(meta->input.c_color);
+	free_parse(meta);
 	get_map_info(in_file, meta);
 	meta->input.map = ft_calloc((unsigned int)(meta->input.n * meta->input.m), \
 				sizeof(char));
 	if (!meta->input.map)
-		return (1);
+		free_and_exit("Error when allocating map memory.", meta);
 	fill_map(in_file, meta);
 	check_map(meta);
 	return (0);

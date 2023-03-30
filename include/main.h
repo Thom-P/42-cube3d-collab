@@ -6,7 +6,7 @@
 /*   By: saeby <saeby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 15:13:35 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/29 17:09:05 by saeby            ###   ########.fr       */
+/*   Updated: 2023/03/30 12:28:41 by saeby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,10 @@
 # define F 4
 # define C 5
 # define D 6
+
+// Textures
+# define TEXTURES_COUNT 6
+# define BIRD_SPRITE "src/textures/bird.xpm"
 
 // Colors
 # define WHITE 16777215 //White
