@@ -6,7 +6,7 @@
 /*   By: saeby <saeby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 15:01:56 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/29 16:27:38 by saeby            ###   ########.fr       */
+/*   Updated: 2023/03/30 12:08:49 by tplanes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,10 @@ static void	create_win(t_meta *meta, int win_ny, int win_nx, char *title)
 		free_and_exit("Error in window init", meta);
 	meta -> xp.win = win;
 	if (load_textures(meta))
+	{
+		mlx_destroy_window(meta -> xp.mlx, meta -> xp.win);
 		free_and_exit("Error in loading textures", meta);
+	}
 	mlx_string_put(meta->xp.mlx, meta->xp.win, 1, 1, WHITE, "Move: WASD, "
 		"Rotate: ARROWS/MOUSE (Toggle with N), Minimap: M, Action: SPACE, "
 		"Bird: B, Quit: ESC");
@@ -72,6 +75,7 @@ static void	create_2d_win(t_meta *meta, char *title)
 			title);
 	if (win2 == NULL)
 	{
+		mlx_destroy_image(meta -> xp.mlx, meta -> im.id);
 		mlx_destroy_window(meta -> xp.mlx, meta -> xp.win);
 		free_and_exit("Error in window2 init", meta);
 	}
