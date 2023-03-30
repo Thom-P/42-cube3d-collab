@@ -7,7 +7,7 @@ WE ./src/textures/we_wall.xpm
 EA ./src/textures/ea_wall.xpm
 D ./src/textures/door.xpm
 C 0,50,120
-F 255,255,255
+F 255,0,255
 
 
         1111111111111111111111111

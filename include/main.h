@@ -6,7 +6,7 @@
 /*   By: saeby <saeby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 15:13:35 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/30 14:23:08 by saeby            ###   ########.fr       */
+/*   Updated: 2023/03/30 14:49:11 by saeby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -337,6 +337,7 @@ int		check_value(char *rgb_str, unsigned int i, t_meta *meta);
 int		check_format(char *rgb_str, t_meta *meta);
 int		check_top_bottom(t_meta *meta);
 int		line_nok(char *line, t_meta *meta);
+void	check_malloc(void *ptr, t_meta *meta);
 
 // parsing/name_checks.c
 int		check_filename(char *in_file);

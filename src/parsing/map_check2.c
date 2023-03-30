@@ -6,7 +6,7 @@
 /*   By: saeby <saeby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 12:21:00 by saeby             #+#    #+#             */
-/*   Updated: 2023/03/30 14:42:08 by saeby            ###   ########.fr       */
+/*   Updated: 2023/03/30 14:49:57 by saeby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,9 @@ int	check_value(char *rgb_str, unsigned int i, t_meta *meta)
 		i++;
 	if (i - j == 0 || i - j > 3)
 		free_and_exit("No number or Number too big.", meta);
-	tmp_str = ft_substr(rgb_str, j, 3); //malloc
+	tmp_str = ft_substr(rgb_str, j, 3);
+	if (!tmp_str)
+		free_and_exit("Error allocating memory.", meta);
 	tmp = ft_atoi(tmp_str);
 	free(tmp_str);
 	if (tmp < 0 || tmp > 255)
@@ -86,4 +88,10 @@ int	line_nok(char *line, t_meta *meta)
 		line++;
 	}
 	return (0);
+}
+
+void	check_malloc(void *ptr, t_meta *meta)
+{
+	if (!ptr)
+		free_and_exit("Error allocating memory", meta);
 }
