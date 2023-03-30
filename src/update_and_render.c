@@ -6,7 +6,7 @@
 /*   By: tplanes <tplanes@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 11:37:00 by tplanes           #+#    #+#             */
-/*   Updated: 2023/03/30 12:20:58 by tplanes          ###   ########.fr       */
+/*   Updated: 2023/03/30 13:42:13 by tplanes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 static void	update_position(t_player *play, char *keys_down);
 
 static void	update_rotation(int flag_mouse_on, t_player *p, char *keys_down);
-
-static int	is_any_key_down(char *keys_down);
 
 /*
 Two step check to allow wall slide
@@ -32,8 +30,6 @@ int	update_and_render(t_meta *meta)
 	p = &meta -> play;
 	map = meta -> input.map;
 	keys_down = meta -> keys_down;
-	if (is_any_key_down(keys_down) == 0)
-		return (0);
 	pos_save[0] = p -> x;
 	pos_save[1] = p -> y;
 	update_rotation(meta -> flag_mouse_on, p, keys_down);
@@ -108,8 +104,7 @@ void	render(t_meta *meta)
 	}
 	return ;
 }
-
-static int	is_any_key_down(char *keys_down)
+/*static int	is_any_key_down(char *keys_down)
 {
 	int	i;
 
@@ -120,4 +115,4 @@ static int	is_any_key_down(char *keys_down)
 			return (1);
 	}
 	return (0);
-}
+}*/
