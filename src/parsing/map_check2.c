@@ -6,7 +6,7 @@
 /*   By: saeby <saeby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 12:21:00 by saeby             #+#    #+#             */
-/*   Updated: 2023/03/29 17:10:34 by saeby            ###   ########.fr       */
+/*   Updated: 2023/03/30 14:34:35 by saeby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ int	check_value(char *rgb_str, unsigned int i, t_meta *meta)
 
 int	line_nok(char *line, t_meta *meta)
 {
+	if (!line)
+		free_and_exit("Error when trimming line", meta);
 	while (*line)
 	{
 		if (!(*line == '0' || *line == '1' || *line == '2' || *line == 'N'

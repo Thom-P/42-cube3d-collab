@@ -6,7 +6,7 @@
 /*   By: saeby <saeby@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 12:04:10 by saeby             #+#    #+#             */
-/*   Updated: 2023/03/30 14:14:33 by tplanes          ###   ########.fr       */
+/*   Updated: 2023/03/30 14:36:58 by saeby            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 int	get_north(char *path, t_meta *meta)
 {
-	meta->input.no_path = ft_strdup(path); //malloc
+	meta->input.no_path = ft_strdup(path);
+	if (!meta->input.no_path)
+		free_and_exit("Error allocating memory.", meta);
 	meta->input.no_path[ft_strlen(path) - 1] = 0;
 	if (open(meta->input.no_path, O_RDONLY) < 0)
 		free_and_exit("Unable to open North texture", meta);
@@ -23,7 +25,9 @@ int	get_north(char *path, t_meta *meta)
 
 int	get_south(char *path, t_meta *meta)
 {
-	meta->input.so_path = ft_strdup(path); //malloc
+	meta->input.so_path = ft_strdup(path);
+	if (!meta->input.so_path)
+		free_and_exit("Error allocating memory.", meta);
 	meta->input.so_path[ft_strlen(path) - 1] = 0;
 	if (open(meta->input.so_path, O_RDONLY) < 0)
 		free_and_exit("Unable to open South texture", meta);
@@ -32,7 +36,9 @@ int	get_south(char *path, t_meta *meta)
 
 int	get_west(char *path, t_meta *meta)
 {
-	meta->input.we_path = ft_strdup(path); //malloc
+	meta->input.we_path = ft_strdup(path);
+	if (!meta->input.we_path)
+		free_and_exit("Error allocating memory.", meta);
 	meta->input.we_path[ft_strlen(path) - 1] = 0;
 	if (open(meta->input.we_path, O_RDONLY) < 0)
 		free_and_exit("Unable to open West texture", meta);
@@ -41,7 +47,9 @@ int	get_west(char *path, t_meta *meta)
 
 int	get_east(char *path, t_meta *meta)
 {
-	meta->input.ea_path = ft_strdup(path); //malloc
+	meta->input.ea_path = ft_strdup(path);
+	if (!meta->input.ea_path)
+		free_and_exit("Error allocating memory.", meta);
 	meta->input.ea_path[ft_strlen(path) - 1] = 0;
 	if (open(meta->input.ea_path, O_RDONLY) < 0)
 		free_and_exit("Unable to open East texture", meta);
@@ -52,7 +60,9 @@ int	get_texture_path(int dir, char *line, t_meta *meta)
 {
 	char	**tmp;
 
-	tmp = ft_split(line, ' '); //malloc
+	tmp = ft_split(line, ' ');
+	if (!tmp)
+		free_and_exit("Error allocating memory.", meta);
 	if (check_text_filename(tmp))
 		free_and_exit("Texture isn't a .xpm file", meta);
 	if (dir == NO)
